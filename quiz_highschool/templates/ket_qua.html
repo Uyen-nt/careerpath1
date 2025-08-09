@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Kết Quả Trắc Nghiệm - CareerPath{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/quiz_highschool.css' %}">
+
+<main class="result-page section-padding">
+  <div class="container result-container">
+    <h2 class="result-heading">🎯 Báo Cáo Kết Quả Trắc Nghiệm Chọn Ngành</h2>
+    <div class="section-divider"></div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('overview')" aria-label="Xem tổng quan kết quả">✅ Tổng Quan</button>
+      <button class="tab" onclick="showTab('analysis')" aria-label="Xem phân tích chi tiết">📊 Phân Tích</button>
+    </div>
+
+    <div class="tab-content-wrapper">
+      <div id="overview" class="tab-content active">
+        <div class="result-wrapper">
+          <div class="result-bars">
+            {% for cluster, percentage in cluster_percentages.items %}
+            <div class="result-bar">
+              <div class="label">• Nhóm {{ cluster }}: <span class="percentage">{{ percentage }}%</span></div>
+              <div class="bar"><div class="fill" style="width:{{ percentage }}%;" data-percentage="{{ percentage }}"></div></div>
+            </div>
+            {% endfor %}
+          </div>
+          <!-- Card 2: Split-Panel "Overlap" Design - Carousel Wrapper -->
+          <div class="profile-spotlight-wrapper">
+              {{ top_card_html|safe }}
+              {{ second_card_html|safe }}
+          </div>
+        </div>
+      </div>
+
+      <div id="analysis" class="tab-content">
+        <div class="analysis-polished-layout">
+          <!-- SIDEBAR -->
+          <div class="vertical-nav-polished">
+              <div class="nav-header-polished">
+                  <i class="fas fa-flag-checkered"></i>
+                  <h6>Lộ Trình Của Bạn</h6>
+              </div>
+
+              <button class="v-nav-item-polished active" onclick="switchVerticalTab(event, 'v-group1')">
+                  <i class="fas fa-briefcase nav-icon-main"></i>
+                  <div class="v-nav-text">
+                      <span class="v-nav-rank">Lựa chọn #1</span>
+                      <span class="v-nav-name">{{ top_cluster_name }}</span>
+                  </div>
+              </button>
+
+              <button class="v-nav-item-polished" onclick="switchVerticalTab(event, 'v-group2')">
+                  <i class="fas fa-microchip nav-icon-main"></i>
+                  <div class="v-nav-text">
+                      <span class="v-nav-rank">Lựa chọn #2</span>
+                      <span class="v-nav-name">{{ second_cluster_name }}</span>
+                  </div>
+              </button>
+          </div>
+
+          <div class="vertical-content-area-polished">
+            <!-- Lựa chọn #1 -->
+            <div id="v-group1" class="v-content-pane active">
+                <div class="pane-header-polished group-1-theme">
+                    {{ top_analysis_html|safe }}
+                </div>
+            </div>
+
+            <!-- Lựa chọn #2 -->
+            <div id="v-group2" class="v-content-pane">
+                <div class="pane-header-polished group-2-theme">
+                    {{ second_analysis_html|safe }}
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  function showTab(tabId) {
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+    tabs.forEach(btn => btn.classList.remove("active"));
+    contents.forEach(c => {
+      c.classList.remove("active");
+      c.style.opacity = "0";
+    });
+    const selectedTab = document.querySelector(`.tab[onclick="showTab('${tabId}')"]`);
+    const selectedContent = document.getElementById(tabId);
+    selectedTab.classList.add("active");
+    selectedContent.classList.add("active");
+    setTimeout(() => {
+      selectedContent.style.opacity = "1";
+    }, 50);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".fill").forEach(bar => {
+      const percentage = bar.dataset.percentage;
+      bar.style.width = "0%";
+      setTimeout(() => {
+        bar.style.width = `${percentage}%`;
+      }, 300);
+    });
+  });
+
+  function switchVerticalTab(event, paneId) {
+    document.querySelectorAll('.v-content-pane').forEach(pane => {
+      pane.classList.remove('active');
+    });
+    document.querySelectorAll('.v-nav-item-polished').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    const activePane = document.getElementById(paneId);
+    activePane.classList.add('active');
+    event.currentTarget.classList.add('active');
+    animateProgressCircle(activePane);
+  }
+
+  function animateProgressCircle(pane) {
+    const wrapper = pane.querySelector('.progress-circle-wrapper');
+    if (!wrapper) return;
+    const score = parseInt(wrapper.dataset.score, 10);
+    const indicator = wrapper.querySelector('.progress-ring-indicator');
+    const radius = indicator.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (score / 100) * circumference;
+    indicator.style.strokeDasharray = `${circumference} ${circumference}`;
+    indicator.style.strokeDashoffset = circumference;
+    setTimeout(() => {
+      indicator.style.strokeDashoffset = offset;
+    }, 10);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const initialActivePane = document.querySelector('.v-content-pane.active');
+    if (initialActivePane) {
+      animateProgressCircle(initialActivePane);
+    }
+  });
+
+  function switchSpotlightCard(cardIdToShow) {
+    const allCards = document.querySelectorAll('.profile-spotlight-card');
+    allCards.forEach(card => {
+      card.classList.remove('active');
+    });
+    const cardToShow = document.getElementById(cardIdToShow);
+    if (cardToShow) {
+      cardToShow.classList.add('active');
+    }
+  }
+  function restructurePaneContent(paneElement) {
+    // 1. Tìm thẻ cha chứa header có màu nền
+    const headerContainer = paneElement.querySelector('.pane-header-polished');
+    if (!headerContainer) return; // Nếu không có thì thoát
+
+    // 2. Tìm các phần content đang nằm sai vị trí (bên trong header)
+    const contentList = headerContainer.querySelector('.analysis-step-list');
+    const conclusion = headerContainer.querySelector('.analysis-conclusion');
+
+    // 3. Di chuyển các phần content này ra ngoài, làm con của thẻ v-content-pane
+    // JS sẽ tự động di chuyển phần tử từ vị trí cũ sang vị trí mới
+    if (contentList && !contentList.parentElement.classList.contains('v-content-pane')) {
+      paneElement.appendChild(contentList);
+    }
+    if (conclusion && !conclusion.parentElement.classList.contains('v-content-pane')) {
+      paneElement.appendChild(conclusion);
+    }
+  }
+
+  // --- CÁC HÀM CŨ ĐƯỢC CẬP NHẬT ---
+
+  function showTab(tabId) {
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+    tabs.forEach(btn => btn.classList.remove("active"));
+    contents.forEach(c => {
+      c.classList.remove("active");
+      c.style.opacity = "0";
+    });
+    const selectedTab = document.querySelector(`.tab[onclick="showTab('${tabId}')"]`);
+    const selectedContent = document.getElementById(tabId);
+    selectedTab.classList.add("active");
+    selectedContent.classList.add("active");
+    setTimeout(() => {
+      selectedContent.style.opacity = "1";
+    }, 50);
+  }
+
+  function switchVerticalTab(event, paneId) {
+    document.querySelectorAll('.v-content-pane').forEach(pane => {
+      pane.classList.remove('active');
+    });
+    document.querySelectorAll('.v-nav-item-polished').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    const activePane = document.getElementById(paneId);
+    activePane.classList.add('active');
+    event.currentTarget.classList.add('active');
+    
+    // CẬP NHẬT: Gọi hàm tái cấu trúc cho tab vừa được click
+    restructurePaneContent(activePane); 
+
+    animateProgressCircle(activePane);
+  }
+
+  function animateProgressCircle(pane) {
+    const wrapper = pane.querySelector('.progress-circle-wrapper');
+    if (!wrapper) return;
+    const scoreText = wrapper.dataset.score || "0";
+    const score = parseInt(scoreText.replace('%',''), 10);
+    const indicator = wrapper.querySelector('.progress-ring-indicator');
+    if (!indicator) return;
+    const radius = indicator.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (score / 100) * circumference;
+    indicator.style.strokeDasharray = `${circumference} ${circumference}`;
+    indicator.style.strokeDashoffset = circumference;
+    setTimeout(() => {
+      indicator.style.strokeDashoffset = offset;
+    }, 10);
+  }
+
+  function switchSpotlightCard(cardIdToShow) {
+    const allCards = document.querySelectorAll('.profile-spotlight-card');
+    allCards.forEach(card => {
+      card.classList.remove('active');
+    });
+    const cardToShow = document.getElementById(cardIdToShow);
+    if (cardToShow) {
+      cardToShow.classList.add('active');
+    }
+  }
+
+  // --- HÀM CHẠY KHI TẢI TRANG ---
+  document.addEventListener("DOMContentLoaded", () => {
+    // Chạy animation cho thanh tiến trình ngang
+    document.querySelectorAll(".fill").forEach(bar => {
+      const percentage = bar.dataset.percentage;
+      bar.style.width = "0%";
+      setTimeout(() => {
+        bar.style.width = `${percentage}%`;
+      }, 300);
+    });
+
+    // CẬP NHẬT: Tìm tab đang active lúc tải trang và tái cấu trúc nó
+    const initialActivePane = document.querySelector('.v-content-pane.active');
+    if (initialActivePane) {
+      restructurePaneContent(initialActivePane); // Tái cấu trúc cho tab đầu tiên
+      animateProgressCircle(initialActivePane);   // Chạy animation vòng tròn
+    }
+  });
+</script>
+{% endblock %}

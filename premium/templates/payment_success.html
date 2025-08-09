@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Thanh Toán Premium Thành Công - CareerPath{% endblock %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/premium.css' %}">
+</head>
+
+<section class="premium-section text-center py-5">
+  <div class="container">
+    <div class="mb-4">
+      <i class="bi bi-patch-check-fill text-success display-1"></i>
+    </div>
+    <h2 class="fw-bold mb-3">Thanh Toán Premium Thành Công!</h2>
+    <p class="lead mb-4">Bạn đã kích hoạt gói Premium {{ months }} tháng. Hãy tận hưởng các tính năng phân tích chuyên sâu và định hướng nghề nghiệp ngay bây giờ.</p>
+    <p class="text-muted mb-4">Một email xác nhận đã được gửi đến {{ user.email }}.</p>
+    <a href="{% url 'home' %}" class="btn btn-success btn-lg fw-bold shadow-sm">Khám Phá Ngay</a>
+  </div>
+</section>
+{% endblock %}

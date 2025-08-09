@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Thanh Toán Premium - CareerPath{% endblock %}
+
+{% block content %}
+<section class="premium-section text-center py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-3">Thanh Toán Premium</h2>
+        <p class="lead mb-4">Vui lòng thực hiện thanh toán <strong>{{ amount|intcomma }}₫</strong> cho gói {{ months }} tháng Premium.</p>
+        
+        <div id="payment-info" style="display: none;">
+            <p>Mã giao dịch: <strong id="order-id"></strong></p>
+            <h4 class="mb-3">Thông tin thanh toán</h4>
+            <p>
+                Ngân hàng: <strong>Ngân hàng XYZ</strong><br>
+                Số tài khoản: <strong>1234567890</strong><br>
+                Chủ tài khoản: <strong>CareerPath</strong><br>
+                Nội dung chuyển khoản: <strong id="order-id-content"></strong>
+            </p>
+            <img src="{% static 'images/' %}qrcode.jpg" alt="QR Code thanh toán" class="img-fluid" style="max-width: 300px;">
+            <p class="mt-4 text-muted"> 
+                Gói Premium sẽ được kích hoạt sau khi xác nhận.
+            </p>
+        </div>
+        
+        <button id="pay-button" class="btn btn-success btn-lg">Thanh toán</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Quay về trang chủ</a>
+    </div>
+</section>
+
+<script>
+document.getElementById('pay-button').addEventListener('click', function() {
+    const button = this;
+    button.disabled = true;
+    button.textContent = 'Đang xử lý...';
+
+    fetch("{% url 'premium:initiate_payment' %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({
+            months: {{ months }},
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        button.disabled = false;
+        button.style.display = 'none';
+
+        if (data.status === 'success') {
+            document.getElementById('payment-info').style.display = 'block';
+            document.getElementById('qr-code').src = data.qr_code_url;
+            document.getElementById('qr-code').style.display = 'block';
+            document.getElementById('order-id').textContent = data.order_id;
+            document.getElementById('order-id-content').textContent = data.order_id;
+        } else {
+            alert('Lỗi: ' + data.message);
+            button.textContent = 'Thanh toán';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi. Vui lòng thử lại.');
+        button.disabled = false;
+        button.textContent = 'Thanh toán';
+    });
+});
+</script>
+{% endblock %}

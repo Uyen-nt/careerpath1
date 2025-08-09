@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Premium - CareerPath{% endblock %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/premium.css' %}">
+</head>
+
+<section class="premium-section">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center mb-5">
+        <h2 class="section-title fw-bolder mb-3 display-5">Mở Khóa Tiềm Năng Nghề Nghiệp</h2>
+        <p class="lead text-muted">
+          Trải nghiệm CareerPath Premium để nhận phân tích chuyên sâu, định hướng rõ ràng cho sự nghiệp của bạn.
+        </p>
+      </div>
+    </div>
+
+    <div class="row align-items-start justify-content-center">
+      <!-- Cột 1: Lợi ích -->
+      <div class="col-lg-6 col-md-12 mb-5 mb-lg-0">
+        <div class="feature-description">
+          <h3 class="fw-bold mb-4">Tại sao nên chọn Premium?</h3>
+          <ul class="list-unstyled">
+            <li class="d-flex mb-4">
+              <div class="feature-icon me-3">
+                <i class="bi bi-person-check-fill"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold">Hiểu rõ bản thân</h5>
+                <p class="text-muted">Khám phá tính cách, sở thích, năng lực tiềm ẩn qua hệ thống câu hỏi chuyên sâu.</p>
+              </div>
+            </li>
+            <li class="d-flex mb-4">
+              <div class="feature-icon me-3">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold">Đón đầu xu hướng</h5>
+                <p class="text-muted">Phân tích ngành nghề hot, kỹ năng cần thiết để bạn đi trước một bước.</p>
+              </div>
+            </li>
+            <li class="d-flex">
+              <div class="feature-icon me-3">
+                <i class="bi bi-compass-fill"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold">Lộ trình rõ ràng</h5>
+                <p class="text-muted">Gợi ý lộ trình phát triển nghề nghiệp phù hợp, không còn mông lung.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cột 2: Premium -->
+      <div class="col-lg-5 col-md-8">
+        <div class="pricing-card">
+          <div class="card-body p-lg-5">
+            {% if subscription_active %}
+              {% if days_left > 0 %}
+                <h3 class="card-title fw-bold mb-3 text-center">🎉 Bạn đang sử dụng Premium</h3>
+                <p class="text-center text-success fw-bold mb-3">Thời hạn còn lại: {{ days_left }} ngày</p>
+                <p class="text-center">Bạn đã mở khoá toàn bộ tính năng: phân tích chi tiết, gợi ý nghề, báo cáo xu hướng.</p>
+                <a href="{% url 'home' %}" class="btn btn-success btn-lg d-block mt-3">Khám phá ngay</a>
+              {% else %}
+                <h3 class="card-title fw-bold mb-3 text-center">⚠️ Gói Premium đã hết hạn</h3>
+                <p class="text-center text-danger fw-bold mb-3">Thời hạn Premium của bạn đã kết thúc.</p>
+                <p class="text-center">Hãy gia hạn để tiếp tục sử dụng các tính năng Premium.</p>
+                <a href="{% url 'premium:renew_premium' %}" class="btn btn-success btn-lg d-block mt-3">Gia hạn Premium</a>
+              {% endif %}
+
+            {% elif trial_active %}
+              <h3 class="card-title fw-bold mb-3 text-center">⏳ Đang dùng thử Premium miễn phí</h3>
+              <p class="text-center text-success fw-bold mb-3">Còn {{ days_left }} ngày dùng thử miễn phí.</p>
+              <p class="text-center">Nâng cấp gói Premium để không gián đoạn quyền truy cập sau khi hết hạn.</p>
+              <a href="{% url 'premium:renew_premium' %}" class="btn btn-success btn-lg d-block mt-3">Nâng cấp Premium</a>
+
+            {% elif trial_expired %}
+              <h3 class="card-title fw-bold mb-3 text-center">⚠️ Đã hết hạn dùng thử miễn phí</h3>
+              <p class="text-center text-danger fw-bold mb-3">Bạn đã sử dụng hết gói miễn phí.</p>
+              <p class="text-center">Hãy đăng ký Premium để tiếp tục sử dụng các tính năng phân tích và định hướng nghề nghiệp.</p>
+              <a href="{% url 'premium:renew_premium' %}" class="btn btn-success btn-lg d-block mt-3">Đăng ký Premium</a>
+
+            {% else %}
+              <h3 class="card-title fw-bold mb-3 text-center">🎓 Trải nghiệm Premium</h3>
+              <p class="card-subtitle text-muted text-center mb-4">Bước đầu khởi nghiệp thành công.</p>
+              {% if not has_used_trial %}
+                <div class="price-tag text-center my-4">
+                  <span class="price display-4 fw-bolder">Miễn phí</span>
+                  <span class="period text-muted">/ 14 ngày</span>
+                </div>
+                <p class="text-center">Dùng thử Premium miễn phí 14 ngày để trải nghiệm các tính năng phân tích và định hướng nghề nghiệp.</p>
+                <div class="d-grid mb-3">
+                  <a href="{% url 'premium:start_trial' %}" class="btn btn-warning btn-lg fw-bold shadow-sm">Dùng thử miễn phí</a>
+                </div>
+                <hr class="my-3">
+              {% endif %}
+              <!-- <div class="price-tag text-center my-4">
+                <span class="price display-4 fw-bolder">99.000</span>
+                <span class="currency fs-4 fw-light">₫</span>
+                <span class="period text-muted">/ tháng</span>
+              </div> -->
+              <p class="text-center">Hoặc đăng ký Premium ngay để tận hưởng toàn bộ tính năng mà không bị gián đoạn.</p>
+              <div class="d-grid">
+                <a href="{% url 'premium:renew_premium' %}" class="btn btn-success btn-lg fw-bold shadow-sm">Đăng ký Premium</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
