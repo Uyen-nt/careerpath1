@@ -23,12 +23,12 @@ load_dotenv(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-99*fve!-x1k)hmqi*j0_j^j60i2=dl-$7ax_&+tq!25#e0(b+y'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['careerpath.io.vn', '*', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['careerpath.io.vn', 'www.careerpath.io.vn']
 
 
 # Application definition
@@ -117,14 +117,12 @@ LOGGING = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'exe2',
-        'USER': 'root', 
-        'PASSWORD': 'mysqlojt',
-        'HOST': 'localhost',  # or the hostname where your MySQL server is running
-        'PORT': '3306',      # or the port on which your MySQL server is listening
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-        },
+        'NAME': os.getenv('MYSQL_DATABASE'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': os.getenv('MYSQL_HOST','localhost'),
+        'PORT': os.getenv('MYSQL_PORT','3306'),
+        'OPTIONS': {'charset': 'utf8mb4'},        
     }
 }
 
