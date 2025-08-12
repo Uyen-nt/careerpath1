@@ -27,11 +27,6 @@
                 <li>Số tiền: {{ amount|intcomma }}₫</li>
                 <li>Ngày hết hạn: {{ end_date|date:"d/m/Y" }}</li>
             </ul>
-            <p>
-                <a href="{{ success_url }}" style="background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-                    Xem xác nhận thanh toán
-                </a>
-            </p>
             <p>Bạn đã mở khóa toàn bộ tính năng Premium, bao gồm phân tích chuyên sâu và định hướng nghề nghiệp. Hãy bắt đầu khám phá ngay!</p>
             <a href="{% url 'home' %}" class="btn">Khám Phá Ngay</a>
         </div>

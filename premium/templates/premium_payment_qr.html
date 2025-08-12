@@ -13,15 +13,15 @@
             <p>Mã giao dịch: <strong id="order-id"></strong></p>
             <h4 class="mb-3">Thông tin thanh toán</h4>
             <p>
-                Ngân hàng: <strong>Ngân hàng XYZ</strong><br>
-                Số tài khoản: <strong>1234567890</strong><br>
-                Chủ tài khoản: <strong>CareerPath</strong><br>
-                Nội dung chuyển khoản: <strong id="order-id-content"></strong>
+                Ngân hàng: <strong id="bank-name"></strong><br>
+                Số tài khoản: <strong id="account-number"></strong><br>
+                Chủ tài khoản: <strong id="account-name"></strong><br>
+                Nội dung chuyển khoản: <strong id="description"></strong>
             </p>
-            <img src="{% static 'images/' %}qrcode.jpg" alt="QR Code thanh toán" class="img-fluid" style="max-width: 300px;">
-            <p class="mt-4 text-muted"> 
-                Gói Premium sẽ được kích hoạt sau khi xác nhận.
-            </p>
+            <img id="qr-code" alt="QR Code thanh toán" class="img-fluid" style="max-width: 300px; display: none;">
+            <p class="mt-4 text-muted">Sau khi thanh toán, hệ thống sẽ tự động xác nhận và kích hoạt Premium. Vui lòng chờ...</p>
+            <div id="success-message" style="display: none;" class="alert alert-success">Thanh toán thành công! Premium đã được kích hoạt. Bạn sẽ nhận email xác nhận.</div>
+            <div id="error-message" style="display: none;" class="alert alert-danger">Thanh toán thất bại. Vui lòng thử lại.</div>
         </div>
         
         <button id="pay-button" class="btn btn-success btn-lg">Thanh toán</button>
@@ -52,10 +52,30 @@ document.getElementById('pay-button').addEventListener('click', function() {
 
         if (data.status === 'success') {
             document.getElementById('payment-info').style.display = 'block';
-            document.getElementById('qr-code').src = data.qr_code_url;
-            document.getElementById('qr-code').style.display = 'block';
             document.getElementById('order-id').textContent = data.order_id;
-            document.getElementById('order-id-content').textContent = data.order_id;
+            document.getElementById('bank-name').textContent = data.bank_name;
+            document.getElementById('account-number').textContent = data.account_number;
+            document.getElementById('account-name').textContent = data.account_name;
+            document.getElementById('description').textContent = data.description;
+            document.getElementById('qr-code').src = 'data:image/png;base64,' + data.qr_code;
+            document.getElementById('qr-code').style.display = 'block';
+
+            // Poll status every 5 seconds
+            const orderId = data.order_id;
+            const interval = setInterval(() => {
+                fetch(`{% url 'premium:check_payment' 'dummy' %}`.replace('dummy', orderId))
+                .then(res => res.json())
+                .then(statusData => {
+                    if (statusData.status === 'completed') {
+                        document.getElementById('success-message').style.display = 'block';
+                        clearInterval(interval);
+                        setTimeout(() => { window.location.href = '{% url "premium:premium_home" %}'; }, 5000);  // Redirect sau 5s
+                        } else if (statusData.status === 'failed') {
+                        document.getElementById('error-message').style.display = 'block';
+                        clearInterval(interval);                    
+                    }
+                });
+            }, 5000);
         } else {
             alert('Lỗi: ' + data.message);
             button.textContent = 'Thanh toán';

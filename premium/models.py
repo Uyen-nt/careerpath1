@@ -55,9 +55,10 @@ class Transaction(models.Model):
         ('failed', 'Failed'),
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    order_id = models.CharField(max_length=100, unique=True)
+    order_id = models.CharField(max_length=20, unique=True)
     amount = models.IntegerField()
     months = models.IntegerField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    payment_link_id = models.CharField(max_length=100, blank=True, null=True) #lưu id từ payos

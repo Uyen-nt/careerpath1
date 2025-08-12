@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-99*fve!-x1k)hmqi*j0_j^j60i2=dl-$7ax_&+tq!25#e0(b+y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['careerpath.io.vn', '*', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -155,6 +155,11 @@ GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = GOOGLE_OAUTH_CLIENT_ID        
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = GOOGLE_OAUTH_CLIENT_SECRET
 
+# PayOs settings
+PAYOS_CLIENT_ID = os.getenv('PAYOS_CLIENT_ID')
+PAYOS_API_KEY = os.getenv('PAYOS_API_KEY')
+PAYOS_CHECKSUM_KEY = os.getenv('PAYOS_CHECKSUM_KEY')
+
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
@@ -198,6 +203,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static_files'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",

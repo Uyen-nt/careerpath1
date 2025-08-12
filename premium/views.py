@@ -9,6 +9,19 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 
+import json
+import random
+import base64
+from io import BytesIO
+from django.urls import reverse
+import qrcode
+from payos import PayOS, ItemData, PaymentData
+from django.conf import settings
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.shortcuts import get_object_or_404
+
+payOS = PayOS(settings.PAYOS_CLIENT_ID, settings.PAYOS_API_KEY, settings.PAYOS_CHECKSUM_KEY)
+
 User = get_user_model()
 
 def send_payment_confirmation_email(user, months, amount):
@@ -79,14 +92,12 @@ def renew_premium(request):
 
     if request.method == "POST":
         months = int(request.POST.get('months', 1))
-        amount = {1: 49000, 3: 139000, 6: 219000}.get(months, 49000)
-        order_id = f"{user.id}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
+        amount = 2000 * months
 
         context = {
             'amount': amount,
             'months': months,
-            'user': user,
-            'order_id': order_id,
+            'user': user,          
         }
         return render(request, 'premium_payment_qr.html', context)
 
@@ -94,55 +105,94 @@ def renew_premium(request):
 
 @login_required
 def initiate_payment(request):
-    if request.method == "POST":
-        user = request.user
-        months = int(request.POST.get('months', 1))
-        amount = {1: 49000, 3: 139000, 6: 219000}.get(months, 49000)
-        order_id = f"{user.id}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        months = int(data.get('months'))
+        amount = 2000 * months 
 
-        # Tạo giao dịch
-        Transaction.objects.create(
-            user=user,
-            order_id=order_id,
+        order_code = random.randint(100000000, 999999999)  # Unique order code
+        transaction = Transaction.objects.create(
+            user=request.user,
+            order_id=str(order_code),
             amount=amount,
             months=months,
             status='pending'
         )
 
-        return JsonResponse({
-            'status': 'success',
-            'qr_code_url': '/static/images/qr_payment.png',
-            'order_id': order_id,
-        })
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+        item = ItemData(name=f"Gói Premium {months} tháng", quantity=1, price=amount)
+        payment_data = PaymentData(
+            orderCode=order_code,
+            amount=amount,
+            description=f"CP {str(order_code)}",  # Nội dung chuyển khoản ngắn gọn
+            items=[item],
+            returnUrl=request.build_absolute_uri(reverse('premium:premium_home')),
+            cancelUrl=request.build_absolute_uri(reverse('premium:premium_home'))
+        )
 
-@staff_member_required
-def confirm_payment(request, transaction_id):
-    try:
-        transaction = Transaction.objects.get(id=transaction_id, status='pending')
-        subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
-        
-        subscription.activate_subscription(months=transaction.months)
-        transaction.status = 'completed'
-        transaction.save()
-        send_payment_confirmation_email(transaction.user, transaction.months, transaction.amount)
-        
-        return redirect('premium:payment_success', user_id=transaction.user.id, months=transaction.months)
-    except Transaction.DoesNotExist:
-        return render(request, 'payment_error.html', {'error': 'Giao dịch không tồn tại hoặc đã được xác nhận.'})
+        try:
+            link_response = payOS.createPaymentLink(payment_data)
+            transaction.payment_link_id = link_response.paymentLinkId  # Lưu ID
+            transaction.save()
+
+            # Tạo QR code base64 từ qrCode string
+            qr_str = link_response.qrCode
+            qr = qrcode.QRCode(version=1, box_size=10, border=5)
+            qr.add_data(qr_str)
+            qr.make(fit=True)
+            img = qr.make_image(fill_color="black", back_color="white")
+            buffered = BytesIO()
+            img.save(buffered)
+            qr_base64 = base64.b64encode(buffered.getvalue()).decode('ascii')
+
+            # Bank info (bin to name, thêm nhiều bank nếu cần)
+            bin_code = link_response.bin
+            bank_names = {
+                '970418': 'BIDV',  
+                # Thêm bin code khác
+            }
+            bank_name = bank_names.get(bin_code, 'Ngân hàng liên kết')
+
+            return JsonResponse({
+                'status': 'success',
+                'order_id': transaction.order_id,
+                'qr_code': qr_base64,
+                'bank_name': bank_name,
+                'account_number': link_response.accountNumber,
+                'account_name': link_response.accountName,
+                'description': payment_data.description
+            })
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+    return HttpResponseBadRequest()
+
+def payos_webhook(request):
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            verified_data = payOS.verifyPaymentWebhookData(body)
+            order_code = verified_data['orderCode']
+            transaction = get_object_or_404(Transaction, order_id=str(order_code))
+            if transaction.status == 'pending':
+                if verified_data['code'] == '00':
+                    subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
+                    subscription.activate_subscription(months=transaction.months)
+                    transaction.status = 'completed'
+                    transaction.save()
+                    send_payment_confirmation_email(transaction.user, transaction.months, transaction.amount, request)
+                else:
+                    transaction.status = 'failed'
+                    transaction.save()
+                    # Optional: Gửi email thông báo thất bại nếu cần
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+    return HttpResponseBadRequest()
 
 @login_required
-def payment_success(request, user_id, months):
-    user = request.user
-    try:
-        target_user = User.objects.get(id=user_id)
-    except User.DoesNotExist:
-        return render(request, 'payment_error.html', {'error': 'Người dùng không tồn tại.'})
-    
-    if not (user.is_staff or user.id == user_id):
-        return render(request, 'payment_error.html', {'error': 'Bạn không có quyền truy cập trang này.'})
-    
-    return render(request, 'payment_success.html', {'user': target_user, 'months': months})
+def check_payment(request, order_id):
+    transaction = get_object_or_404(Transaction, order_id=order_id, user=request.user)
+    return JsonResponse({'status': transaction.status})
 
 def premium_required(view_func):
     def wrapper(request, *args, **kwargs):
