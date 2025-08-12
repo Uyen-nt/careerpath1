@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['careerpath.io.vn', 'www.careerpath.io.vn', '103.173.66.148', 'www.google.com']
+ALLOWED_HOSTS = ['careerpath.io.vn', 'www.careerpath.io.vn', '103.173.66.148', 'www.google.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
