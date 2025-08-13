@@ -8,6 +8,8 @@ from .career_analysis_html import ANALYSIS_HTMLS
 from .career_analysis_cards import ANALYSIS_CARDS_PRIMARY, ANALYSIS_CARDS_SECONDARY
 from django.contrib.auth.decorators import login_required
 from .models import QuizHighschool
+from premium.models import PremiumSubscription
+
 
 import os
 from django.conf import settings
@@ -550,6 +552,8 @@ def calculate_result(request):
 
 def ket_qua(request):
     quiz_result_id = request.GET.get('quiz_id') or request.session.get('quiz_result_id')
+    subscription = PremiumSubscription.objects.filter(user=request.user).first()
+    is_premium = subscription.check_status() if subscription else False
     
     if quiz_result_id:
         try:
@@ -590,7 +594,8 @@ def ket_qua(request):
                 "second_card_image_exists": second_card_image_exists,
 
                 "quiz_id": quiz_result.id,  # Truyền ID của kết quả vào context
-                "quiz_type": "highschool"
+                "quiz_type": "highschool",
+                "is_premium": is_premium,
             }
 
         except QuizHighschool.DoesNotExist:
@@ -608,6 +613,7 @@ def ket_qua(request):
                 "cluster_percentages": {},
                 "top_card_image_exists": False,
                 "second_card_image_exists": False,
+                "is_premium": False,
             }
     else:
         context = {
@@ -624,13 +630,11 @@ def ket_qua(request):
             "cluster_percentages": {},
             "top_card_image_exists": False,
             "second_card_image_exists": False,
+            "is_premium": False,
         }
         
 
     return render(request, 'ket_qua.html', context)
-
-
-
 
 
 from quiz_highschool.models import ResultFeedback, QuizHighschool

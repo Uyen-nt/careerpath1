@@ -58,7 +58,7 @@
               </div>
             </button>
           </div>
-          <div class="vertical-content-area-polished">
+          <div class="vertical-content-area-polished {% if not is_premium %}locked-pane{% endif %}">
             <div id="v-group1" class="v-content-pane active">
               <div class="pane-header-polished group-1-theme">
                 {{ top_analysis_html|safe }}
@@ -69,7 +69,16 @@
                 {{ second_analysis_html|safe }}
               </div>
             </div>
-          </div>
+            {% if not is_premium %}
+            <div class="premium-overlay premium-overlay--content">
+              <div class="premium-overlay-content">
+                <i class="fas fa-crown"></i>
+                <p>Hãy sử dụng Premium để xem</p>
+                <a class="btn-premium" href="{% url 'premium:renew_premium' %}">Nâng cấp ngay</a>
+              </div>
+            </div>
+          {% endif %}
+          </div>        
         </div>
       </div>
     </div>
