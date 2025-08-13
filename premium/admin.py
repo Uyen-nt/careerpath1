@@ -3,8 +3,8 @@ from .models import PremiumSubscription, Transaction
 
 @admin.register(PremiumSubscription)
 class PremiumSubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'is_active', 'trial_start', 'trial_end', 'subscription_start', 'subscription_end', 'days_left')
-    list_filter = ('is_active', 'has_used_trial')
+    list_display = ('user', 'is_active', 'subscription_start', 'subscription_end', 'days_left')
+    list_filter = ('is_active',)
     search_fields = ('user__username', 'user__email')
 
 @admin.register(Transaction)

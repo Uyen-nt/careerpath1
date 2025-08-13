@@ -1,0 +1,89 @@
+
+/* Card lựa chọn gói */
+.plan-options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Khoảng cách giữa các gói */
+  margin-bottom: 1.5rem;
+}
+
+.plan-option {
+  position: relative;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+}
+
+.plan-option:hover {
+  border-color: #ffca2c;
+  transform: translateY(-2px);
+}
+
+/* Ẩn radio button mặc định */
+.plan-option input[type="radio"] {
+  display: none;
+}
+
+/* Style khi được chọn */
+.plan-option.selected {
+  border-color: #ffc107;
+  background-color: #fffcf2;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+}
+
+.plan-option .plan-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #212529;
+}
+
+.plan-option .plan-price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0a3d1b;
+}
+
+.plan-option .plan-price .plan-duration {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.plan-option .plan-savings {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #dc3545;
+}
+
+/* Huy hiệu "Tốt nhất" */
+.best-value-badge {
+  position: absolute;
+  top: -12px;
+  right: 15px;
+  background: linear-gradient(135deg, #198754, #28a745);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Thông tin người dùng (thay cho input) */
+.user-info-display {
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.user-info-display p {
+  margin-bottom: 0.25rem;
+}
+.user-info-display .text-muted {
+  margin-right: 0.5rem;
+}

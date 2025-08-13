@@ -1,0 +1,99 @@
+
+.payment-card {
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  overflow: hidden; /* Ẩn các phần tử con tràn ra ngoài */
+}
+
+/* Bố cục 2 cột cho QR và thông tin */
+.payment-layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Phần mã QR */
+.qr-code-wrapper {
+  padding: 2rem;
+  text-align: center;
+  background-color: #f8f9fa; /* Nền sáng nhẹ để nổi bật QR */
+  border-right: 1px solid #dee2e6;
+}
+
+.qr-code-wrapper h5 {
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 1rem;
+}
+
+.qr-code-image {
+  max-width: 230px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Phần thông tin chi tiết */
+.payment-details-wrapper {
+  padding: 2rem 2.5rem;
+}
+
+/* Danh sách thông tin chuyển khoản */
+.info-list {
+  list-style: none;
+  padding-left: 0;
+  font-size: 0.95rem;
+}
+.info-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+.info-list li:last-child {
+  border-bottom: none;
+}
+.info-list .text-muted {
+  color: #6c757d !important;
+}
+.info-list strong {
+  color: #212529;
+  font-weight: 600;
+}
+
+/* Khung nội dung chuyển khoản */
+.transfer-memo {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  background-color: #fff3cd; /* Màu vàng nhạt để cảnh báo */
+  border-left: 4px solid #ffc107;
+  border-radius: 8px;
+  text-align: center;
+}
+.transfer-memo p {
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+  color: #664d03;
+}
+.transfer-memo h5 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: 1px; /* Tăng khoảng cách chữ cho dễ đọc */
+}
+
+/* Thông báo và Spinner */
+#loading-spinner {
+    padding: 4rem;
+}
+
+.final-actions {
+    margin-top: 2rem;
+    text-align: center;
+}

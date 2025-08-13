@@ -1,128 +1,120 @@
-/* Card Premium */
-/* --- Premium Section Styling --- */
-
-/* Sử dụng một gradient nhẹ cho nền để trông hiện đại hơn */
-/* --- Premium Section Styling --- */
-
-/* Thêm một mẫu nền SVG tinh tế để không bị nhàm chán */
-/* --- Premium Section Styling - Tông màu Xanh Lá & Vàng --- */
-
-/* 
-  Kỹ thuật Nền Aura: 
-  - Đặt section là relative để chứa các pseudo-element.
-  - overflow: hidden để các vệt sáng không tràn ra ngoài.
-  - ::before và ::after tạo ra 2 vệt sáng màu (vàng và xanh) được làm mờ và đặt ở phía sau.
-*/
 .premium-section {
-  background-color: #f4f9f4; /* Một màu xanh lá rất nhạt làm nền chính */
+  background-color: #f4f9f4;
   color: #333;
-  position: relative; /* Bắt buộc để định vị các vệt sáng */
-  overflow: hidden;   /* Ngăn các vệt sáng tạo thanh cuộn */
+  position: relative;
+  overflow: hidden;
   z-index: 0;
+  font-size: 0.95rem; /* Thu nhỏ toàn bộ font một chút */
+  line-height: 1.5;
 }
 
-/* Vệt sáng màu vàng ở góc trên-trái */
+.lead-line {
+  max-width: 900px; /* rộng hơn mặc định */
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
+/* Vệt sáng */
 .premium-section::before {
   content: '';
   position: absolute;
-  top: -150px;
-  left: -200px;
-  width: 450px;
-  height: 450px;
-  background-image: radial-gradient(circle, rgba(255, 223, 128, 0.5), transparent 70%);
+  top: -120px;
+  left: -160px;
+  width: 380px;
+  height: 380px;
+  background-image: radial-gradient(circle, rgba(255, 223, 128, 0.45), transparent 70%);
+  filter: blur(90px);
+  z-index: -1;
+}
+.premium-section::after {
+  content: '';
+  position: absolute;
+  bottom: -160px;
+  right: -120px;
+  width: 420px;
+  height: 420px;
+  background-image: radial-gradient(circle, rgba(167, 223, 183, 0.55), transparent 70%);
   filter: blur(100px);
   z-index: -1;
 }
 
-/* Vệt sáng màu xanh lá ở góc dưới-phải */
-.premium-section::after {
-  content: '';
-  position: absolute;
-  bottom: -200px;
-  right: -150px;
-  width: 500px;
-  height: 500px;
-  background-image: radial-gradient(circle, rgba(167, 223, 183, 0.6), transparent 70%);
-  filter: blur(120px);
-  z-index: -1;
-}
-
-
+/* Tiêu đề */
 .section-title {
+  font-size: 1.8rem; /* nhỏ hơn display-5 */
+  font-weight: 700;
   color: #212529;
 }
 
-/* -- Cột mô tả lợi ích (Bên trái) -- */
-.feature-description h5 {
-  color: #0a3d1b; /* Màu xanh lá đậm để làm điểm nhấn, sang trọng hơn */
+/* Lợi ích */
+.feature-description h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
 }
-
-/* Thay đổi gradient của icon để khớp với tông màu mới */
+.feature-description h5 {
+  font-size: 1rem;
+  color: #0a3d1b;
+}
+.feature-description p {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
 .feature-icon {
-  flex-shrink: 0;
-  width: 50px;
-  height: 50px;
-  /* Gradient từ vàng sang xanh lá cây */
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+  border-radius: 10px;
   background: linear-gradient(135deg, #ffca2c, #84d49d);
-  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  /* Đổ bóng màu xanh lá cho đồng bộ */
-  box-shadow: 0 4px 15px rgba(132, 212, 157, 0.4);
+  box-shadow: 0 3px 10px rgba(132, 212, 157, 0.35);
+  flex-shrink: 0;
 }
 
-
-/* -- Thẻ giá (Bên phải) -- */
+/* Card Premium */
 .pricing-card {
-  /* Thêm backdrop-filter để tạo hiệu ứng thủy tinh mờ */
   background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px); /* Cho Safari */
-  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  border-top: 4px solid #ffc107; /* Giữ lại viền vàng làm điểm nhấn */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease-in-out;
+  border-top: 3px solid #ffc107;
 }
-
 .pricing-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
-  background-color: rgba(255, 255, 255, 0.75);
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
+/* Tiêu đề card */
 .pricing-card .card-title {
+  font-size: 1.2rem;
   color: #1a202c;
 }
-
-.price-tag .price {
-  color: #212529;
+.pricing-card p {
+  font-size: 0.9rem;
 }
 
-/* Danh sách feature trong thẻ giá */
-.feature-list i {
-  color: #28a745; /* Giữ màu xanh lá cây thành công */
-  position: relative;
-  top: 1px;
-}
-
+/* Nút bấm */
+.btn-success,
 .btn-warning {
-  padding: 1rem 1.5rem;
-  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.4rem;
+  font-weight: 600;
+}
+.btn-warning {
   background-color: #ffc107;
   border-color: #ffc107;
   color: #212529;
-  transition: all 0.2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
-
 .btn-warning:hover {
   background-color: #ffca2c;
   border-color: #ffca2c;
-  transform: scale(1.03);
-  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+  transform: scale(1.02);
+  box-shadow: 0 3px 10px rgba(255, 193, 7, 0.35);
 }

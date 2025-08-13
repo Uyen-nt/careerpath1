@@ -6,7 +6,6 @@ app_name = 'premium'
 
 urlpatterns = [
     path('', views.premium_home, name='premium_home'),
-    path('start-trial/', views.start_trial, name='start_trial'),
     path('renew/', views.renew_premium, name='renew_premium'),
     path('initiate-payment/', views.initiate_payment, name='initiate_payment'),
     path('payos-webhook/', views.payos_webhook, name='payos_webhook'),  # Webhook từ PayOS

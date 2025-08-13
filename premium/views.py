@@ -41,48 +41,29 @@ def send_payment_confirmation_email(user, months, amount):
         html_message=message,
     )
 
-@login_required
 def premium_home(request):
-    user = request.user
-    subscription, _ = PremiumSubscription.objects.get_or_create(user=user)
-    subscription.check_status()
+    user = request.user if request.user.is_authenticated else None
 
-    now = timezone.now()
-    trial_expired = False
-    trial_active = False
+    subscription = None
     subscription_active = False
     days_left = 0
 
-    if subscription.trial_start:
-        if subscription.trial_end > now and not subscription.subscription_start:
-            trial_active = True
-            days_left = (subscription.trial_end - now).days
-        elif subscription.trial_end <= now and not subscription.subscription_start:
-            trial_expired = True
-
-    if subscription.subscription_start and subscription.subscription_end > now:
-        subscription_active = True
-        days_left = (subscription.subscription_end - now).days
+    if user:
+        subscription, _ = PremiumSubscription.objects.get_or_create(user=user)
+        subscription.check_status()
+        now = timezone.now()
+        if subscription.subscription_start and subscription.subscription_end > now:
+            subscription_active = True
+            days_left = (subscription.subscription_end - now).days
 
     context = {
         "subscription": subscription,
-        "trial_active": trial_active,
-        "trial_expired": trial_expired,
         "subscription_active": subscription_active,
         "days_left": days_left,
-        "has_used_trial": subscription.has_used_trial,
+        "user": user,
     }
     return render(request, 'premium.html', context)
 
-@login_required
-def start_trial(request):
-    user = request.user
-    subscription, _ = PremiumSubscription.objects.get_or_create(user=user)
-    if subscription.has_used_trial:
-        return redirect('premium:renew_premium')
-    if not subscription.is_active:
-        subscription.start_trial()
-    return render(request, 'trial_success.html')
 
 @login_required
 def renew_premium(request):
@@ -90,18 +71,48 @@ def renew_premium(request):
     subscription, _ = PremiumSubscription.objects.get_or_create(user=user)
     subscription.check_status()
 
+    # Xác định lần đầu đăng ký hay gia hạn
+    is_first_time = subscription.subscription_start is None
+    is_expired = (subscription.subscription_start is not None) and (not subscription.is_active)
+
+    # Tiêu đề/trợ ngôn ngữ hiển thị cho template
+    if is_first_time:
+        page_title = "Đăng ký Premium"
+        hero_subtitle = "Điền thông tin để bắt đầu trải nghiệm Premium với đầy đủ tính năng nâng cao."
+        cta_label = "Tiếp tục thanh toán"
+    else:
+        page_title = "Gia hạn Premium" if is_expired else "Gia hạn/Quản lý Premium"
+        hero_subtitle = (
+            "Gói Premium của bạn đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng đầy đủ tính năng."
+            if is_expired else
+            "Cập nhật thông tin để tiếp tục quản lý gói Premium."
+        )
+        cta_label = "Tiếp tục thanh toán"
+
     if request.method == "POST":
         months = int(request.POST.get('months', 1))
-        amount = 2000 * months
+        amount = 2000 * months  # TODO: đồng bộ với giá hiển thị nếu bạn dùng 39,000₫
 
         context = {
             'amount': amount,
             'months': months,
-            'user': user,          
+            'user': user,
         }
         return render(request, 'premium_payment_qr.html', context)
 
-    return render(request, 'renew_premium.html', {"user": user})
+    return render(
+        request,
+        'renew_premium.html',
+        {
+            "user": user,
+            "subscription": subscription,
+            "is_first_time": is_first_time,
+            "is_expired": is_expired,
+            "page_title": page_title,
+            "hero_subtitle": hero_subtitle,
+            "cta_label": cta_label,
+        }
+    )
 
 @login_required
 def initiate_payment(request):
