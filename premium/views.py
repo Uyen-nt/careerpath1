@@ -95,7 +95,7 @@ def renew_premium(request):
 
     if request.method == "POST":
         months = int(request.POST.get('months', 1))
-        amount = 2000 * months  # TODO: đồng bộ với giá hiển thị nếu bạn dùng 39,000₫
+        amount = 15000 * months  # TODO: đồng bộ với giá hiển thị nếu bạn dùng 39,000₫
 
         context = {
             'amount': amount,
@@ -123,7 +123,7 @@ def initiate_payment(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         months = int(data.get('months'))
-        amount = 2000 * months 
+        amount = 15000 * months 
 
         order_code = random.randint(100000000, 999999999)  # Unique order code
         transaction = Transaction.objects.create(
