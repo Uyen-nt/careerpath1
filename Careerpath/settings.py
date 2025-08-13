@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'main',
     'quiz_highschool',
     'quiz_university',
-    #'quiz_workers',
+    'quiz_workers',
     'users',    
     'trend',
     'premium',
