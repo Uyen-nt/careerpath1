@@ -20,6 +20,8 @@ from django.conf import settings
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 
+from django.views.decorators.csrf import csrf_exempt
+
 payOS = PayOS(settings.PAYOS_CLIENT_ID, settings.PAYOS_API_KEY, settings.PAYOS_CHECKSUM_KEY)
 
 User = get_user_model()
@@ -177,6 +179,7 @@ def initiate_payment(request):
 
     return HttpResponseBadRequest()
 
+@csrf_exempt
 def payos_webhook(request):
     if request.method == 'POST':
         try:
