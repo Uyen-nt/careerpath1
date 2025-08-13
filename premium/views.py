@@ -184,18 +184,14 @@ def initiate_payment(request):
 @csrf_exempt
 def payos_webhook(request):
     if request.method != 'POST':
-        # Trả 405 cho method khác để rõ ràng
         return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
-
     try:
-        # body có thể là bytes -> parse json
         body = json.loads(request.body.decode('utf-8'))
+        verified = payOS.verifyPaymentWebhookData(body)  # -> WebhookData object
 
-        # Xác minh chữ ký + giải mã dữ liệu theo SDK
-        verified = payOS.verifyPaymentWebhookData(body)
-        # Theo payOS, verified có dạng phẳng: orderCode, code, paymentLinkId, ...
-        order_code = str(verified.get('orderCode'))
-        code = str(verified.get('code'))
+        order_code = str(verified.orderCode)  # thuộc tính, không phải dict.get
+        code = str(verified.code)             # "00" = thành công theo PayOS
+        payment_link_id = getattr(verified, 'paymentLinkId', None)
 
         if not order_code:
             raise ValueError('orderCode missing in webhook payload')
@@ -203,31 +199,28 @@ def payos_webhook(request):
         transaction = get_object_or_404(Transaction, order_id=order_code)
 
         if transaction.status == 'pending':
-            if code == '00':  # Thanh toán thành công
+            if code == '00':
                 subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
                 subscription.activate_subscription(months=transaction.months)
 
                 transaction.status = 'completed'
-                transaction.payment_link_id = verified.get('paymentLinkId') or transaction.payment_link_id
+                if payment_link_id:
+                    transaction.payment_link_id = payment_link_id
                 transaction.save(update_fields=['status', 'payment_link_id', 'updated_at'])
 
-                # GỌI HÀM EMAIL ĐÚNG CHỮ KÝ (3 tham số)
+                # Gửi email đúng chữ ký hàm (3 tham số)
                 send_payment_confirmation_email(transaction.user, transaction.months, transaction.amount)
-                # Có thể push thêm notification tại đây nếu dùng messages hay websocket
-
             else:
                 transaction.status = 'failed'
                 transaction.save(update_fields=['status', 'updated_at'])
 
-        # payOS chỉ cần 2xx để coi là thành công
+        # Trả 200 để PayOS ghi nhận webhook OK
         return HttpResponse("OK", status=200)
 
     except Exception as e:
         logger.exception("payOS webhook error: %s", e)
-        # Vẫn trả 200 để payOS không retry vô hạn nếu là lỗi đã biết do dữ liệu ngoài kỳ vọng
-        # nhưng trong giai đoạn debug bạn có thể trả 400 để nhìn thấy cảnh báo từ PayOS Dashboard.
+        # Trong lúc debug có thể để 400 để nhìn cảnh báo trên PayOS; khi chạy thật nên trả 200 và log lỗi
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
-
 @login_required
 def check_payment(request, order_id):
     transaction = get_object_or_404(Transaction, order_id=order_id, user=request.user)
