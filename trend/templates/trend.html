@@ -1,221 +1,53 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}📈 Xu hướng thị trường - CareerPath{% endblock %}
+{% block title %}Xu hướng thị trường - CareerPath{% endblock %}
 
 {% block content %}
+{# --- Nạp Font & Thư viện (ĐÃ XÓA AOS.CSS) --- #}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{# !!! THAY ĐỔI ĐƯỜNG DẪN CSS CỦA BẠN TẠI ĐÂY !!! #}
+<link rel="stylesheet" href="{% static 'css/trend.css' %}">
 
-<style>
-    :root {
-        --primary-color: #007B8A;       /* Deep Teal */
-        --secondary-color: #00A99D;    /* Vibrant Teal */
-        --accent-color: #FFA500;        /* Orange - Nổi bật hơn Gold */
-        --heading-color: #1A374D;      /* Dark Desaturated Blue */
-        --text-color: #52616B;         /* Soft Gray */
-        /* Nền trang mới - gradient nhẹ nhàng */
-        --page-bg-start: hsl(210, 40%, 98%);
-        --page-bg-end: hsl(210, 40%, 94%);
-        --white-color: #ffffff;
-        --border-color: #e9ecef;
-        --border-radius-lg: 16px;       /* Bo góc mềm mại hơn */
-        /* Shadow tinh tế hơn */
-        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-        --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.07);
-    }
-    body {
-        font-family: 'Be Vietnam Pro', sans-serif;
-        color: var(--text-color);
-        /* Áp dụng nền mới */
-        background-color: var(--page-bg-start);
-        background-image: radial-gradient(circle at 50% 0%, var(--page-bg-start), var(--page-bg-end) 150%);
-    }
 
-    /* --- Hero Section --- */
-    .hero-section {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        background-size: 200% 200%;
-        color: var(--white-color);
-        padding: 100px 0;
-        position: relative;
-        overflow: hidden;
-        animation: gradient-animation 10s ease infinite;
-    }
-    @keyframes gradient-animation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    .hero-section h2 {
-        font-size: 3.8rem; /* To hơn một chút */
-        font-weight: 700;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .hero-section .lead {
-        font-size: 1.25rem;
-        max-width: 600px;
-        margin: 1.5rem auto 0;
-        opacity: 0.95;
-    }
-
-    /* --- Dải phân cách sóng --- */
-    .section-divider {
-        position: absolute;
-        bottom: -1px; /* Đặt chính xác ở đáy */
-        left: 0;
-        width: 100%;
-        overflow: hidden;
-        line-height: 0;
-        transform: rotate(180deg);
-    }
-    .section-divider svg {
-        position: relative;
-        display: block;
-        width: calc(100% + 1.3px);
-        height: 120px; /* Điều chỉnh độ cao của sóng */
-    }
-    .section-divider .shape-fill {
-        fill: var(--page-bg-start); /* Cập nhật màu cho khớp nền */
-    }
-
-    /* --- General Section Styling --- */
-    .section-padding {
-        padding: 100px 0;
-    }
-    .section-title {
-        font-weight: 700;
-        color: var(--heading-color);
-        position: relative;
-        padding-bottom: 20px;
-        margin-bottom: 60px;
-        font-size: 2.5rem;
-    }
-    .section-title::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100px;
-        height: 5px;
-        background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-        border-radius: 3px;
-    }
-
-    /* --- Chart Section --- */
-    .chart-card {
-        background: var(--white-color);
-        border-radius: var(--border-radius-lg);
-        box-shadow: var(--shadow);
-        border: 1px solid var(--border-color);
-        padding: 2rem; /* Tăng padding */
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .chart-card:hover {
-        transform: translateY(-8px);
-        box-shadow: var(--shadow-hover);
-    }
-    .chart-card-header {
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 1rem;
-        margin-bottom: 1.5rem;
-    }
-    .chart-card-header h5 {
-        color: var(--heading-color);
-        font-weight: 700;
-        margin: 0;
-    }
-    .chart-card-header .fa-arrow-trend-up {
-        color: var(--accent-color);
-    }
-
-    /* --- Industry Cards Section --- */
-    .industry-card {
-        background: var(--white-color);
-        border-radius: var(--border-radius-lg);
-        box-shadow: var(--shadow);
-        border: 1px solid var(--border-color);
-        border-top: 4px solid transparent; /* Chuẩn bị cho hiệu ứng hover */
-        transition: all 0.3s ease-in-out;
-        padding: 2.5rem 1.5rem;
-        position: relative;
-    }
-    .industry-card:hover {
-        transform: translateY(-10px) scale(1.03);
-        box-shadow: var(--shadow-hover);
-        border-top-color: var(--primary-color);
-    }
-    .icon-circle {
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
-        background-color: #E6F2F3; /* Màu nền nhạt của primary color */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
-    }
-    .icon-circle i {
-        font-size: 2.5rem;
-        color: var(--primary-color);
-        transition: all 0.3s ease;
-    }
-    .industry-card:hover .icon-circle {
-        background-color: var(--primary-color);
-        transform: rotate(15deg) scale(1.1);
-    }
-    .industry-card:hover .icon-circle i {
-        color: var(--white-color);
-        transform: rotate(-15deg);
-    }
-    .industry-card .card-title {
-        color: var(--heading-color);
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-    .industry-card .job-count {
-        color: var(--text-color);
-        font-size: 0.9rem;
-    }
-</style>
-
-<section class="hero-section text-center">
-    <div class="container" data-aos="fade-up">
-        <!-- Thay đổi icon cho phù hợp hơn -->
-        <h2 class="display-4 fw-bold mb-3"><i class="fa-solid fa-magnifying-glass-chart me-3"></i>Xu Hướng Thị Trường Việc Làm</h2>
-        <p class="lead" data-aos="fade-up" data-aos-delay="200">
-            Khám phá sự phát triển và nhu cầu tuyển dụng của các ngành nghề nổi bật nhất hiện nay.
+{# GIỮ NGUYÊN HTML NÀY #}
+<section class="hero-section-v2">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="container text-center">
+        <h1 class="hero-title-v2">
+            <i class="fa-solid fa-magnifying-glass-chart me-3"></i>
+            Phân Tích Xu Hướng <span class="highlight-green">Thị Trường</span>
+        </h1>
+        <p class="hero-lead-v2">
+            Khám phá dữ liệu mới nhất, nắm bắt nhu cầu tuyển dụng và định hướng con đường sự nghiệp của bạn một cách thông minh.
         </p>
-    </div>
-    <!-- Thêm dải phân cách sóng SVG -->
-    <div class="section-divider">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path></svg>
     </div>
 </section>
 
-<section class="section-padding">
+{# --- Phần Biểu đồ Mới --- #}
+<section class="section-padding bg-white">
     <div class="container">
-        <div class="row g-5 justify-content-center" data-aos="fade-up">
-            <div class="col-lg-6 d-flex">
-                <div class="card chart-card h-100 w-100">
+        <div class="row g-5 justify-content-center">
+            <div class="col-lg-6 d-flex"> <!-- ĐÃ XÓA data-aos -->
+                <div class="chart-card-v2 h-100 w-100">
                     <div class="chart-card-header">
-                        <h5><i class="fas fa-arrow-trend-up me-2"></i>Tăng Trưởng Theo Thời Gian</h5>
+                        <h5><i class="fas fa-arrow-trend-up me-2 text-warning"></i>Tăng Trưởng Việc Làm Theo Thời Gian</h5>
                     </div>
-                    <div style="height:320px;">
+                    <div class="chart-canvas-wrapper">
                         <canvas id="growthChart"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 d-flex">
-                <div class="card chart-card h-100 w-100">
+            <div class="col-lg-6 d-flex"> <!-- ĐÃ XÓA data-aos -->
+                <div class="chart-card-v2 h-100 w-100">
                     <div class="chart-card-header">
-                        <h5><i class="fas fa-briefcase me-2" style="color: var(--primary-color);"></i>Top 7 Ngành Nhu Cầu Cao Nhất</h5>
+                        <h5><i class="fas fa-briefcase me-2 text-success"></i>Top 7 Ngành Nhu Cầu Cao Nhất</h5>
                     </div>
-                    <div style="height:320px;">
+                    <div class="chart-canvas-wrapper">
                         <canvas id="demandChart"></canvas>
                     </div>
                 </div>
@@ -224,13 +56,19 @@
     </div>
 </section>
 
-<section class="section-padding">
+{# --- Phần Top Ngành Nghề Nổi Bật Mới --- #}
+<section class="section-padding" style="background-color: var(--light-gray-bg);">
     <div class="container">
-        <h2 class="text-center section-title" data-aos="fade-up">🔥 Top Ngành Nghề Nổi Bật</h2>
+        <div class="text-center"> <!-- ĐÃ XÓA data-aos -->
+            <h2 class="section-title">🔥 Top Ngành Nghề Nổi Bật</h2>
+            <p class="lead mb-5" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+                Những lĩnh vực đang dẫn đầu về số lượng cơ hội việc làm và tiềm năng phát triển.
+            </p>
+        </div>
         <div class="row g-4 justify-content-center">
             {% for industry in industries %}
-            <div class="col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0 1 100 %}">
-                <div class="industry-card w-100 text-center d-flex flex-column align-items-center justify-content-center">
+            <div class="col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch"> <!-- ĐÃ XÓA data-aos -->
+                <div class="industry-card-v2 w-100">
                     <div class="icon-circle"><i class="{{ industry.icon }}"></i></div>
                     <h5 class="card-title">{{ industry.name }}</h5>
                     <p class="job-count">{{ industry.job_count }} việc làm</p>
@@ -242,20 +80,21 @@
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+{# --- ĐÃ XÓA SCRIPT CỦA AOS.JS --- #}
 <script>
-AOS.init({ once: true, duration: 600, easing: 'ease-in-out' });
+// --- ĐÃ XÓA DÒNG AOS.init() ---
 
+// --- Dữ liệu và cấu hình biểu đồ giữ nguyên ---
 const trendLabels = {{ trend_labels|safe }};
 const trendData = {{ trend_data|safe }};
 const industryLabels = {{ industry_labels|safe }};
 const industryData = {{ industry_data|safe }};
 
-// --- Growth Chart (Line) - Biểu đồ tăng trưởng ---
+// --- Biểu đồ Tăng trưởng (Line Chart) ---
 const growthCtx = document.getElementById('growthChart').getContext('2d');
 const lineGradient = growthCtx.createLinearGradient(0, 0, 0, 300);
-lineGradient.addColorStop(0, 'rgba(255, 165, 0, 0.4)'); // Màu accent
-lineGradient.addColorStop(1, 'rgba(255, 165, 0, 0)');
+lineGradient.addColorStop(0, 'rgba(40, 167, 69, 0.4)');
+lineGradient.addColorStop(1, 'rgba(40, 167, 69, 0)');
 
 new Chart(growthCtx, {
     type: 'line',
@@ -264,16 +103,16 @@ new Chart(growthCtx, {
         datasets: [{
             label: 'Việc làm',
             data: trendData,
-            borderColor: 'var(--accent-color)',
+            borderColor: '#28a745', // var(--primary-green)
             backgroundColor: lineGradient,
             fill: true,
             tension: 0.4,
-            borderWidth: 3, // Dày hơn
-            pointRadius: 5, // Điểm to hơn
-            pointHoverRadius: 8,
-            pointBackgroundColor: 'var(--white-color)',
-            pointBorderColor: 'var(--accent-color)',
-            pointHoverBackgroundColor: 'var(--accent-color)'
+            borderWidth: 3,
+            pointRadius: 4,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: '#28a745',
+            pointHoverBackgroundColor: '#28a745'
         }]
     },
     options: {
@@ -286,42 +125,41 @@ new Chart(growthCtx, {
     }
 });
 
-// --- Demand Chart (Bar) - Biểu đồ nhu cầu ---
-// CHỈ HIỂN THỊ TOP 7 NGÀNH ĐỂ BIỂU ĐỒ SẠCH ĐẸP
+// --- Biểu đồ Nhu cầu (Bar Chart) ---
 const CHART_LIMIT = 7;
 const topIndustryLabels = industryLabels.slice(0, CHART_LIMIT);
 const topIndustryData = industryData.slice(0, CHART_LIMIT);
 
 const demandCtx = document.getElementById('demandChart').getContext('2d');
 const barGradient = demandCtx.createLinearGradient(0, 0, 0, 320);
-barGradient.addColorStop(0, 'rgba(0, 123, 138, 0.9)'); // primary color
-barGradient.addColorStop(1, 'rgba(0, 169, 157, 0.7)'); // secondary color
+barGradient.addColorStop(0, 'rgba(40, 167, 69, 0.9)');
+barGradient.addColorStop(1, 'rgba(255, 193, 7, 0.8)');
 
 new Chart(demandCtx, {
     type: 'bar',
     data: {
-        labels: topIndustryLabels, // Dùng dữ liệu đã cắt
+        labels: topIndustryLabels,
         datasets: [{
             label: 'Số lượng việc làm',
-            data: topIndustryData, // Dùng dữ liệu đã cắt
+            data: topIndustryData,
             backgroundColor: barGradient,
-            borderColor: 'var(--primary-color)',
+            borderColor: 'rgba(40, 167, 69, 0.9)',
             borderWidth: 1,
-            borderRadius: 6,
-            hoverBackgroundColor: 'var(--primary-color)',
-            barPercentage: 0.6, // Điều chỉnh độ rộng cột
+            borderRadius: 8,
+            hoverBackgroundColor: '#1e7e34', // var(--dark-green)
+            barPercentage: 0.6,
             categoryPercentage: 0.8
         }]
     },
     options: {
         responsive: true, maintainAspectRatio: false,
-        indexAxis: 'x', // Đảm bảo nhãn không bị nghiêng
+        indexAxis: 'x',
         plugins: {
             legend: { display: false },
             tooltip: {
-                backgroundColor: 'var(--heading-color)',
-                titleFont: { size: 14, weight: 'bold' },
-                bodyFont: { size: 12 },
+                backgroundColor: '#212529',
+                titleFont: { size: 14, weight: 'bold', family: "'Be Vietnam Pro', sans-serif" },
+                bodyFont: { size: 12, family: "'Roboto', sans-serif" },
                 padding: 12,
                 cornerRadius: 8,
                 displayColors: false,

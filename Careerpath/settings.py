@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'main',
     'quiz_highschool',
     'quiz_university',
-    'quiz_workers',
+    #'quiz_workers',
     'users',    
     'trend',
     'premium',
@@ -218,3 +218,29 @@ MEDIA_ROOT = Path('/var/www/careerpath/media')
 
 LOGIN_REDIRECT_URL = '/'          # sau đăng nhập google chuyển về trang chủ
 LOGOUT_REDIRECT_URL = '/'         # sau đăng xuất chuyển về trang chủ
+
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(exist_ok=True)
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {"format": "%(asctime)s %(levelname)s [%(name)s] %(message)s"},
+    },
+    "handlers": {
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": str(LOG_DIR / "django.log"),   # <— tuyệt đối, nằm trong dự án
+            "maxBytes": 5 * 1024 * 1024,
+            "backupCount": 3,
+            "formatter": "verbose",
+            "encoding": "utf-8",
+        },
+        "console": {"class": "logging.StreamHandler"},
+    },
+    "loggers": {
+        "django": {"handlers": ["file", "console"], "level": "INFO", "propagate": True},
+    },
+}

@@ -17,7 +17,7 @@
                     Đam mê học tập là bước đầu, nhưng kỹ năng là chìa khóa giúp bạn tỏa sáng! Hãy cùng CareerPath khám phá bản thân, trang bị kiến thức và kỹ năng để tự tin bước vào tương lai nghề nghiệp mơ ước.
                 </p>
                 <a href="#student-quiz-steps" class="btn btn-primary btn-lg me-2 mb-2">Tìm hiểu quy trình <i class="fas fa-arrow-down ms-2"></i></a>
-                <a href="{% if request.user.is_authenticated %}{% url 'quiz_university:select_cluster_u' %}{% else %}{% url 'login' %}?next={% url 'quiz_university:select_cluster_u' %}{% endif %}" 
+                <a href="{% if request.user.is_authenticated %}{% url 'quiz_university:select_cluster_u' %}{% else %}{% url 'users:login' %}?next={% url 'quiz_university:select_cluster_u' %}{% endif %}" 
                 class="btn btn-secondary btn-lg mb-2">
                     Bắt đầu Đánh Giá <i class="fas fa-rocket ms-2"></i>
                 </a>
@@ -191,7 +191,7 @@
         <div class="cta-frame text-center">
             <h2 class="final-cta-title mb-3">Sẵn sàng nâng cấp kỹ năng?</h2>
             <p class="final-cta-subtitle mb-4">Chỉ vài phút để khám phá lộ trình phát triển sự nghiệp của bạn!</p>
-            <a href="{% if request.user.is_authenticated %}{% url 'quiz_university:question_u' %}{% else %}{% url 'login' %}?next={% url 'quiz_university:question_u' %}{% endif %}" 
+            <a href="{% if request.user.is_authenticated %}{% url 'quiz_university:select_cluster_u' %}{% else %}{% url 'users:login' %}?next={% url 'quiz_university:question_u' %}{% endif %}" 
             class="btn btn-primary btn-lg">
                 BẮT ĐẦU ĐÁNH GIÁ NGAY <i class="fas fa-arrow-right ms-2"></i>
             </a>

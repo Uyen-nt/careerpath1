@@ -1209,12 +1209,11 @@ small.suggested-majors i {
 
 .result-page {
   background: linear-gradient(145deg, var(--light-green-bg) 0%, var(--light-yellow-bg) 100%);
-  min-height: calc(100vh - 80px);
-  padding: 2rem 1rem;
+  padding: 4rem 1rem;
   font-family: var(--font-secondary);
   color: var(--text-dark);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .result-page::before,
@@ -1266,7 +1265,6 @@ small.suggested-majors i {
   z-index: 2;
   transition: all 0.3s ease;
 }
-
 .result-container:hover {
   box-shadow: var(--box-shadow-lifted);
   transform: translateY(-2px);
@@ -2115,3 +2113,333 @@ small.suggested-majors i {
   }
 }
 
+/* ======================================================= */
+/* === REVIEW V4: FORM NHỎ GỌN (COMPACT FORM) === */
+/* ======================================================= */
+
+#final-evaluation {
+    margin-top: 4rem;
+}
+
+.feedback-compact-form-v4 {
+    max-width: 650px;
+    margin: 0 auto;
+    
+    /* === Các thuộc tính tạo giao diện thẻ mới === */
+    background-color: #fff; /* Nền màu trắng */
+    border: none;
+    border-radius: 16px; /* Bo góc mềm mại */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+
+    /* Giữ lại từ code cũ */
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* 
+  Thêm thanh màu gradient ở trên cùng
+*/
+.feedback-compact-form-v4::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    
+    /* === THAY ĐỔI TẠI ĐÂY: Làm thanh màu ngắn và nằm giữa === */
+    left: 10%;  /* Để lại khoảng trống 10% bên trái */
+    right: 10%; /* Để lại khoảng trống 10% bên phải */
+    /* Trình duyệt sẽ tự động tính toán width = 100% - 10% - 10% = 80% và căn giữa */
+    
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary-green) 0%, #a0d334 50%, var(--primary-yellow) 100%);
+    
+    /* (Tùy chọn) Thêm bo tròn nhẹ cho thanh màu để trông mềm mại hơn */
+    border-radius: 0 0 10px 10px;
+}
+
+
+/* === CÁC PHẦN BÊN TRONG GIỮ NGUYÊN STYLE CŨ === */
+/* (Không cần thay đổi các phần dưới đây) */
+
+/* Hàng chứa các ngôi sao */
+.feedback-compact-form-v4 .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feedback-compact-form-v4 .star {
+    font-size: 1.8rem;
+    color: #cbd5e1;
+    background: none; border: none; cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.feedback-compact-form-v4 .star:hover {
+    transform: scale(1.2);
+}
+
+.feedback-compact-form-v4 .star.active {
+    color: var(--primary-yellow);
+}
+
+/* Dòng chữ kế bên sao */
+.rating-text {
+    margin-left: auto;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-medium);
+}
+
+/* Wrapper cho hàng comment và nút gửi */
+.comment-action-wrapper-v4 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Wrapper cho ô input để chứa icon (giữ nguyên position: relative) */
+.input-wrapper-v4 {
+    position: relative;
+    flex-grow: 1;
+}
+
+/* 
+  Icon bên trong ô input (điều chỉnh vị trí top một chút)
+*/
+.input-icon-v4 {
+    position: absolute;
+    left: 1rem;
+    top: 1.4rem; /* Điều chỉnh để thẳng hàng với dòng chữ khi gõ */
+    transform: translateY(-50%);
+    color: #adb5bd;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+/* 
+  Ô input được cập nhật padding để có chỗ cho label nổi lên 
+*/
+#fb-comment {
+    width: 100%;
+    height: 52px; /* Tăng nhẹ chiều cao */
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-md, 8px);
+    background-color: #fff;
+    /* Thêm padding-top để chừa chỗ cho label */
+    padding: 1rem 1rem 0.5rem 2.5rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+/* === CSS MỚI CHO HIỆU ỨNG NHÃN NỔI === */
+
+/* Style cho label lúc bình thường (nằm trong ô input) */
+.floating-label {
+    position: absolute;
+    top: 50%;
+    left: 2.7rem; /* Vị trí sau icon */
+    transform: translateY(-50%);
+    color: #adb5bd; /* Màu chữ mờ giống placeholder */
+    font-size: 0.95rem;
+    pointer-events: none; /* Quan trọng: Cho phép click xuyên qua label */
+    transition: all 0.2s ease-in-out;
+}
+
+/* 
+  Hiệu ứng xảy ra khi input được focus HOẶC khi có chữ bên trong
+*/
+#fb-comment:focus + .floating-label,
+#fb-comment:not(:placeholder-shown) + .floating-label {
+    top: 0.8rem; /* Di chuyển lên trên */
+    font-size: 0.75rem; /* Thu nhỏ lại */
+    color: var(--primary-green); /* Đổi màu khi active */
+}
+
+/* Đổi màu icon khi input được focus */
+#fb-comment:focus ~ .input-icon-v4 {
+    color: var(--primary-green);
+}
+.input-wrapper-v4:hover #fb-comment {
+    border-color: var(--primary-green);
+}
+
+/* 
+  Đồng thời, đổi màu của icon pen.
+*/
+.input-wrapper-v4:hover .input-icon-v4 {
+    color: var(--primary-green);
+}
+
+/* Cập nhật lại style focus của input để hài hòa hơn */
+#fb-comment:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+}
+
+/* Nút Gửi */
+.btn-submit-v4 {
+    flex-shrink: 0;
+    padding: 0 2rem;
+    height: 48px;
+    border-radius: var(--border-radius-md, 8px);
+    border: none;
+    background-color: var(--primary-green);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-submit-v4:hover:not(:disabled) {
+    background-color: var(--dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-submit-v4:disabled {
+    background-color: #ced4da;
+    cursor: not-allowed;
+}
+
+.feedback-compact-form-v4 .loading {
+    width: 0.9rem; height: 0.9rem; border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-top-color: transparent;
+    animation: spin 0.8s linear infinite;
+}
+
+/* Dòng trạng thái (nếu có lỗi) */
+.feedback-compact-form-v4 .muted {
+    text-align: right;
+    font-size: 0.8rem;
+    margin-top: -1rem;
+    color: #e53e3e;
+    min-height: 1rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- Responsive cho màn hình nhỏ --- */
+@media (max-width: 576px) {
+    #final-evaluation {
+        margin-top: 1.5rem;
+        padding-bottom: 2rem;
+    }
+    .feedback-compact-form-v4 {
+        padding: 1.5rem 1rem;
+    }
+    .rating-text {
+        display: none;
+    }
+    .comment-action-wrapper-v4 {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .btn-submit-v4 {
+        width: 100%;
+    }
+}
+/* ======================================================= */
+/* === TOAST NOTIFICATION STYLES (MÃ MỚI) === */
+/* ======================================================= */
+#toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 380px;
+    max-width: 90vw;
+    background-color: white;
+    border-radius: 12px; /* bo tròn hơn */
+    padding: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid;
+    overflow: hidden;
+    position: relative;
+    
+    /* Hiệu ứng trượt lên và nảy */
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast.success { border-color: var(--primary-green, #28a745); }
+.toast.error   { border-color: var(--danger, #dc3545); }
+
+.toast-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+.toast.success .toast-icon { color: var(--primary-green, #28a745); }
+.toast.error .toast-icon { color: var(--danger, #dc3545); }
+
+
+.toast-content .title {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.toast-content .message {
+    font-size: 0.95rem;
+    color: var(--text-medium);
+    line-height: 1.5;
+}
+
+.toast-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #9ca3af;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+}
+.toast-close:hover {
+    color: #374151;
+}
+
+@keyframes progress-countdown {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+.toast-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    animation: progress-countdown 5s linear forwards;
+}
+.toast.success .toast-progress-bar { background-color: var(--primary-green, #28a745); }
+.toast.error .toast-progress-bar { background-color: var(--danger, #dc3545); }

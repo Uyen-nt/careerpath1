@@ -5,358 +5,880 @@
 # ==============================
 ANALYSIS_HTMLS = {
     "social": """
-        <h3>Phân Tích Chi Tiết: Xã hội – Nhân văn</h3>
-        <p>Bạn có tố chất phù hợp với các ngành giáo dục, công tác xã hội, tâm lý, luật, văn học, truyền thông xã hội – những lĩnh vực cần sự kiên nhẫn, khả năng lắng nghe, kỹ năng giao tiếp và tinh thần hỗ trợ cộng đồng.</p>
 
-        <h4>Kỹ năng mềm (Soft Skills):</h4>
-        <p>Bộ câu hỏi đánh giá khả năng giao tiếp, làm việc nhóm, thuyết trình, quản lý thời gian, động viên nhóm, và lắng nghe người khác:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có khả năng giao tiếp tự tin, lắng nghe, dẫn dắt nhóm và xử lý mâu thuẫn – những kỹ năng quan trọng khi làm giáo viên, cố vấn, nhân viên xã hội, quản lý lớp học hoặc điều phối dự án cộng đồng.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn cần rèn luyện kỹ năng trình bày quan điểm rõ ràng, phản hồi tích cực khi làm việc nhóm, quản lý thời gian tốt hơn khi tham gia hoạt động.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tham gia câu lạc bộ, nhóm thảo luận, tình nguyện để thực hành giao tiếp.</li>
-                    <li>Luyện tập phản hồi tích cực và kỹ năng lắng nghe qua các bài tập nhóm.</li>
-                    <li>Ghi chú và đánh giá quá trình làm việc nhóm của mình để tự cải thiện.</li>
-                </ul>
-            </li>
-        </ul>
+<div class="analysis-step-list">
 
-        <h4>Kỹ năng chuyên môn (Professional Skills):</h4>
-        <p>Bộ câu hỏi này giúp đánh giá mức độ lập kế hoạch học tập, nắm kiến thức chuyên ngành, tham gia nghiên cứu, phân tích vấn đề xã hội, tự đánh giá kết quả học tập, và ứng dụng công cụ hỗ trợ học tập:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có khả năng lập kế hoạch học tập rõ ràng, nắm vững kiến thức chuyên ngành, tham gia và chủ động trong các hoạt động ngoại khóa, hội thảo, thảo luận nhóm, và ứng dụng công cụ số hỗ trợ học tập.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn cần nâng cao tính chủ động trong học tập, cải thiện kỹ năng phân tích tình huống xã hội, tham gia các buổi hội thảo, workshop chuyên ngành, sử dụng công cụ số để ghi chú, lập kế hoạch.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tham gia các lớp học kỹ năng mềm và kỹ năng học tập hiệu quả.</li>
-                    <li>Thực hiện nghiên cứu nhỏ liên quan ngành học và trình bày trước nhóm.</li>
-                    <li>Sử dụng Notion, Obsidian hoặc Google Calendar để lập kế hoạch học tập.</li>
-                    <li>Tham gia hội thảo chuyên đề hoặc các câu lạc bộ học thuật.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 1: Giới thiệu tổng quan -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-users"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Giới thiệu tổng quan</h6>
+                <div class="step-body">
+                    <p>Bạn đang phù hợp với nhóm ngành <strong>Xã hội – Nhân văn</strong> – nơi đề cao sự lắng nghe, cảm thông, tư duy phân tích và khả năng truyền đạt. Những lĩnh vực tiêu biểu bao gồm: giáo dục, luật, tâm lý học, văn học, công tác xã hội, truyền thông…</p>
+                    <p>Đây là nhóm ngành dành cho những người biết quan tâm đến người khác, mong muốn đóng góp cho xã hội và không ngừng hoàn thiện bản thân.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Tư duy sáng tạo (Creative Thinking):</h4>
-        <p>Bộ câu hỏi này phản ánh mức độ bạn đưa ra ý tưởng mới, cải tiến cách học, sáng tạo ví dụ minh họa, tạo nội dung học tập và sử dụng công cụ số để học tập sáng tạo:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có khả năng sáng tạo phương pháp học, tìm ví dụ minh họa dễ hiểu, giúp người khác hiểu kiến thức nhanh hơn, biết cách đổi mới phương pháp học tập, và áp dụng công cụ số hiệu quả.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn nên luyện tập cách biến kiến thức thành các ví dụ dễ hiểu, tạo sơ đồ tư duy, flashcard, chia sẻ kiến thức qua mạng xã hội, và thử áp dụng các phương pháp học khác nhau để tìm ra cách phù hợp nhất với bản thân.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tạo slide tóm tắt kiến thức và chia sẻ cho bạn bè.</li>
-                    <li>Thử các công cụ như Canva, Mindmap để trực quan hóa kiến thức.</li>
-                    <li>Luyện thuyết trình nội dung bạn đã học để tự kiểm tra sự hiểu biết.</li>
-                    <li>Chia sẻ cách học của bạn qua các nhóm học tập hoặc mạng xã hội.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 2: Kỹ năng mềm -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-sky"><i class="fas fa-hands-helping"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng mềm: Nền tảng của kết nối</h6>
+                <div class="step-body">
+                    <p>Những kỹ năng này giúp bạn giao tiếp, hợp tác và xây dựng mối quan hệ tích cực – yếu tố then chốt của người làm trong ngành xã hội.</p>
+                    <ul class="styled-list-v">
+                        <li>Biết lắng nghe và thấu hiểu người khác.</li>
+                        <li>Tham gia và hỗ trợ nhóm một cách chủ động.</li>
+                        <li>Biết chia sẻ ý kiến, trình bày rõ ràng và phản hồi tích cực.</li>
+                        <li>Quản lý thời gian và phối hợp hiệu quả khi làm việc nhóm.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Hãy luyện tập giao tiếp hàng ngày, tham gia câu lạc bộ, tình nguyện hoặc nhóm thảo luận để nâng cao khả năng làm việc với con người.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Định hướng phát triển:</h4>
-        <p>Để phát triển toàn diện trong ngành Xã hội – Nhân văn, bạn cần:</p>
-        <ul>
-            <li>Giữ vững tinh thần yêu con người, trách nhiệm cộng đồng, sẵn sàng hỗ trợ người khác.</li>
-            <li>Kết hợp nâng cao kỹ năng mềm và chuyên môn, đồng thời sáng tạo trong cách học và chia sẻ kiến thức.</li>
-            <li>Tham gia hoạt động tình nguyện, câu lạc bộ xã hội, dự án cộng đồng để rèn kỹ năng thực tế.</li>
-            <li>Thiết lập mục tiêu cải thiện kỹ năng còn yếu trong 1–2 tháng và tự đánh giá sự tiến bộ của bản thân.</li>
-        </ul>
+    <!-- Bước 3: Kỹ năng chuyên môn -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-violet"><i class="fas fa-book-open"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng chuyên môn: Kiến thức tạo sức mạnh</h6>
+                <div class="step-body">
+                     <p>Kỹ năng chuyên môn là nền móng giúp bạn vững vàng trong học tập và nghề nghiệp. Bao gồm:</p>
+                    <ul class="styled-list-v">
+                        <li>Nắm vững kiến thức ngành: luật, giáo dục, văn hóa, xã hội học…</li>
+                        <li>Biết lập kế hoạch học tập, theo dõi tiến độ và tự đánh giá kết quả.</li>
+                        <li>Phân tích tình huống thực tế và áp dụng lý thuyết vào cuộc sống.</li>
+                        <li>Tham gia hội thảo, học thêm từ dự án thực tiễn và sử dụng công cụ số.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Hãy bắt đầu từ việc tạo kế hoạch học rõ ràng, thử học một chủ đề mới mỗi tháng và trình bày lại cho người khác hiểu.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <p><strong>Lời khuyên:</strong> Hãy bắt đầu bằng những hành động nhỏ như tham gia một buổi workshop, đọc thêm sách liên quan ngành, luyện thuyết trình, chia sẻ bài học với người khác. Những thói quen này sẽ giúp bạn trở thành một người học chủ động và phát triển vững chắc trong lĩnh vực Xã hội – Nhân văn.</p>
+    <!-- Bước 4: Tư duy sáng tạo -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-rose"><i class="fas fa-lightbulb"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Tư duy sáng tạo: Làm mới cách học, cách sống</h6>
+                <div class="step-body">
+                    <p>Tư duy sáng tạo trong ngành xã hội thể hiện qua việc biến tri thức thành nội dung dễ hiểu, truyền cảm hứng:</p>
+                    <ul class="styled-list-v">
+                        <li>Tạo ví dụ minh họa, sơ đồ tư duy, video học tập…</li>
+                        <li>Chia sẻ kiến thức linh hoạt với bạn bè, lớp học hoặc cộng đồng.</li>
+                        <li>Sử dụng các công cụ như Canva, Notion, PowerPoint, CapCut để trực quan hóa.</li>
+                        <li>Biết điều chỉnh phương pháp học khi thấy chưa hiệu quả.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Mỗi tuần, hãy thử tạo một nội dung học sáng tạo (infographic, video ngắn, bài giảng mini) để chia sẻ với người khác.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bước 5: Định hướng phát triển -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-amber"><i class="fas fa-compass"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Định hướng phát triển cá nhân</h6>
+                <div class="step-body">
+                    <p>Hành trình trưởng thành trong ngành xã hội – nhân văn là hành trình bền bỉ, từ bên trong.</p>
+                     <ul class="styled-list-v">
+                        <li>Giữ vững lòng yêu người, sự tử tế và niềm tin vào giá trị con người.</li>
+                        <li>Kết hợp rèn luyện kỹ năng mềm – chuyên môn – sáng tạo một cách đều đặn.</li>
+                        <li>Tham gia các dự án xã hội, CLB học thuật hoặc hoạt động ngoại khóa.</li>
+                        <li>Ghi chép tiến trình phát triển kỹ năng cá nhân hàng tháng.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 6: Hành động nhỏ -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-bullseye"></i></div>
+            <!-- Không có step-line ở bước cuối cùng -->
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Hành động nhỏ, tạo bước tiến lớn</h6>
+                <div class="step-body">
+                   <ul class="styled-list-v">
+                        <li><strong>Đăng ký các buổi workshop xã hội:</strong> Mở rộng kiến thức và kết nối chuyên môn.</li>
+                        <li><strong>Luyện nói ngắn 5 phút/ngày:</strong> Gia tăng tự tin khi chia sẻ và thuyết trình.</li>
+                        <li><strong>Lập kế hoạch học bằng Notion/Trello:</strong> Quản lý thời gian và tiến độ hiệu quả.</li>
+                        <li><strong>Viết nhật ký nhóm sau mỗi hoạt động:</strong> Rèn kỹ năng phản hồi và tư duy phản biện.</li>
+                        <li><strong>Tạo nội dung học chia sẻ trên mạng xã hội:</strong> Thực hành tư duy sáng tạo và truyền đạt.</li>
+                   </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Thẻ kết luận -->
+<div class="analysis-conclusion">
+    <div class="conclusion-icon"><i class="fas fa-flag-checkered"></i></div>
+    <div class="conclusion-text">
+        <h6>Lời kết</h6>
+        <p>Ngành <strong>Xã hội – Nhân văn</strong> không đo bằng điểm số. Nó đo bằng sự thấu cảm, sự hiểu biết, và những gì bạn để lại trong lòng người khác.
+        Dù bạn đang ở đâu, hãy kiên trì từng bước. Giá trị bạn tạo ra cho người khác cũng chính là sự thành công của bạn trong ngành học đầy nhân văn này.</p>
+    </div>
+</div>
+    """,
+
+    "business": """
+<div class="analysis-step-list">
+
+    <!-- Bước 1: Giới thiệu tổng quan -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-briefcase"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Giới thiệu tổng quan</h6>
+                <div class="step-body">
+                    <p>Bạn thuộc nhóm ngành <strong>Quản lý – Kinh doanh</strong> – lĩnh vực gắn liền với khả năng lãnh đạo, phân tích thị trường, xây dựng chiến lược và tạo giá trị thông qua sản phẩm, dịch vụ. Đây là ngành đòi hỏi sự nhạy bén, tư duy chiến lược và kỹ năng giao tiếp mạnh mẽ.</p>
+                    <p>Các lĩnh vực tiêu biểu bao gồm: quản trị doanh nghiệp, marketing, tài chính, thương mại, logistics, nhân sự, khởi nghiệp, quản lý dự án…</p>
+                    <p>Ngành này phù hợp với những ai yêu thích thử thách, chủ động tìm kiếm cơ hội và biết biến ý tưởng thành hành động thực tế.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 2: Kỹ năng mềm -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-sky"><i class="fas fa-users"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng mềm: Giao tiếp và lãnh đạo</h6>
+                <div class="step-body">
+                    <p>Kỹ năng mềm là nền tảng giúp bạn tạo dựng mối quan hệ, đàm phán hiệu quả và truyền cảm hứng cho đội nhóm.</p>
+                    <ul class="styled-list-v">
+                        <li>Giao tiếp rõ ràng, biết lắng nghe và thấu hiểu khách hàng.</li>
+                        <li>Khả năng thương lượng và giải quyết xung đột khéo léo.</li>
+                        <li>Lãnh đạo và hỗ trợ đồng đội đạt mục tiêu chung.</li>
+                        <li>Quản lý thời gian, đảm bảo tiến độ công việc.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Tham gia các CLB kinh doanh, hội thảo khởi nghiệp, hoặc các khóa học kỹ năng lãnh đạo để nâng cao khả năng kết nối và ảnh hưởng.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 3: Kỹ năng chuyên môn -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-violet"><i class="fas fa-chart-line"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng chuyên môn: Nền tảng quản trị và kinh doanh</h6>
+                <div class="step-body">
+                    <p>Kỹ năng chuyên môn giúp bạn biến ý tưởng thành kế hoạch và hành động cụ thể.</p>
+                    <ul class="styled-list-v">
+                        <li>Kiến thức quản trị, marketing, tài chính và phân tích dữ liệu.</li>
+                        <li>Khả năng lập kế hoạch kinh doanh và quản lý dự án.</li>
+                        <li>Ứng dụng công cụ quản lý, phần mềm kế toán, CRM…</li>
+                        <li>Hiểu biết thị trường và hành vi khách hàng.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Tham gia các cuộc thi khởi nghiệp, dự án mô phỏng kinh doanh và thường xuyên cập nhật xu hướng thị trường để rèn luyện khả năng phân tích – lập chiến lược.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 4: Tư duy sáng tạo -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-rose"><i class="fas fa-lightbulb"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Tư duy sáng tạo: Đổi mới và khác biệt</h6>
+                <div class="step-body">
+                    <p>Tư duy sáng tạo giúp bạn tìm ra cách mới để tiếp cận thị trường, cải thiện sản phẩm và thu hút khách hàng.</p>
+                    <ul class="styled-list-v">
+                        <li>Phát triển ý tưởng marketing độc đáo.</li>
+                        <li>Điều chỉnh phương pháp khi cách cũ không hiệu quả.</li>
+                        <li>Ứng dụng công cụ số để tăng hiệu suất và tính mới mẻ.</li>
+                        <li>Tạo chiến lược bán hàng khác biệt so với đối thủ.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Theo dõi các thương hiệu thành công, học cách họ đổi mới và thử nghiệm ý tưởng riêng để tạo dấu ấn cá nhân.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 5: Định hướng phát triển -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-amber"><i class="fas fa-compass"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Định hướng phát triển cá nhân</h6>
+                <div class="step-body">
+                    <p>Ngành Quản lý – Kinh doanh đòi hỏi sự học hỏi liên tục và khả năng thích ứng nhanh với thay đổi.</p>
+                    <ul class="styled-list-v">
+                        <li>Luôn cập nhật xu hướng kinh doanh và công nghệ mới.</li>
+                        <li>Phát triển kỹ năng lãnh đạo và tư duy chiến lược.</li>
+                        <li>Xây dựng mạng lưới quan hệ trong ngành.</li>
+                        <li>Kết hợp học lý thuyết và trải nghiệm thực tế qua dự án.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 6: Hành động nhỏ -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-bullseye"></i></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Hành động nhỏ, tạo bước tiến lớn</h6>
+                <div class="step-body">
+                   <ul class="styled-list-v">
+                        <li><strong>Đọc 1 case study kinh doanh mỗi tuần:</strong> Học hỏi kinh nghiệm từ thực tế.</li>
+                        <li><strong>Tham gia hội thảo, networking event:</strong> Mở rộng mối quan hệ.</li>
+                        <li><strong>Thử lập kế hoạch kinh doanh mini:</strong> Rèn tư duy chiến lược.</li>
+                        <li><strong>Thực hành thuyết trình ý tưởng:</strong> Nâng cao khả năng thuyết phục.</li>
+                        <li><strong>Theo dõi tin tức thị trường:</strong> Dự đoán và nắm bắt cơ hội.</li>
+                   </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Thẻ kết luận -->
+<div class="analysis-conclusion">
+    <div class="conclusion-icon"><i class="fas fa-flag-checkered"></i></div>
+    <div class="conclusion-text">
+        <h6>Lời kết</h6>
+        <p>Ngành <strong>Quản lý – Kinh doanh</strong> không chỉ là kiếm lợi nhuận, mà còn là nghệ thuật lãnh đạo, xây dựng giá trị và tạo ảnh hưởng. Hãy giữ tinh thần học hỏi, khả năng thích ứng và niềm đam mê sáng tạo – vì mỗi quyết định đúng đắn của bạn có thể thay đổi cả một tổ chức hoặc cộng đồng.</p>
+    </div>
+</div>
+
+
     """,
 
     "tech": """
-        <h3>Phân Tích Chi Tiết: Công nghệ – Kỹ thuật</h3>
-        <p>Bạn có tiềm năng phát triển trong các ngành Khoa học máy tính, Kỹ thuật phần mềm, Kỹ thuật điện – điện tử, Cơ điện tử, Tự động hóa, và các lĩnh vực kỹ thuật ứng dụng khác. Nhóm ngành này yêu cầu sự tư duy logic, khả năng giải quyết vấn đề, tính kỷ luật và kỹ năng làm việc độc lập lẫn nhóm hiệu quả.</p>
+  <div class="analysis-step-list">
 
-        <h4>Kỹ năng mềm (Soft Skills):</h4>
-        <p>Bộ câu hỏi đánh giá khả năng giao tiếp, làm việc nhóm kỹ thuật, trình bày giải pháp, tổ chức thời gian và hỗ trợ đồng đội trong quá trình làm dự án:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có kỹ năng phối hợp nhóm, trình bày giải pháp rõ ràng, chủ động giúp đỡ thành viên khác – rất quan trọng khi làm việc nhóm kỹ thuật, phát triển phần mềm hoặc lắp ráp hệ thống.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn cần nâng cao khả năng giao tiếp, phản hồi kỹ thuật, và rèn luyện tinh thần hợp tác khi làm nhóm.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tham gia các dự án lập trình hoặc chế tạo theo nhóm.</li>
-                    <li>Giao tiếp kỹ thuật rõ ràng qua sơ đồ, tài liệu hoặc thuyết trình ngắn.</li>
-                    <li>Rèn luyện quản lý thời gian bằng cách lập kế hoạch rõ ràng và theo dõi tiến độ.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 1: Giới thiệu tổng quan -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-microchip"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Giới thiệu tổng quan</h6>
+                <div class="step-body">
+                    <p>Bạn thuộc nhóm ngành <strong>Công nghệ – Kỹ thuật</strong> – nơi kết hợp giữa tư duy logic, khả năng giải quyết vấn đề và sự sáng tạo không giới hạn. Đây là lĩnh vực của những người tạo ra giải pháp, sản phẩm và hệ thống giúp thế giới vận hành hiệu quả hơn.</p>
+                    <p>Những lĩnh vực tiêu biểu bao gồm: lập trình phần mềm, trí tuệ nhân tạo, điện – điện tử, cơ khí, tự động hóa, kỹ thuật môi trường, và các ngành công nghệ mới nổi như blockchain, IoT, in 3D.</p>
+                    <p>Ngành này phù hợp với những ai yêu thích thử thách, đam mê công nghệ, và mong muốn xây dựng giải pháp hữu ích cho đời sống.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Kỹ năng chuyên môn (Technical Skills):</h4>
-        <p>Phản ánh mức độ hiểu và ứng dụng kiến thức chuyên ngành như lập trình, đọc hiểu tài liệu kỹ thuật, vận hành thiết bị, sử dụng phần mềm kỹ thuật:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có nền tảng kỹ thuật tốt, khả năng áp dụng kiến thức vào thực tế như mô phỏng, thiết kế, hoặc lập trình – rất phù hợp cho các công việc kỹ thuật ứng dụng.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn cần củng cố kiến thức nền tảng (như toán – lý – tin), thực hành phần mềm chuyên ngành hoặc nâng cao kỹ năng đọc hiểu tài liệu kỹ thuật tiếng Anh.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Luyện tập các bài tập kỹ thuật cơ bản (như lập trình thuật toán, mô phỏng mạch, vẽ 3D…).</li>
-                    <li>Tham gia cuộc thi chuyên môn như hackathon, chế tạo robot hoặc dự án IoT nhỏ.</li>
-                    <li>Dùng công cụ như GitHub, TinkerCAD, AutoCAD, Arduino IDE… để rèn kỹ năng thực hành.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 2: Kỹ năng mềm -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-sky"><i class="fas fa-users-cog"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng mềm: Gắn kết con người và công nghệ</h6>
+                <div class="step-body">
+                    <p>Kỹ năng mềm là cầu nối giúp bạn biến ý tưởng kỹ thuật thành sản phẩm thực tế và được mọi người đón nhận.</p>
+                    <ul class="styled-list-v">
+                        <li>Giao tiếp rõ ràng khi làm việc nhóm hoặc thuyết trình sản phẩm.</li>
+                        <li>Phối hợp hiệu quả trong dự án đa vai trò (dev, thiết kế, QA...).</li>
+                        <li>Giải quyết xung đột kỹ thuật bằng trao đổi và phân tích dữ liệu.</li>
+                        <li>Quản lý thời gian để đảm bảo tiến độ dự án.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Tham gia hackathon, workshop hoặc các cộng đồng công nghệ để rèn giao tiếp, teamwork và mở rộng network.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Tư duy sáng tạo (Creative Thinking):</h4>
-        <p>Bộ câu hỏi đánh giá khả năng đổi mới giải pháp, tìm cách tối ưu hệ thống, đề xuất ý tưởng kỹ thuật hoặc sáng tạo ứng dụng mới:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có khả năng phát hiện vấn đề kỹ thuật, đề xuất giải pháp cải tiến hoặc tạo sản phẩm mới – đây là lợi thế lớn khi tham gia nghiên cứu và phát triển sản phẩm (R&D).</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn cần rèn luyện khả năng phân tích vấn đề đa chiều, dám thử nghiệm ý tưởng mới và học hỏi từ các sản phẩm có sẵn.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tham khảo các sản phẩm mở nguồn (open source), nghiên cứu cách người khác giải quyết vấn đề kỹ thuật.</li>
-                    <li>Tham gia workshop sáng tạo sản phẩm kỹ thuật (Arduino, Raspberry Pi, AI mini project…)</li>
-                    <li>Viết blog hoặc nhật ký kỹ thuật để rèn luyện tư duy cải tiến và phản biện kỹ thuật.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 3: Kỹ năng chuyên môn -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-violet"><i class="fas fa-laptop-code"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng chuyên môn: Nền móng vững chắc</h6>
+                <div class="step-body">
+                    <p>Kỹ năng chuyên môn giúp bạn biến ý tưởng thành sản phẩm hoàn thiện, đáp ứng nhu cầu thực tế.</p>
+                    <ul class="styled-list-v">
+                        <li>Thành thạo ngôn ngữ lập trình hoặc công cụ kỹ thuật trong chuyên ngành.</li>
+                        <li>Sử dụng hệ thống quản lý mã nguồn (Git) và quy trình phát triển phần mềm.</li>
+                        <li>Biết kiểm thử, phân tích và tối ưu sản phẩm.</li>
+                        <li>Ứng dụng công cụ hỗ trợ như IDE, phần mềm mô phỏng, nền tảng AI.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Xây dựng portfolio cá nhân với các project thực tế, cập nhật công nghệ mới qua khóa học trực tuyến và tài liệu chuyên ngành.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>🎯 Định hướng phát triển:</h4>
-        <ul>
-            <li>Giữ tinh thần học hỏi, thử nghiệm và cải tiến sản phẩm liên tục.</li>
-            <li>Kết hợp kiến thức chuyên môn và kỹ năng mềm để làm việc hiệu quả trong nhóm kỹ thuật.</li>
-            <li>Tạo sản phẩm nhỏ định kỳ (ví dụ: app, mô hình, robot mini…) để xây dựng portfolio cá nhân.</li>
-            <li>Tham gia cộng đồng kỹ thuật online để học hỏi và cập nhật xu hướng mới.</li>
-        </ul>
+    <!-- Bước 4: Tư duy sáng tạo -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-rose"><i class="fas fa-lightbulb"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Tư duy sáng tạo: Tạo khác biệt trong giải pháp</h6>
+                <div class="step-body">
+                    <p>Ngành công nghệ – kỹ thuật không chỉ đòi hỏi kiến thức, mà còn cần sự sáng tạo để tối ưu và đổi mới sản phẩm.</p>
+                    <ul class="styled-list-v">
+                        <li>Đề xuất ý tưởng và cải tiến tính năng sản phẩm.</li>
+                        <li>Áp dụng công cụ sáng tạo (Canva, Figma, Miro) vào thiết kế giải pháp.</li>
+                        <li>Kết hợp công nghệ mới để giải quyết vấn đề cũ.</li>
+                        <li>Tìm kiếm nguồn học tập và cảm hứng từ cộng đồng quốc tế.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Dành thời gian nghiên cứu các dự án mã nguồn mở hoặc case study để học cách các chuyên gia sáng tạo giải pháp.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <p><strong>Lời khuyên:</strong> Bắt đầu với một dự án cá nhân nhỏ, lập kế hoạch học tập rõ ràng, và giữ nhịp luyện tập kỹ năng hàng tuần. Kiên trì là chìa khóa trong ngành Công nghệ – Kỹ thuật.</p>
+    <!-- Bước 5: Định hướng phát triển -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-amber"><i class="fas fa-compass"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Định hướng phát triển cá nhân</h6>
+                <div class="step-body">
+                    <p>Để tiến xa trong ngành công nghệ – kỹ thuật, bạn cần liên tục học hỏi và thích nghi.</p>
+                    <ul class="styled-list-v">
+                        <li>Kết hợp kỹ năng lập trình, phân tích dữ liệu và kiến thức chuyên ngành.</li>
+                        <li>Tham gia dự án thực tế và làm việc với mentor giàu kinh nghiệm.</li>
+                        <li>Rèn luyện khả năng học nhanh công nghệ mới.</li>
+                        <li>Xây dựng thương hiệu cá nhân qua blog kỹ thuật hoặc chia sẻ kiến thức.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 6: Hành động nhỏ -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-bullseye"></i></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Hành động nhỏ, tạo bước tiến lớn</h6>
+                <div class="step-body">
+                   <ul class="styled-list-v">
+                        <li><strong>Tham gia 1 dự án mã nguồn mở:</strong> Rèn kỹ năng code và teamwork thực tế.</li>
+                        <li><strong>Học 1 công cụ mới mỗi tháng:</strong> Tăng khả năng thích ứng công nghệ.</li>
+                        <li><strong>Viết blog kỹ thuật:</strong> Củng cố kiến thức và xây dựng uy tín.</li>
+                        <li><strong>Thử ý tưởng mới trong project cá nhân:</strong> Rèn tư duy sáng tạo và giải quyết vấn đề.</li>
+                        <li><strong>Kết nối với chuyên gia:</strong> Mở rộng cơ hội nghề nghiệp.</li>
+                   </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Thẻ kết luận -->
+<div class="analysis-conclusion">
+    <div class="conclusion-icon"><i class="fas fa-flag-checkered"></i></div>
+    <div class="conclusion-text">
+        <h6>Lời kết</h6>
+        <p>Ngành <strong>Công nghệ – Kỹ thuật</strong> là hành trình học hỏi suốt đời. Thành công không chỉ đến từ kiến thức, mà còn từ khả năng biến ý tưởng thành giải pháp thực tế, mang lại giá trị cho cộng đồng và xã hội. Hãy chủ động, sáng tạo và không ngừng tiến bộ – vì thế giới công nghệ luôn cần những người dám tạo ra sự khác biệt.</p>
+    </div>
+</div>
 
     """,
 
     "arts": """
-        <h3>Phân Tích Chi Tiết: Nghệ thuật – Sáng tạo</h3>
-        <p>Bạn có năng khiếu hoặc đam mê với các lĩnh vực thiết kế đồ họa, mỹ thuật, thời trang, sân khấu – điện ảnh, truyền thông thị giác, kiến trúc nội thất, hoặc các ngành sáng tạo nội dung. Những lĩnh vực này đề cao cảm xúc thẩm mỹ, khả năng biểu đạt cá nhân và sự linh hoạt trong tư duy sáng tạo.</p>
+       <div class="analysis-step-list">
 
-        <h4>Kỹ năng mềm (Soft Skills):</h4>
-        <p>Bộ câu hỏi đánh giá khả năng giao tiếp, trình bày ý tưởng, làm việc nhóm sáng tạo, phản hồi nghệ thuật, và hỗ trợ đồng đội trong dự án:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có khả năng làm việc nhóm hiệu quả, trình bày ý tưởng rõ ràng và linh hoạt trong giao tiếp nghệ thuật – đây là nền tảng quan trọng khi làm việc với khách hàng, cộng sự hoặc trong các dự án nhóm sáng tạo.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn có thể gặp khó khăn khi thuyết trình sản phẩm, trao đổi quan điểm thiết kế hoặc kết nối với đồng nghiệp trong môi trường nghệ thuật đòi hỏi cởi mở và linh hoạt.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tham gia các buổi workshop, triển lãm, hoặc sự kiện nghệ thuật để học cách lắng nghe và trình bày ý tưởng.</li>
-                    <li>Thực hành thuyết trình ngắn về sản phẩm của mình với bạn bè hoặc nhóm.</li>
-                    <li>Giao tiếp đa phương tiện: dùng moodboard, sketch, hoặc slide để biểu đạt ý tưởng hiệu quả hơn.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 1: Giới thiệu tổng quan -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-palette"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Giới thiệu tổng quan</h6>
+                <div class="step-body">
+                    <p>Bạn thuộc nhóm ngành <strong>Sáng tạo – Nghệ thuật</strong> – nơi hội tụ của trí tưởng tượng phong phú, cảm xúc tinh tế và khả năng biến ý tưởng thành tác phẩm chạm tới trái tim con người.</p>
+                    <p>Những lĩnh vực tiêu biểu bao gồm: thiết kế đồ họa, mỹ thuật, âm nhạc, nhiếp ảnh, điện ảnh, kiến trúc, truyền thông sáng tạo, thời trang…</p>
+                    <p>Ngành này dành cho những ai khao khát tạo nên giá trị thẩm mỹ, truyền cảm hứng và mang đến trải nghiệm độc đáo cho cộng đồng.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Kỹ năng chuyên môn (Technical/Professional Skills):</h4>
-        <p>Phản ánh mức độ nắm vững kiến thức chuyên ngành, kỹ năng sử dụng phần mềm sáng tạo, hoàn thiện sản phẩm, và khả năng áp dụng kỹ thuật thẩm mỹ vào thực tế:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có kỹ năng sử dụng phần mềm tốt, khả năng hoàn thiện sản phẩm thẩm mỹ cao, và chủ động học hỏi xu hướng nghệ thuật mới – đây là những yếu tố then chốt trong môi trường sáng tạo cạnh tranh.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn cần củng cố kỹ năng chỉnh sửa, sử dụng phần mềm thiết kế, hoặc chưa thực sự làm quen với quy trình hoàn thiện sản phẩm nghệ thuật chuyên nghiệp.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Học thêm các phần mềm chuyên ngành như Adobe Illustrator, Photoshop, Premiere, Blender, v.v.</li>
-                    <li>Chọn dự án nhỏ có tính ứng dụng để luyện tập kỹ năng hoàn thiện và tinh chỉnh sản phẩm.</li>
-                    <li>Tham khảo portfolio của người đi trước để hiểu tiêu chuẩn chất lượng sản phẩm nghệ thuật chuyên nghiệp.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 2: Kỹ năng mềm -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-sky"><i class="fas fa-users"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng mềm: Cầu nối cảm xúc và ý tưởng</h6>
+                <div class="step-body">
+                    <p>Kỹ năng mềm giúp bạn làm việc hiệu quả trong môi trường sáng tạo vốn luôn biến đổi và đa dạng.</p>
+                    <ul class="styled-list-v">
+                        <li>Giao tiếp tự tin khi trình bày ý tưởng trước nhóm hoặc khách hàng.</li>
+                        <li>Lắng nghe và dung hòa các quan điểm khác nhau.</li>
+                        <li>Quản lý thời gian hợp lý để đáp ứng deadline mà vẫn giữ chất lượng sản phẩm.</li>
+                        <li>Hợp tác ăn ý trong các dự án nghệ thuật đa lĩnh vực.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Tham gia các nhóm sáng tạo, workshop nghệ thuật hoặc sự kiện trưng bày để rèn luyện kỹ năng giao tiếp và mở rộng kết nối.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Tư duy sáng tạo (Creative Thinking):</h4>
-        <p>Đánh giá khả năng đưa ra ý tưởng mới, thay đổi cách tiếp cận nghệ thuật, quan sát xu hướng thị trường và thể hiện bản sắc cá nhân qua sản phẩm:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có tư duy linh hoạt, dám thử nghiệm phong cách mới, đề xuất ý tưởng độc đáo, kết hợp yếu tố cá nhân và thị trường – đây là thế mạnh nổi bật trong lĩnh vực nghệ thuật đòi hỏi đổi mới liên tục.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn có thể đang ở giai đoạn “bắt chước” hoặc chưa tự tin thể hiện bản sắc cá nhân. Thiếu cảm hứng sáng tạo hoặc chưa biết cách phát triển ý tưởng thành sản phẩm hoàn chỉnh.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tạo thói quen quan sát sản phẩm sáng tạo của người khác (Behance, Pinterest, Instagram…).</li>
-                    <li>Thử nghiệm phong cách khác nhau, hoặc kết hợp nhiều yếu tố để tạo “chất riêng”.</li>
-                    <li>Ghi chú ý tưởng sáng tạo mỗi ngày, lập sổ tay ý tưởng hoặc bản moodboard cá nhân.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 3: Kỹ năng chuyên môn -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-violet"><i class="fas fa-paint-brush"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng chuyên môn: Nền tảng để tỏa sáng</h6>
+                <div class="step-body">
+                    <p>Kỹ năng chuyên môn là công cụ để bạn biến cảm hứng thành sản phẩm hoàn thiện và chuyên nghiệp.</p>
+                    <ul class="styled-list-v">
+                        <li>Nắm vững kỹ thuật, nguyên tắc và quy trình trong lĩnh vực nghệ thuật của bạn.</li>
+                        <li>Sử dụng thành thạo các phần mềm và công cụ sáng tạo.</li>
+                        <li>Chỉnh sửa, hoàn thiện sản phẩm đạt chuẩn thẩm mỹ và kỹ thuật.</li>
+                        <li>Luôn cập nhật xu hướng nghệ thuật, phong cách mới.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Xây dựng bộ sưu tập (portfolio) đa dạng, tham gia cuộc thi hoặc triển lãm để nâng cao kỹ năng và uy tín cá nhân.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>🎯 Định hướng phát triển:</h4>
-        <ul>
-            <li>Tập trung xây dựng portfolio cá nhân đa dạng – đây là “tấm vé” nghề nghiệp quan trọng với người làm nghệ thuật.</li>
-            <li>Kết hợp cảm xúc nghệ thuật và kỹ thuật trình bày sản phẩm chuyên nghiệp.</li>
-            <li>Tham gia cộng đồng sáng tạo, cuộc thi nghệ thuật, triển lãm hoặc các nhóm sáng tác.</li>
-            <li>Đặt mục tiêu cá nhân về số lượng sản phẩm/tháng để duy trì nhịp sáng tạo liên tục.</li>
-        </ul>
+    <!-- Bước 4: Tư duy sáng tạo -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-rose"><i class="fas fa-lightbulb"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Tư duy sáng tạo: Chìa khóa tạo dấu ấn</h6>
+                <div class="step-body">
+                    <p>Tư duy sáng tạo là linh hồn của mọi sản phẩm nghệ thuật – giúp bạn tạo nên sự khác biệt và ghi dấu ấn cá nhân.</p>
+                    <ul class="styled-list-v">
+                        <li>Đề xuất ý tưởng mới và cải tiến thiết kế.</li>
+                        <li>Kết hợp yếu tố nghệ thuật truyền thống với xu hướng hiện đại.</li>
+                        <li>Tận dụng công nghệ để mở rộng khả năng sáng tác.</li>
+                        <li>Tìm cảm hứng từ nhiều nguồn: thiên nhiên, văn hóa, xã hội, nghệ thuật quốc tế.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Duy trì thói quen tạo “nhật ký ý tưởng” và thử nghiệm ít nhất một kỹ thuật hoặc phong cách mới mỗi tháng.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <p><strong>Lời khuyên:</strong> Sáng tạo không đến từ cảm hứng nhất thời – hãy tạo thói quen quan sát, luyện tập, và thể hiện bản thân thông qua mỗi sản phẩm. Hãy để tác phẩm nói lên “chất riêng” của bạn.</p>
+    <!-- Bước 5: Định hướng phát triển -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-amber"><i class="fas fa-compass"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Định hướng phát triển cá nhân</h6>
+                <div class="step-body">
+                    <p>Để phát triển bền vững trong lĩnh vực nghệ thuật, bạn cần vừa nuôi dưỡng cảm xúc, vừa trau dồi kỹ năng.</p>
+                    <ul class="styled-list-v">
+                        <li>Giữ tinh thần cởi mở để tiếp thu và thử nghiệm cái mới.</li>
+                        <li>Kết hợp học tập kỹ thuật với rèn luyện thẩm mỹ cá nhân.</li>
+                        <li>Chủ động tìm cơ hội trưng bày, biểu diễn hoặc chia sẻ tác phẩm.</li>
+                        <li>Kết nối với nghệ sĩ, nhà thiết kế, đạo diễn, nhà sản xuất để mở rộng cơ hội hợp tác.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 6: Hành động nhỏ -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-bullseye"></i></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Hành động nhỏ, tạo bước tiến lớn</h6>
+                <div class="step-body">
+                   <ul class="styled-list-v">
+                        <li><strong>Tham gia workshop sáng tạo:</strong> Học hỏi kỹ thuật và xu hướng mới.</li>
+                        <li><strong>Tạo portfolio online:</strong> Trưng bày và quảng bá tác phẩm.</li>
+                        <li><strong>Thử một phong cách mới mỗi tháng:</strong> Mở rộng khả năng sáng tác.</li>
+                        <li><strong>Ghi lại quá trình sáng tác:</strong> Để rút kinh nghiệm và chia sẻ với cộng đồng.</li>
+                        <li><strong>Kết nối với cộng đồng nghệ thuật:</strong> Mở rộng tầm nhìn và cơ hội nghề nghiệp.</li>
+                   </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Thẻ kết luận -->
+<div class="analysis-conclusion">
+    <div class="conclusion-icon"><i class="fas fa-flag-checkered"></i></div>
+    <div class="conclusion-text">
+        <h6>Lời kết</h6>
+        <p>Ngành <strong>Sáng tạo – Nghệ thuật</strong> là nơi bạn để lại dấu ấn cá nhân qua từng tác phẩm. Thành công không chỉ đo bằng giải thưởng, mà bằng cảm xúc và giá trị bạn mang đến cho người khác. Hãy dám thử, dám sai, và dám khác biệt – vì chính sự khác biệt tạo nên phong cách của bạn.</p>
+    </div>
+</div>
 
     """,
     "health": """
-        <h3>Phân Tích Chi Tiết: Y tế – Sức khỏe</h3>
-        <p>Bạn có thiên hướng quan tâm tới sức khỏe con người, chăm sóc cộng đồng, hỗ trợ người bệnh và làm việc trong môi trường đòi hỏi sự kiên nhẫn, tỉ mỉ và tinh thần trách nhiệm cao. Nhóm ngành này bao gồm các lĩnh vực như điều dưỡng, y đa khoa, dược, kỹ thuật xét nghiệm, y tế công cộng và tâm lý học lâm sàng.</p>
+       <div class="analysis-step-list">
 
-        <h4>Kỹ năng mềm (Soft Skills):</h4>
-        <p>Phản ánh khả năng làm việc nhóm trong môi trường trực ca, giao tiếp với bệnh nhân, lắng nghe, đồng cảm và ứng xử linh hoạt trong các tình huống y khoa:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có kỹ năng giao tiếp rõ ràng, khả năng làm việc nhóm tốt trong môi trường căng thẳng, biết quan tâm và lắng nghe người khác – đây là yếu tố quan trọng trong công việc chăm sóc và hỗ trợ sức khỏe bệnh nhân.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn có thể gặp khó khăn khi làm việc ca trực, xử lý tình huống căng thẳng, hoặc chưa tự tin khi tương tác với người bệnh hoặc đồng nghiệp.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tham gia các hoạt động cộng đồng, chiến dịch y tế để luyện sự đồng cảm và khả năng giao tiếp thực tế.</li>
-                    <li>Thực hành thuyết trình ngắn hoặc chia sẻ tình huống trong nhóm học để nâng cao phản xạ giao tiếp.</li>
-                    <li>Luyện kỹ năng quản lý thời gian và phản hồi trong nhóm để làm quen với mô hình làm việc y khoa.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 1: Giới thiệu tổng quan -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-stethoscope"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Giới thiệu tổng quan</h6>
+                <div class="step-body">
+                    <p>Bạn thuộc nhóm ngành <strong>Y tế – Sức khỏe</strong> – nơi hội tụ của kiến thức chuyên môn vững chắc, sự tận tâm và tinh thần trách nhiệm cao với cộng đồng. Đây là lĩnh vực gắn liền với việc bảo vệ, chăm sóc và nâng cao sức khỏe con người.</p>
+                    <p>Các lĩnh vực tiêu biểu bao gồm: y khoa, điều dưỡng, dược học, y tế công cộng, phục hồi chức năng, dinh dưỡng, xét nghiệm y học, và các ngành chăm sóc sức khỏe khác.</p>
+                    <p>Ngành này phù hợp với những người có lòng nhân ái, tính kỷ luật, kỹ năng làm việc nhóm và khả năng xử lý tình huống nhanh nhạy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Kỹ năng chuyên môn (Professional/Technical Skills):</h4>
-        <p>Đánh giá khả năng lập kế hoạch trực ca, nắm kiến thức y học, sử dụng công cụ y tế và phần mềm tra cứu, kỹ năng xử lý ca bệnh và ghi hồ sơ bệnh án:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có kiến thức y khoa tốt, sử dụng công cụ tra cứu thành thạo, thực hành lâm sàng linh hoạt, biết kết hợp phản xạ chuyên môn và giao tiếp khi xử lý ca bệnh.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn còn thiếu thực hành lâm sàng hoặc chưa tự tin khi sử dụng công cụ tra cứu, lập kế hoạch học tập, hoặc chưa có thói quen cập nhật tài liệu chuyên ngành.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tham gia thực tập, các buổi mô phỏng lâm sàng, hoặc lớp kỹ năng lâm sàng cơ bản.</li>
-                    <li>Sử dụng phần mềm y học như Medscape, UpToDate để luyện tra cứu thường xuyên.</li>
-                    <li>Học cách ghi chép hồ sơ bệnh án rõ ràng, đầy đủ – kỹ năng quan trọng trong môi trường thực tế.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 2: Kỹ năng mềm -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-sky"><i class="fas fa-hand-holding-heart"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng mềm: Sự đồng cảm và kết nối</h6>
+                <div class="step-body">
+                    <p>Kỹ năng mềm giúp bạn tạo dựng niềm tin với bệnh nhân, đồng nghiệp và cộng đồng – yếu tố then chốt trong ngành Y tế – Sức khỏe.</p>
+                    <ul class="styled-list-v">
+                        <li>Lắng nghe và thấu hiểu nhu cầu của bệnh nhân.</li>
+                        <li>Giao tiếp rõ ràng, truyền đạt thông tin y khoa chính xác.</li>
+                        <li>Hợp tác chặt chẽ với đồng nghiệp trong môi trường áp lực cao.</li>
+                        <li>Quản lý thời gian hiệu quả trong ca trực hoặc khi xử lý nhiều công việc.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Tham gia các khóa đào tạo kỹ năng giao tiếp y tế, tham gia tình nguyện cộng đồng để rèn khả năng lắng nghe và đồng cảm.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Tư duy sáng tạo (Creative Thinking):</h4>
-        <p>Đo lường mức độ chủ động tìm cách tối ưu hóa quy trình chăm sóc, đề xuất cải tiến trong công việc, vận dụng công nghệ vào học tập và thực hành:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có khả năng quan sát vấn đề trong môi trường y tế và chủ động đưa ra giải pháp cải tiến quy trình, sáng tạo nội dung truyền thông y tế hoặc áp dụng công nghệ để hỗ trợ học tập hiệu quả.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn chưa quen với việc phản biện quy trình, chưa chủ động đưa ra sáng kiến mới hoặc còn ngại thử nghiệm các công cụ công nghệ để hỗ trợ công việc.</li>
-            <li><strong>Cách cải thiện:</strong>
-                <ul>
-                    <li>Tham gia các cuộc thi sáng kiến chăm sóc sức khỏe cộng đồng, chiến dịch truyền thông y tế.</li>
-                    <li>Học sử dụng các app học tập y khoa hoặc hệ thống mô phỏng lâm sàng để mở rộng tư duy.</li>
-                    <li>Ghi nhận và cải tiến những bước nhỏ trong thao tác hằng ngày để hình thành tư duy đổi mới.</li>
-                </ul>
-            </li>
-        </ul>
+    <!-- Bước 3: Kỹ năng chuyên môn -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-violet"><i class="fas fa-user-md"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng chuyên môn: Nền tảng vững vàng</h6>
+                <div class="step-body">
+                    <p>Kỹ năng chuyên môn là chìa khóa đảm bảo chất lượng chăm sóc và an toàn cho bệnh nhân.</p>
+                    <ul class="styled-list-v">
+                        <li>Nắm vững kiến thức y khoa và quy trình kỹ thuật của chuyên ngành.</li>
+                        <li>Thực hành lâm sàng, kỹ năng xử lý ca bệnh chuẩn xác.</li>
+                        <li>Ứng dụng công cụ, phần mềm y tế và tài liệu tra cứu chuyên ngành.</li>
+                        <li>Cập nhật kiến thức mới từ nghiên cứu, hội thảo và tài liệu y khoa.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Xây dựng thói quen đọc tạp chí y khoa, tham gia thực tập và hội thảo chuyên ngành để nâng cao năng lực thực hành.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <h4>Định hướng phát triển:</h4>
-        <ul>
-            <li>Xây dựng thói quen giao tiếp chuyên nghiệp, từ tốn, biết lắng nghe và đặt câu hỏi đúng lúc.</li>
-            <li>Thường xuyên cập nhật kiến thức chuyên môn, tham gia lớp tập huấn kỹ năng lâm sàng.</li>
-            <li>Tham gia hoạt động tình nguyện y tế để trau dồi kỹ năng thực tế và trách nhiệm cộng đồng.</li>
-            <li>Dành thời gian tự đánh giá hiệu quả xử lý tình huống thực tế để học từ trải nghiệm.</li>
-        </ul>
+    <!-- Bước 4: Tư duy sáng tạo -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-rose"><i class="fas fa-lightbulb"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Tư duy sáng tạo: Đổi mới để cứu người</h6>
+                <div class="step-body">
+                    <p>Tư duy sáng tạo trong ngành Y tế – Sức khỏe giúp bạn tìm ra giải pháp tối ưu hơn trong chẩn đoán, điều trị và chăm sóc.</p>
+                    <ul class="styled-list-v">
+                        <li>Đề xuất cải tiến quy trình làm việc để nâng cao hiệu quả.</li>
+                        <li>Tận dụng công nghệ và phần mềm mới hỗ trợ khám chữa bệnh.</li>
+                        <li>Thiết kế chương trình truyền thông sức khỏe cộng đồng hấp dẫn, dễ hiểu.</li>
+                        <li>Học hỏi từ các ca bệnh đặc biệt để tìm hướng xử lý tối ưu.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Tham gia nghiên cứu hoặc dự án y tế cộng đồng để rèn luyện tư duy giải quyết vấn đề sáng tạo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <p><strong>Lời khuyên:</strong> Nghề y không chỉ cần kiến thức mà còn đòi hỏi tâm huyết, sự kiên nhẫn và tinh thần phục vụ. Hãy học cách giữ bình tĩnh, quan sát và không ngừng nâng cao kỹ năng để trở thành
+    <!-- Bước 5: Định hướng phát triển -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-amber"><i class="fas fa-compass"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Định hướng phát triển cá nhân</h6>
+                <div class="step-body">
+                    <p>Hành trình trong ngành Y tế – Sức khỏe đòi hỏi sự kiên trì và học hỏi liên tục.</p>
+                    <ul class="styled-list-v">
+                        <li>Duy trì đạo đức nghề nghiệp và tinh thần nhân ái.</li>
+                        <li>Kết hợp nhuần nhuyễn giữa kỹ năng mềm, chuyên môn và sáng tạo.</li>
+                        <li>Chủ động tham gia các khóa đào tạo chuyên sâu và thực hành tại cơ sở y tế.</li>
+                        <li>Xây dựng mạng lưới nghề nghiệp để học hỏi và hợp tác.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bước 6: Hành động nhỏ -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-bullseye"></i></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Hành động nhỏ, tạo bước tiến lớn</h6>
+                <div class="step-body">
+                   <ul class="styled-list-v">
+                        <li><strong>Đọc 1 bài nghiên cứu y khoa mỗi tuần:</strong> Cập nhật kiến thức mới.</li>
+                        <li><strong>Tham gia ít nhất 1 buổi hội thảo/tháng:</strong> Mở rộng góc nhìn và kết nối.</li>
+                        <li><strong>Thực hành kỹ năng giao tiếp y tế:</strong> Giúp bệnh nhân hiểu và tin tưởng.</li>
+                        <li><strong>Ghi chép chi tiết ca trực:</strong> Nâng cao khả năng phân tích và rút kinh nghiệm.</li>
+                        <li><strong>Đề xuất sáng kiến nhỏ tại nơi làm việc:</strong> Tăng hiệu quả và chất lượng chăm sóc.</li>
+                   </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Thẻ kết luận -->
+<div class="analysis-conclusion">
+    <div class="conclusion-icon"><i class="fas fa-flag-checkered"></i></div>
+    <div class="conclusion-text">
+        <h6>Lời kết</h6>
+        <p>Ngành <strong>Y tế – Sức khỏe</strong> không chỉ là một nghề, mà là sứ mệnh. Thành công không đo bằng danh hiệu, mà bằng số cuộc đời bạn góp phần cứu giúp và cải thiện. Hãy giữ vững lòng nhân ái, tinh thần học hỏi và sự sáng tạo – vì mỗi bước tiến của bạn đều có thể cứu một mạng sống.</p>
+    </div>
+</div>
+
     """,
 
-    "social": """
-        <h3>Phân Tích Chi Tiết: Xã hội – Nhân văn</h3>
-        <p>Bạn phù hợp với lĩnh vực giáo dục, công tác xã hội, tâm lý, luật, văn học, truyền thông xã hội – những lĩnh vực cần sự kiên nhẫn, khả năng lắng nghe, kỹ năng giao tiếp và tinh thần hỗ trợ cộng đồng.</p>
-
-        <h4>Kỹ năng mềm (Soft Skills):</h4>
-        <p>Phản ánh khả năng giao tiếp, thuyết trình, làm việc nhóm, lắng nghe, giải quyết mâu thuẫn, và tổ chức thời gian:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn có khả năng tương tác tốt với người khác, dễ đồng cảm, trình bày rõ ràng quan điểm, linh hoạt xử lý tình huống xã hội. Những kỹ năng này rất cần trong giảng dạy, tư vấn, tổ chức sự kiện, hoặc điều phối hoạt động cộng đồng.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn cần luyện tập thêm khả năng trình bày, lắng nghe tích cực và phản hồi trong môi trường nhóm, cũng như cách kiểm soát thời gian trong các hoạt động cộng đồng.</li>
-            <li><strong>Gợi ý cải thiện:</strong>
-                <ul>
-                    <li>Tham gia các nhóm thảo luận, CLB kỹ năng mềm hoặc hoạt động thiện nguyện để luyện thực tế.</li>
-                    <li>Tập viết và chia sẻ quan điểm cá nhân qua blog, mạng xã hội, hoặc diễn đàn sinh viên.</li>
-                    <li>Rèn thói quen đánh giá sau mỗi lần làm việc nhóm để cải thiện bản thân.</li>
-                </ul>
-            </li>
-        </ul>
-
-        <h4>Kỹ năng chuyên môn (Chuyên ngành):</h4>
-        <p>Đánh giá khả năng lập kế hoạch học tập, hiểu kiến thức xã hội – nhân văn, phân tích tình huống, và vận dụng công cụ học tập:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn chủ động trong học tập, biết cách tổ chức thông tin, lập luận và liên hệ với thực tiễn. Bạn có thể theo đuổi các ngành cần tư duy phản biện như truyền thông, luật học, giáo dục công dân hoặc chính sách xã hội.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn có thể còn học theo kiểu ghi nhớ, thiếu ứng dụng hoặc ít tham gia hoạt động học thuật nâng cao.</li>
-            <li><strong>Gợi ý cải thiện:</strong>
-                <ul>
-                    <li>Tham gia hội thảo, đọc sách phân tích tình huống xã hội, viết tiểu luận hoặc phân tích phim, truyện.</li>
-                    <li>Ứng dụng các công cụ như Notion, Zotero, Obsidian để tổng hợp và phân tích tài liệu học tập.</li>
-                    <li>Luyện phản biện bằng cách tự đưa ra nhận định về các vấn đề xã hội đang diễn ra.</li>
-                </ul>
-            </li>
-        </ul>
-
-        <h4>Tư duy sáng tạo:</h4>
-        <p>Đánh giá khả năng đưa ra ý tưởng mới, ứng dụng phương pháp học đa dạng, và truyền cảm hứng cho cộng đồng học tập:</p>
-        <ul>
-            <li><strong>Điểm cao:</strong> Bạn biết cách làm mới cách học – như dùng sơ đồ tư duy, kể chuyện, ví dụ minh họa – rất phù hợp với vai trò người hướng dẫn, diễn giả, giáo viên, người làm nội dung giáo dục.</li>
-            <li><strong>Điểm chưa cao:</strong> Bạn có thể còn phụ thuộc vào sách giáo khoa, chưa linh hoạt biến kiến thức thành sản phẩm sáng tạo.</li>
-            <li><strong>Gợi ý cải thiện:</strong>
-                <ul>
-                    <li>Thiết kế infographics, flashcard, hoặc bài giảng mini để truyền đạt ý tưởng.</li>
-                    <li>Chia sẻ kiến thức qua YouTube, podcast hoặc các bài đăng phân tích xã hội.</li>
-                    <li>Tham gia các cuộc thi như hùng biện, viết luận, sáng tạo nội dung nhân văn.</li>
-                </ul>
-            </li>
-        </ul>
-
-        <h4>Định hướng phát triển:</h4>
-        <ul>
-            <li>Kết hợp kỹ năng mềm, tư duy phản biện và óc sáng tạo để tạo ra giá trị xã hội.</li>
-            <li>Tìm kiếm cơ hội thực hành qua công việc tình nguyện, thực tập ngành giáo dục, tâm lý, công tác xã hội hoặc truyền thông.</li>
-            <li>Đặt mục tiêu phát triển từng kỹ năng trong 1–2 tháng với sự tự đánh giá tiến bộ thường xuyên.</li>
-        </ul>
-
-        <p><strong>Lời khuyên:</strong> Nhóm ngành Xã hội – Nhân văn rất cần người biết truyền cảm hứng, thấu hiểu con người, và cam kết với cộng đồng. Dù bạn bắt đầu từ điểm nào, hãy kiên trì rèn luyện từng bước – từ việc chia sẻ một câu chuyện ý nghĩa đến chủ động hỗ trợ người khác trong nhóm. Đó là hành trình xây nền vững chắc cho người làm nhân văn thực thụ.</p>
-
-    """,
     "science": """
-    <h3>Phân Tích Chi Tiết: Nhóm ngành Khoa học – Tự nhiên</h3>
-    <p>Bạn thuộc nhóm người có khả năng suy luận logic, yêu thích sự khám phá, phân tích và có xu hướng tìm hiểu bản chất sâu xa của các hiện tượng. Nhóm ngành Khoa học – Tự nhiên bao gồm: Toán học, Vật lý, Hóa học, Sinh học, Thiên văn học, Khoa học dữ liệu, Môi trường, Công nghệ sinh học, Khoa học vật liệu, và nhiều lĩnh vực nghiên cứu liên ngành.</p>
+    <div class="analysis-step-list">
 
-    <h4>Kỹ năng mềm (Soft Skills):</h4>
-    <ul>
-        <li><strong>Điểm cao:</strong> Bạn có khả năng giao tiếp học thuật, hợp tác nhóm khoa học tốt, có thể trình bày lập luận chặt chẽ và truyền đạt ý tưởng rõ ràng. Điều này đặc biệt phù hợp trong môi trường học thuật, thuyết trình nghiên cứu hoặc làm việc trong nhóm nghiên cứu liên ngành.</li>
-        <li><strong>Điểm chưa cao:</strong> Có thể bạn còn e ngại khi trình bày ý tưởng, thiếu kỹ năng phản biện hoặc gặp khó khăn khi hợp tác nhóm giải quyết vấn đề.</li>
-        <li><strong>Gợi ý cải thiện:</strong>
-            <ul>
-                <li>Tham gia các buổi seminar học thuật, câu lạc bộ tranh biện khoa học hoặc nhóm học tập.</li>
-                <li>Luyện kỹ năng viết báo cáo và trình bày dự án khoa học bằng infographic, sơ đồ tư duy.</li>
-                <li>Thực hành phản biện qua việc phân tích các lập luận trong bài báo khoa học hoặc tin tức khoa học đại chúng.</li>
-                <li>Viết “Khoa học cho mọi người” – chuyển một chủ đề phức tạp thành ngôn ngữ đơn giản.</li>
-            </ul>
-        </li>
-    </ul>
+    <!-- Bước 1: Giới thiệu tổng quan -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-atom"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Giới thiệu tổng quan</h6>
+                <div class="step-body">
+                    <p>Bạn thuộc nhóm ngành <strong>Khoa học Tự nhiên</strong> – nơi khám phá, phân tích và giải thích các quy luật của thế giới tự nhiên. Đây là lĩnh vực của những người yêu thích nghiên cứu, tìm tòi và đặt câu hỏi "Tại sao" để tìm ra câu trả lời dựa trên bằng chứng khoa học.</p>
+                    <p>Các lĩnh vực tiêu biểu gồm: toán học, vật lý, hóa học, sinh học, khoa học môi trường, khoa học trái đất, và các ngành liên ngành như khoa học dữ liệu, khoa học vật liệu, khoa học không gian.</p>
+                    <p>Ngành này phù hợp với những ai kiên nhẫn, tỉ mỉ, tư duy logic và có khả năng phân tích, tổng hợp thông tin một cách khoa học.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h4>Kỹ năng chuyên môn (Academic/Technical Skills):</h4>
-    <ul>
-        <li><strong>Điểm cao:</strong> Bạn có nền tảng kiến thức vững, có thể áp dụng công thức, mô hình, phân tích dữ liệu và sử dụng công cụ học tập hiện đại như phần mềm mô phỏng, lập trình phân tích.</li>
-        <li><strong>Điểm chưa cao:</strong> Có thể bạn còn gặp khó khăn trong việc kết nối lý thuyết với thực hành, giải quyết tình huống thực tế hoặc chưa quen sử dụng công cụ kỹ thuật số để học tập.</li>
-        <li><strong>Gợi ý phát triển:</strong>
-            <ul>
-                <li>Học sử dụng phần mềm chuyên ngành như: Python (khoa học dữ liệu), MATLAB (mô phỏng), Excel nâng cao (thống kê), GeoGebra (Toán học), Stellarium (Thiên văn), R hoặc SPSS (phân tích dữ liệu).</li>
-                <li>Tham gia các khóa học online miễn phí (Coursera, edX, FutureLearn) về chuyên ngành khoa học.</li>
-                <li>Làm project nhỏ: mô phỏng chuyển động vật lý, tạo máy tính số học bằng Python, mô hình hóa quá trình sinh học, phân tích dữ liệu thời tiết.</li>
-                <li>Lập kế hoạch tự học và thực hành kỹ năng định kỳ hàng tuần.</li>
-            </ul>
-        </li>
-    </ul>
+    <!-- Bước 2: Kỹ năng mềm -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-sky"><i class="fas fa-users"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng mềm: Giao tiếp khoa học và hợp tác nhóm</h6>
+                <div class="step-body">
+                    <p>Kỹ năng mềm trong Khoa học Tự nhiên giúp bạn truyền đạt ý tưởng rõ ràng, làm việc hiệu quả trong các nhóm nghiên cứu và dự án liên ngành.</p>
+                    <ul class="styled-list-v">
+                        <li>Trình bày kết quả nghiên cứu một cách mạch lạc, dễ hiểu.</li>
+                        <li>Lắng nghe và tôn trọng ý kiến khác biệt.</li>
+                        <li>Hợp tác để giải quyết vấn đề phức tạp.</li>
+                        <li>Quản lý thời gian và phân bổ công việc hợp lý.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Tham gia hội thảo, seminar khoa học và các câu lạc bộ học thuật để luyện kỹ năng trình bày và trao đổi học thuật.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h4>Tư duy sáng tạo và phản biện (Creative & Scientific Thinking):</h4>
-    <ul>
-        <li><strong>Điểm cao:</strong> Bạn thích đặt câu hỏi mới, dám thử giải pháp khác lạ, và có khả năng phân tích nhiều góc nhìn – đây là chìa khóa để làm nghiên cứu và phát triển tri thức mới.</li>
-        <li><strong>Điểm chưa cao:</strong> Bạn có thể còn quen học theo mẫu, ngại sai, chưa quen đặt giả thuyết hoặc tìm phương án khác.</li>
-        <li><strong>Gợi ý phát triển:</strong>
-            <ul>
-                <li>Thử xây dựng "Giả thuyết điên rồ" mỗi tuần và tìm cách chứng minh/nghiên cứu thử.</li>
-                <li>Tham gia các cuộc thi sáng tạo khoa học (hackathon, nghiên cứu khoa học sinh viên, giải pháp xanh...)</li>
-                <li>Viết bài phân tích so sánh các giả thuyết khoa học lịch sử với các mô hình hiện tại.</li>
-                <li>Tập phát triển ý tưởng từ “hiện tượng đời sống” – ví dụ: tạo mô hình dự báo độ bụi, đánh giá hiệu quả khẩu trang, phân tích thời gian học và kết quả.</li>
-            </ul>
-        </li>
-    </ul>
+    <!-- Bước 3: Kỹ năng chuyên môn -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-violet"><i class="fas fa-flask"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Kỹ năng chuyên môn: Nền tảng nghiên cứu vững chắc</h6>
+                <div class="step-body">
+                    <p>Kỹ năng chuyên môn là công cụ giúp bạn khám phá và ứng dụng các nguyên lý khoa học vào thực tiễn.</p>
+                    <ul class="styled-list-v">
+                        <li>Nắm vững kiến thức chuyên ngành và phương pháp nghiên cứu.</li>
+                        <li>Thực hiện thí nghiệm, phân tích dữ liệu và đánh giá kết quả.</li>
+                        <li>Ứng dụng công cụ số và phần mềm phân tích khoa học.</li>
+                        <li>Đọc hiểu và tổng hợp tài liệu khoa học, đặc biệt bằng tiếng Anh.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Xây dựng thói quen đọc tạp chí khoa học uy tín, tham gia nghiên cứu khoa học sinh viên và rèn kỹ năng phân tích số liệu bằng công cụ chuyên ngành.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h4>Định hướng phát triển nghề nghiệp:</h4>
-    <ul>
-        <li>Chọn chuyên ngành phù hợp giữa các lĩnh vực Toán – Lý – Hóa – Sinh – Môi trường – Dữ liệu – Công nghệ.</li>
-        <li>Tham gia các nhóm nghiên cứu sinh viên, CLB sáng tạo khoa học hoặc mô phỏng công trình nghiên cứu.</li>
-        <li>Thực hiện nghiên cứu nhỏ với đề tài cá nhân hoặc nhóm: đo nhiệt độ lớp học, phân tích dữ liệu ô nhiễm, đo chất lượng nước,...</li>
-        <li>Chuẩn bị hồ sơ học bổng hoặc thi học sinh giỏi, xét tuyển đại học bằng hồ sơ dự án thực tế.</li>
-        <li>Phát triển kỹ năng học thuật (viết bài khoa học, phân tích, trích dẫn, tìm tài liệu học thuật hiệu quả).</li>
-    </ul>
+    <!-- Bước 4: Tư duy sáng tạo -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-rose"><i class="fas fa-lightbulb"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Tư duy sáng tạo: Khám phá và đổi mới</h6>
+                <div class="step-body">
+                    <p>Tư duy sáng tạo trong Khoa học Tự nhiên giúp bạn tìm ra cách tiếp cận mới để giải quyết các câu hỏi nghiên cứu và tối ưu quy trình thí nghiệm.</p>
+                    <ul class="styled-list-v">
+                        <li>Đề xuất ý tưởng mới và cải tiến phương pháp nghiên cứu.</li>
+                        <li>Tích hợp công nghệ hiện đại vào quá trình nghiên cứu.</li>
+                        <li>Kết nối kiến thức từ nhiều lĩnh vực để tạo ra giải pháp mới.</li>
+                        <li>Luôn đặt câu hỏi và thử nghiệm giả thuyết mới.</li>
+                    </ul>
+                    <p><strong>Gợi ý phát triển:</strong> Tham gia các dự án nghiên cứu liên ngành và luyện kỹ năng đặt câu hỏi khoa học để khơi gợi tư duy mới.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h4>Tài nguyên học tập gợi ý:</h4>
-    <ul>
-        <li>Website: Khan Academy, Brilliant.org, SciShow, Nature, Quanta Magazine.</li>
-        <li>Podcast: The Infinite Monkey Cage, Science Vs, Orbital Mechanics Podcast.</li>
-        <li>Sách: “Thinking Fast and Slow”, “A Brief History of Time”, “The Disappearing Spoon”, “Astrophysics for People in a Hurry”.</li>
-        <li>Kênh Youtube: Veritasium, TED-Ed, Physics Girl, Crash Course, Numberphile.</li>
-    </ul>
+    <!-- Bước 5: Định hướng phát triển -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-amber"><i class="fas fa-compass"></i></div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Định hướng phát triển cá nhân</h6>
+                <div class="step-body">
+                    <p>Sự nghiệp trong Khoa học Tự nhiên là hành trình dài của học hỏi, thử nghiệm và kiên trì.</p>
+                    <ul class="styled-list-v">
+                        <li>Liên tục cập nhật kiến thức và công nghệ mới.</li>
+                        <li>Kết hợp kỹ năng phân tích với tư duy sáng tạo.</li>
+                        <li>Tham gia cộng đồng khoa học để mở rộng góc nhìn.</li>
+                        <li>Xây dựng hồ sơ nghiên cứu (research portfolio) để ghi dấu thành tựu.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h4>Lời khuyên tổng kết:</h4>
-    <p>Hãy duy trì sự tò mò và kỷ luật – bạn là kiểu người không chỉ học để biết, mà học để tạo ra sự hiểu biết mới. Khoa học sẽ đưa bạn tới những nơi chưa ai đặt chân – miễn là bạn dám đặt câu hỏi và đi đến cùng với nó. Một thói quen đọc mỗi ngày, một dự án mỗi quý, và một bài học từ mỗi thất bại sẽ tạo nên con đường khoa học vững chắc cho bạn.</p>
+    <!-- Bước 6: Hành động nhỏ -->
+    <div class="analysis-step">
+        <div class="step-visual">
+            <div class="step-icon-wrapper icon-bg-teal"><i class="fas fa-bullseye"></i></div>
+        </div>
+        <div class="step-content">
+            <div class="step-content-card">
+                <h6 class="step-title">Hành động nhỏ, tạo bước tiến lớn</h6>
+                <div class="step-body">
+                   <ul class="styled-list-v">
+                        <li><strong>Đọc 1 bài báo khoa học mỗi tuần:</strong> Mở rộng kiến thức chuyên ngành.</li>
+                        <li><strong>Tham gia seminar hoặc workshop:</strong> Học hỏi phương pháp nghiên cứu mới.</li>
+                        <li><strong>Thử một công cụ phân tích dữ liệu mới:</strong> Tăng hiệu quả nghiên cứu.</li>
+                        <li><strong>Viết tóm tắt nghiên cứu:</strong> Luyện khả năng diễn đạt khoa học.</li>
+                        <li><strong>Kết nối với các nhà nghiên cứu:</strong> Mở rộng hợp tác và cơ hội học tập.</li>
+                   </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Thẻ kết luận -->
+<div class="analysis-conclusion">
+    <div class="conclusion-icon"><i class="fas fa-flag-checkered"></i></div>
+    <div class="conclusion-text">
+        <h6>Lời kết</h6>
+        <p>Ngành <strong>Khoa học Tự nhiên</strong> là hành trình khám phá không ngừng. Thành công không chỉ đến từ kết quả nghiên cứu, mà từ quá trình bạn kiên trì tìm hiểu và đóng góp tri thức mới cho nhân loại. Hãy giữ tinh thần tò mò, sự kỷ luật và niềm đam mê tìm hiểu – vì mỗi khám phá của bạn đều mở ra cánh cửa mới cho khoa học.</p>
+    </div>
+</div>
+
     """
 
 }

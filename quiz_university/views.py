@@ -23,38 +23,47 @@ def gioi_thieu(request):
 @require_http_methods(["GET", "POST"])
 def select_cluster(request):
     if request.method == "POST":
-        try:
-            selected_cluster_code = request.POST.get("selected_cluster_code")
-            selected_cluster_name = request.POST.get("selected_cluster_name")
+        code = request.POST.get("selected_cluster_code")
+        name = request.POST.get("selected_cluster_name")
+        if not (code and name):
+            return render(request, "select_cluster_u.html", {"error": "Thiếu thông tin nhóm ngành."})
 
-            if selected_cluster_code and selected_cluster_name:
-                quiz = QuizUniversity.objects.create(
-                    user=request.user,
-                    selected_cluster_code=selected_cluster_code,
-                    selected_cluster_name=selected_cluster_name
-                )
-                request.session['quiz_university_result_id'] = quiz.id
-                request.session['selected_cluster_code'] = selected_cluster_code  # ✅ lưu nhóm ngành
+        # clear state cũ nếu có
+        request.session.pop("quiz_university_result_id", None)
+        request.session.pop("quiz_answers", None)
 
-                return redirect('quiz_university:question_u')  # Chuyển hướng đến trang câu hỏi
-            else:
-                return render(request, 'select_cluster_u.html', {
-                    'error': 'Thiếu thông tin nhóm ngành.'
-                })
-        except Exception as e:
-            return render(request, 'select_cluster_u.html', {
-                'error': 'Dữ liệu không hợp lệ.'
-            })
-    
-    # GET request: Hiển thị giao diện chọn nhóm ngành
-    return render(request, 'select_cluster_u.html')
+        request.session["selected_cluster_code"] = code
+        request.session["selected_cluster_name"] = name
+        return redirect("quiz_university:question_u")
+
+    return render(request, "select_cluster_u.html")
+
+
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def question_u(request):
-    quiz_result_id = request.session.get('quiz_university_result_id')
-    if not quiz_result_id or not QuizUniversity.objects.filter(id=quiz_result_id, user=request.user).exists():
-        return redirect('quiz_university:select_cluster_u')
-    return render(request, 'question_u.html')
+    code = request.session.get("selected_cluster_code")
+    name = request.session.get("selected_cluster_name")
+    if not (code and name):
+        return redirect("quiz_university:select_cluster_u")
+
+    # Lưu tạm câu trả lời vào session nếu bạn submit từng câu bằng form POST
+    if request.method == "POST":
+        answers = request.session.get("quiz_answers", {})
+        qid = request.POST.get("question_id")
+        ans = request.POST.get("answer")
+        if qid and ans:
+            answers[qid] = ans
+            request.session["quiz_answers"] = answers
+        if request.POST.get("submit") == "1":  # bấm nút Nộp bài
+            return redirect("quiz_university:submit_quiz_u")
+
+    return render(request, "question_u.html", {
+        "selected_cluster_code": code,
+        "selected_cluster_name": name,
+    })
+
 
 @require_POST
 @login_required
@@ -116,24 +125,27 @@ def submit_quiz_u(request):
     analysis_html = generate_analysis_html(cluster_code, skill_scores, readiness_score)
     detailed_analysis_html = generate_detailed_analysis_html(cluster_code, skill_scores, readiness_score)
 
-    quiz_result_id = request.session.get('quiz_university_result_id')
-    if not quiz_result_id:
-        return JsonResponse({"status": "error", "message": "Không tìm thấy bài test."}, status=400)
-
     try:
-        quiz_result = QuizUniversity.objects.get(id=quiz_result_id, user=request.user)
-        quiz_result.answers = answers
-        quiz_result.skill_scores = skill_scores
-        quiz_result.readiness_score = readiness_score
-        quiz_result.analysis_html = analysis_html
-        quiz_result.detailed_analysis_html = detailed_analysis_html
-        quiz_result.updated_at = timezone.now()
-        quiz_result.save()
-    except QuizUniversity.DoesNotExist:
-        return JsonResponse({"status": "error", "message": "Bài test không tồn tại."}, status=400)
+        # ✅ Tạo bản ghi mới khi nộp bài
+        quiz_result = QuizUniversity.objects.create(
+            user=request.user,
+            selected_cluster_code=cluster_code,
+            selected_cluster_name=request.session.get('selected_cluster_name', ''),
+            answers=answers,
+            skill_scores=skill_scores,
+            readiness_score=readiness_score,
+            analysis_html=analysis_html,
+            detailed_analysis_html=detailed_analysis_html,
+            updated_at=timezone.now()
+        )
+
+        # ✅ Lưu ID vào session để dùng cho trang kết quả
+        request.session['quiz_university_result_id'] = quiz_result.id
+
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": "Không thể lưu kết quả."}, status=500)
 
     return JsonResponse({"status": "ok", "redirect": "/quiz_university/ket-qua/"})
-
 
 
 # Đặt ở đầu views.py hoặc utils.py
@@ -158,16 +170,20 @@ def ket_qua_u(request):
             analysis_html = generate_analysis_html(cluster_code, skill_scores, readiness_score)
             detailed_analysis_html = generate_detailed_analysis_html(cluster_code, skill_scores, readiness_score)
 
-            # ✅ Thêm định dạng hiển thị đẹp
+            order = ["Kỹ năng mềm", "Kỹ năng chuyên môn", "Tư duy sáng tạo"]
             skill_scores_display = {k: format_score(v) for k, v in skill_scores.items()}
-            readiness_score_display = format_score(readiness_score)
+            skill_scores_sorted = {k: skill_scores_display[k] for k in order if k in skill_scores_display}
 
             context = {
                 "selected_cluster_name": quiz_result.selected_cluster_name,
-                "readiness_score": readiness_score_display,
-                "skill_scores": skill_scores_display,
+                "readiness_score": format_score(readiness_score),
+                "skill_scores": skill_scores_sorted,
                 "analysis_html": analysis_html,
-                "detailed_analysis_html": detailed_analysis_html
+                "detailed_analysis_html": detailed_analysis_html,
+
+                # 👇 thêm 2 biến này để form đánh giá dùng
+                "quiz_type": "university",
+                "quiz_id": quiz_result.id,
             }
         except QuizUniversity.DoesNotExist:
             context = {"error": "Kết quả không tồn tại."}

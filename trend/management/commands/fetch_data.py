@@ -17,7 +17,7 @@ class Command(BaseCommand):
         base_url = f'https://api.adzuna.com/v1/api/jobs/{country_code}/search/'
 
         industry_counts = {}
-        total_pages = 2  # For testing; adjust to 20+ when stable
+        total_pages = 5  # For testing; adjust to 20+ when stable
 
         for page in range(1, total_pages + 1):
             url = base_url + str(page)
@@ -69,9 +69,9 @@ class Command(BaseCommand):
                 record_date=today
             )
 
-            self.stdout.write(self.style.SUCCESS(f"✅ Created new trend data for {today}"))
+            self.stdout.write(self.style.SUCCESS(f"Created new trend data for {today}"))
         else:
-            self.stdout.write(self.style.WARNING(f"⚠️ Data for {today} already exists. Skipping creation."))
+            self.stdout.write(self.style.WARNING(f"Data for {today} already exists. Skipping creation."))
 
         # Clean up old data (keep max 6 days)
         unique_dates = IndustryTrend.objects.values_list('record_date', flat=True).distinct().order_by('-record_date')[:6]
@@ -79,5 +79,5 @@ class Command(BaseCommand):
         deleted_count, _ = IndustryTrend.objects.exclude(record_date__in=dates_to_keep).delete()
 
         
-        self.stdout.write(self.style.SUCCESS(f"🧹 Cleaned {deleted_count} old records, kept {len(dates_to_keep)} recent days."))
-        self.stdout.write(self.style.SUCCESS('✅ Successfully updated top industries and trends.'))
+        self.stdout.write(self.style.SUCCESS(f"Cleaned {deleted_count} old records, kept {len(dates_to_keep)} recent days."))
+        self.stdout.write(self.style.SUCCESS('Successfully updated top industries and trends.'))

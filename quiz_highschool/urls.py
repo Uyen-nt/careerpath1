@@ -9,6 +9,7 @@ urlpatterns = [
     path('api/next-question/', views.next_question, name='next_question'),
     path('ket-qua/', views.ket_qua, name='ket_qua'),
     path('submit/', views.calculate_result, name='submit'),
+    path("feedback/", views.save_feedback, name="save_feedback"),
 
 ]
 

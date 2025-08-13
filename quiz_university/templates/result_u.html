@@ -125,20 +125,52 @@
             <!-- ================== TAB PHÂN TÍCH CHI TIẾT ================== -->
             <div id="detailed" class="tab-content">
                 <!-- Vùng chứa nội dung gốc, sẽ được JS xử lý -->
-                <div id="original-detailed-content" style="display: none;">
+                
                   {{ detailed_analysis_html|safe }}
-                </div>
-                <!-- Vùng chứa timeline sẽ được JS tạo ra -->
-                <div id="timeline-container">
-                    <!-- Timeline will be generated here by JavaScript -->
-                </div>
+                
             </div>
         </div>
 
     </div>
 
   </div>
+    <!-- KHUNG TRẮNG SỐ 2: ĐÁNH GIÁ (GIAO DIỆN V4 - COMPACT FORM) -->
+  <div class="container" id="final-evaluation">
+      <!-- Wrapper mới cho form nhỏ gọn -->
+      <div class="feedback-compact-form-v4"
+          data-quiz-type="{{ quiz_type|default:'university' }}"
+          data-quiz-id="{{ quiz_id|default:'' }}">
+
+          <!-- Hàng 1: Các ngôi sao -->
+          <div class="stars" role="radiogroup" aria-label="Đánh giá 1 đến 5 sao">
+              <button type="button" class="star" aria-checked="false" aria-label="1 sao" data-rating="1">★</button>
+              <button type="button" class="star" aria-checked="false" aria-label="2 sao" data-rating="2">★</button>
+              <button type="button" class="star" aria-checked="false" aria-label="3 sao" data-rating="3">★</button>
+              <button type="button" class="star" aria-checked="false" aria-label="4 sao" data-rating="4">★</button>
+              <button type="button" class="star" aria-checked="false" aria-label="5 sao" data-rating="5">★</button>
+              <span class="rating-text">Bạn thấy hữu ích chứ?</span>
+          </div>
+
+          <!-- Hàng 2: Ô comment và nút gửi -->
+          <div class="comment-action-wrapper-v4">
+              <div class="input-wrapper-v4">
+                  <i class="fas fa-pen input-icon-v4"></i>
+                  <!-- Input giờ có placeholder là một khoảng trắng -->
+                  <input type="text" id="fb-comment" maxlength="500" placeholder=" " aria-label="Nội dung đánh giá">
+                  <!-- Label mới được thêm vào để tạo hiệu ứng -->
+                  <label for="fb-comment" class="floating-label">Chia sẻ trải nghiệm của bạn...</label>
+              </div>
+              <button id="fb-submit" class="btn-submit-v4" disabled>
+                  <span class="loading" hidden></span>
+                  <span>Gửi</span>
+              </button>
+          </div>
+          
+          <span id="fb-status" class="muted" role="status" aria-live="polite"></span>
+      </div>
+  </div>
 </main>
+<div id="toast-container"></div>
 
 <script>
   // Hàm chuyển tab
@@ -296,6 +328,137 @@
     // Animation cho vòng tròn
     animateProgressRing();
   });
+
+
+  // =======================================================
+// === SCRIPT MỚI: TOAST NOTIFICATION & ĐÁNH GIÁ ===
+// =======================================================
+
+/**
+ * Hiển thị một thông báo Toast
+ * @param {string} message - Nội dung thông báo
+ * @param {string} type - Loại thông báo ('success' hoặc 'error')
+ * @param {number} duration - Thời gian hiển thị (ms)
+ */
+function showToast(message, type = 'success', duration = 5000) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+
+    const icons = {
+        success: '<i class="fas fa-check-circle"></i>',
+        error: '<i class="fas fa-times-circle"></i>'
+    };
+    
+    const titles = {
+        success: 'Thành công!',
+        error: 'Có lỗi xảy ra!'
+    }
+
+    toast.innerHTML = `
+        <div class="toast-icon">${icons[type]}</div>
+        <div class="toast-content">
+            <div class="title">${titles[type]}</div>
+            <div class="message">${message}</div>
+        </div>
+        <button class="toast-close">&times;</button>
+        <div class="toast-progress-bar"></div>
+    `;
+
+    container.appendChild(toast);
+
+    // Kích hoạt animation
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Tự động đóng
+    const timeoutId = setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500); // Xóa khỏi DOM sau khi animation kết thúc
+    }, duration);
+
+    // Đóng khi click nút close
+    toast.querySelector('.toast-close').addEventListener('click', () => {
+        clearTimeout(timeoutId); // Hủy tự động đóng
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500);
+    });
+}
+
+
+// Logic xử lý form đánh giá (PHIÊN BẢN SỬA LỖI CHO GIAO DIỆN V4)
+(function() {
+  const wrap = document.querySelector('.feedback-compact-form-v4');
+  if (!wrap) return;
+
+  const quizType = (wrap.dataset.quizType || '').toLowerCase();   // "university"
+  const quizId   = Number(wrap.dataset.quizId || 0);
+
+  const stars    = wrap.querySelectorAll('.star');
+  const submitBtn= wrap.querySelector('#fb-submit');
+  const commentEl= wrap.querySelector('#fb-comment');
+  const spinner  = submitBtn.querySelector('.loading');
+  const statusEl = wrap.querySelector('#fb-status');
+
+  let rating = 0;
+
+  function updateButtonState(){ submitBtn.disabled = !(rating >= 1 && rating <= 5); }
+
+  stars.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      rating = parseInt(btn.dataset.rating, 10) || 0;
+      stars.forEach(b => {
+        const r = parseInt(b.dataset.rating, 10) || 0;
+        b.classList.toggle('active', r <= rating);
+        b.setAttribute('aria-checked', r <= rating ? 'true' : 'false');
+      });
+      updateButtonState();
+    });
+  });
+
+  submitBtn.addEventListener('click', async () => {
+    if (!quizType || !quizId) {
+      showToast('Thiếu thông tin bài trắc nghiệm để đánh giá.', 'error');
+      return;
+    }
+
+    const comment = (commentEl.value || '').trim();
+    submitBtn.disabled = true; spinner.hidden = false; if (statusEl) statusEl.textContent = '';
+
+    let ok = false;
+    try {
+      const res = await fetch("{% url 'quiz_highschool:save_feedback' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({ quiz_type: quizType, quiz_id: quizId, rating, comment })
+      });
+      const data = await res.json();
+      ok = res.ok && data.ok;
+
+      if (ok) {
+        showToast('Cảm ơn bạn đã gửi đánh giá!', 'success');
+        commentEl.value = ""; rating = 0;
+        stars.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-checked','false'); });
+        updateButtonState();
+      } else {
+        showToast((data && data.error) || 'Gửi đánh giá thất bại.', 'error');
+      }
+    } catch (e) {
+      showToast('Lỗi kết nối mạng. Vui lòng thử lại.', 'error');
+    } finally {
+      spinner.hidden = true;
+      if (!ok) submitBtn.disabled = false;
+    }
+  });
+
+  updateButtonState();
+})();
   
 </script>
 {% endblock %}

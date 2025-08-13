@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericRelation
 
 class QuizUniversity(models.Model):
     """
@@ -30,6 +31,9 @@ class QuizUniversity(models.Model):
     # HTML phân tích chi tiết cho kết quả
     analysis_html = models.TextField()
     detailed_analysis_html = models.TextField(blank=True, null=True)  
+
+    # ResultFeedback 
+    feedbacks = GenericRelation("quiz_highschool.ResultFeedback", related_query_name="quiz_university")
 
     # Đề xuất hành động tiếp theo (optionally show in result page)
     recommended_actions = models.TextField(blank=True, null=True)

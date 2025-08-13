@@ -1392,7 +1392,7 @@ a.btn-edit-inline:hover {
     border-top: 1px solid var(--border-color);
 }
 
-/* --- QUIZ HISTORY STYLES (PREMIUM DESIGN V2) --- */
+/* --- QUIZ HISTORY STYLES (PREMIUM DESIGN V2 - UPDATED) --- */
 
 .quiz-history-list-v2 {
     display: flex;
@@ -1402,14 +1402,14 @@ a.btn-edit-inline:hover {
 
 .quiz-history-item-v2 {
     display: grid;
-    /* Bố cục 3 cột: Ngày (auto) - Nội dung (1fr) - Nút (auto) */
-    grid-template-columns: auto 1fr auto; 
+    /* THAY ĐỔI: Sử dụng grid layout của Code 2 */
+    grid-template-columns: 90px 1fr auto; 
     align-items: center;
-    gap: 24px;
+    gap: 1.5rem; /* Giữ gap lớn hơn của V2 */
     background: #ffffff;
-    border: 1px solid #e5e7eb; /* Gray-200 */
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
-    padding: 16px 24px;
+    padding: 1rem 1.5rem; /* Giữ padding của V2 */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -1419,112 +1419,231 @@ a.btn-edit-inline:hover {
     border-color: var(--primary-green, #28a745);
 }
 
-/* --- Cột 1: Ngày tháng --- */
-.history-item-date-block {
+/* 
+=========================================================
+== BẮT ĐẦU PHẦN CSS LẤY TỪ CODE 2 CHO CÁC MỤC BÊN TRONG ==
+=========================================================
+*/
+
+/* Cột 1: Ngày tháng */
+.card-date {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-right: 24px;
-    border-right: 1px solid #e5e7eb;
+    height: 100%;
+    background-color: var(--light-green-bg, #f0fdf4);
+    border-radius: var(--border-radius-md, 8px);
     text-align: center;
+    padding: 0.5rem;
+    border: 1px solid #dcfce7;
 }
-.history-item-day {
-    font-size: 2.25rem; /* Rất lớn */
-    font-weight: 700;
-    color: var(--primary-green, #28a745);
+
+.card-date .day {
+    font-family: var(--font-primary, sans-serif);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--dark-green, #15803d);
     line-height: 1;
 }
-.history-item-monthyear {
-    font-size: 0.875rem;
-    color: #6b7280; /* Gray-500 */
+
+.card-date .month-year {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-medium, #495057);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* --- Cột 2: Nội dung kết quả --- */
-.history-item-content {
+/* Cột 2: Thông tin chính */
+.card-info {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0.5rem;
 }
-.history-result-v2 {
+
+.info-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-}
-.history-result-v2 i {
-    font-size: 1.2rem;
-    color: #9ca3af; /* Gray-400 */
-}
-.history-result-v2 p {
-    margin: 0;
-    flex-grow: 1; /* Để thẻ % đẩy ra xa */
-    color: #4b5563; /* Gray-600 */
-}
-.history-result-v2 strong {
-    font-weight: 600;
-    color: #111827; /* Gray-900 */
+    gap: 0.75rem;
+    padding: 0.25rem 0;
 }
 
-/* Thẻ badge cho phần trăm */
-.result-percentage-badge {
-    font-size: 0.8rem;
+.info-row p {
+    margin: 0;
+    flex-grow: 1;
+    color: var(--text-medium, #495057);
+    font-size: 0.9rem;
+}
+
+.info-row strong {
     font-weight: 600;
+    color: var(--text-dark, #212529);
+}
+
+/* Icon Styles */
+.info-row i {
+    font-size: 1rem;
+    width: 28px;
+    height: 28px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.icon-gold { color: #f59e0b; background-color: #fffbeb; }
+.icon-silver { color: #6b7280; background-color: #f3f4f6; }
+.icon-green { color: var(--primary-green); background-color: var(--light-green-bg); }
+
+
+
+/* Thẻ badge phần trăm */
+.percentage-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
     padding: 4px 10px;
-    border-radius: 50px; /* Bo tròn như viên thuốc */
-    color: #15803d; /* Green-700 */
-    background-color: #dcfce7; /* Green-100 */
+    border-radius: 50px;
     white-space: nowrap;
 }
-.result-percentage-badge.secondary {
-    color: #6b7280; /* Gray-500 */
-    background-color: #f3f4f6; /* Gray-100 */
+.percentage-badge.primary {
+    color: #a16207; 
+    background-color: #fef9c3;
+    border: 1px solid #fde68a;
+}
+.percentage-badge.secondary {
+    color: var(--dark-green, #166534);
+    background-color: var(--light-green-bg, #dcfce7);
+    border: 1px solid #bbf7d0;
 }
 
-/* Làm nổi bật kết quả top 1 */
-.top-result-highlight {
-    background: linear-gradient(90deg, #f0fdf4, #ffffff 70%); /* Nền gradient xanh nhạt */
-    padding: 10px;
-    margin: -10px; /* Trick để padding không làm lệch bố cục */
-    border-radius: 8px;
+/* Cột 3: Nút hành động */
+.card-actions {
+    padding-left: 0.5rem;
 }
-.top-result-highlight i {
-    color: var(--primary-yellow, #ffc107);
+.btn-view-details {
+    background-color: var(--primary-green);
+    color: #ffffff;
+    border: none;
+    font-family: var(--font-primary, sans-serif);
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.1);
+    transition: all 0.3s ease;
 }
 
-/* --- Cột 3: Nút hành động --- */
-.quiz-history-actions-v2 .btn {
-    transition: all 0.2s ease;
+.btn-view-details i {
+    transition: transform 0.3s ease;
 }
 
-/* Hiệu ứng tương tác: khi hover thẻ, nút cũng thay đổi */
-.quiz-history-item-v2:hover .btn-primary {
-    background-color: var(--dark-green);
-    transform: scale(1.05);
+.btn-view-details:hover {
+    background-color: var(--dark-green, #1e7e34);
+    box-shadow: 0 6px 14px rgba(40, 167, 69, 0.2);
+    transform: translateY(-2px);
 }
+.btn-view-details:hover i {
+    transform: translateX(2px);
+}
+
+
+/* 
+=======================================================
+== KẾT THÚC PHẦN CSS LẤY TỪ CODE 2 ====================
+=======================================================
+*/
+
 
 /* --- Responsive cho mobile --- */
 @media (max-width: 767px) {
     .quiz-history-item-v2 {
-        /* Chuyển thành 1 cột duy nhất */
         grid-template-columns: 1fr; 
         padding: 16px;
         gap: 16px;
     }
-    .history-item-date-block {
-        flex-direction: row; /* Ngày tháng nằm ngang */
-        border-right: none;
-        border-bottom: 1px solid #e5e7eb;
-        padding-right: 0;
-        padding-bottom: 12px;
-        justify-content: flex-start;
-        gap: 8px;
-    }
-    .history-item-day { font-size: 1.5rem; }
-    .history-item-monthyear { font-size: 0.8rem; }
     
-    .quiz-history-actions-v2 {
-        align-self: flex-end; /* Đẩy nút sang phải */
+    /* Style cho cột ngày tháng trên mobile */
+    .card-date {
+        grid-row: 1; /* Đảm bảo nó luôn ở hàng đầu */
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: baseline;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        background-color: transparent; /* Bỏ nền trên mobile */
+        border: none; /* Bỏ viền trên mobile */
     }
+    .card-date .day { color: var(--text-dark); }
+    
+    /* Đảm bảo cột thông tin và hành động ở đúng vị trí */
+    .card-info { grid-row: 2; }
+    .card-actions { grid-row: 3; justify-self: flex-end; padding-left: 0; margin-top: 0.5rem; }
+}
+
+
+/* ======================================================= */
+/* === KIỂU 1: VIÊN THUỐC VÀNG CHO SỐ ĐIỂM === */
+/* ======================================================= */
+
+/* Trả lại style mặc định cho nhãn "Điểm sẵn sàng:" */
+.readiness-score-row p {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text-medium, #495057);
+    font-weight: 600;
+}
+
+/* Biến riêng con số % thành một "viên thuốc" màu vàng */
+.readiness-score-row strong {
+    display: inline-block;
+    background-color: var(--light-yellow-bg, #fefce8);
+    color: #a75521;
+    padding: 0.25rem 0.75rem; /* Padding nhỏ để viên thuốc gọn gàng */
+    border-radius: 50px;
+    border: 1px solid #ffc107;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-left: 0.5rem; /* Khoảng cách với chữ "Điểm sẵn sàng:" */
+    vertical-align: baseline; /* Căn chỉnh với dòng chữ */
+}
+
+/* ======================================================= */
+/* === KIỂU 3: PHÂN BIỆT BẰNG TIÊU ĐỀ DẠNG CHIP (TỐI GIẢN) === */
+/* ======================================================= */
+
+/* Kiểu cho tiêu đề dạng "chip" hoặc "pill" */
+.history-group-title {
+    display: inline-block; /* Quan trọng: Giúp background chỉ bọc vừa nội dung */
+    padding: 0.6rem 1.25rem;
+    border-radius: 50px; /* Bo tròn để tạo hình viên thuốc */
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem; /* Khoảng cách từ tiêu đề đến danh sách kết quả */
+    font-family: var(--font-primary, sans-serif);
+}
+
+/* Thêm màu sắc cho từng theme */
+.history-group-title.theme-highschool {
+    background-color: var(--light-green-bg, #f0fdf4);
+    color: var(--dark-green, #15803d);
+    border: 1px solid var(--primary-green, #28a745);
+}
+
+.history-group-title.theme-university {
+    background-color: var(--light-yellow-bg, #fefce8);
+    color: #a16207; /* Màu nâu đậm hợp với nền vàng */
+    border: 1px solid var(--primary-yellow, #ffc107);
+}
+
+/* Kiểu cho đường kẻ ngang phân cách */
+.section-separator {
+    border: 0;
+    height: 1px; /* Đường kẻ mỏng */
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0)); /* Hiệu ứng mờ dần 2 đầu */
+    margin: 2.5rem 0; /* Khoảng cách trên và dưới */
 }

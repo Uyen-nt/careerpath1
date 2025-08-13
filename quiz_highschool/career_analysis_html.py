@@ -1,20 +1,18 @@
 # career_analysis_html.py
 
 BUSINESS_HTML = """
-  <div class="header-text">
-      <h2>Quản lý – Kinh doanh</h2>
+<div class="header-text">
+    <h2>Quản lý – Kinh doanh</h2>
       <p>Bạn có khả năng tổ chức, lãnh đạo và tinh thần cầu tiến, phù hợp với môi trường chuyên nghiệp, năng động và có định hướng mục tiêu rõ ràng.</p>
   </div>
-  <div class="progress-circle-wrapper" data-score="{score}">
-      <svg class="progress-ring" width="100" height="100">
+<div class="progress-circle-wrapper" data-score="{score}">
+    <svg class="progress-ring" width="100" height="100">
         <circle class="progress-ring-track" stroke-width="8" fill="transparent" r="44" cx="50" cy="50"/>
         <circle class="progress-ring-indicator" stroke-width="8" fill="transparent" r="44" cx="50" cy="50"/>
-      </svg>
-      <span class="progress-score">{score}%</span>
-  </div>
+    </svg>
+    <span class="progress-score">{score}%</span>
+</div>
 
-
-<!-- CẤU TRÚC MỚI: Dạng Infographic Timeline -->
 <div class="analysis-step-list">
 
     <!-- Bước 1: Vì sao phù hợp? -->
@@ -139,8 +137,9 @@ BUSINESS_HTML = """
     </div>
 </div>
 
-<!-- Thẻ kết luận nằm riêng biệt -->
-<div class="analysis-conclusion>
+
+<!-- Thẻ kết luận -->
+<div class="analysis-conclusion">
     <div class="conclusion-icon"><i class="fas fa-flag-checkered"></i></div>
     <div class="conclusion-text">
         <h6>Tổng kết & Lời khuyên</h6>

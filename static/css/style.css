@@ -807,3 +807,202 @@ html {
 .no-caret::after {
     display: none !important;
 }
+
+/* === CSS CHO MODAL LỰA CHỌN (PHIÊN BẢN VIBRANT & ALIVE) === */
+
+#chooseUserTypeModal .modal-content {
+    border-radius: var(--border-radius-lg);
+    border: none;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.1);
+    background-color: #f8f9fa; /* Nền xám nhạt để thẻ trắng nổi bật */
+}
+
+#chooseUserTypeModal .modal-header {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem 2rem;
+}
+
+#chooseUserTypeModal .modal-title {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 1.3rem;
+}
+
+.choice-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem;
+    border: 2px solid #e9ecef; /* Viền xám nhạt mặc định */
+    border-radius: var(--border-radius-lg);
+    text-decoration: none;
+    min-height: 220px;
+    background-color: #fff;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* === HIỆU ỨNG SÁNG LÊN KHI HOVER === */
+.choice-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* Viền đổi màu và đậm hơn */
+.choice-card-student:hover {
+    border-color: var(--primary-green);
+}
+.choice-card-university:hover {
+    border-color: var(--primary-yellow);
+}
+
+.choice-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    filter: brightness(1); /* Độ sáng mặc định */
+}
+
+.choice-title {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin: 0;
+    transition: all 0.3s ease;
+    filter: brightness(1); /* Độ sáng mặc định */
+}
+
+/* === MÀU SẮC CÓ SẴN CHO ICON VÀ TITLE === */
+.choice-card-student .choice-icon,
+.choice-card-student .choice-title {
+    color: var(--primary-green);
+}
+
+.choice-card-university .choice-icon,
+.choice-card-university .choice-title {
+    color: var(--primary-yellow);
+}
+
+/* === HIỆU ỨNG LÀM MÀU SẮC RỰC RỠ HƠN KHI HOVER === */
+.choice-card:hover .choice-icon,
+.choice-card:hover .choice-title {
+    filter: brightness(1.1); /* Tăng độ sáng của màu sắc */
+    transform: scale(1.05); /* Phóng to nhẹ để tạo cảm giác "sống" */
+}
+
+/* =============================================================== */
+/* ===   CSS PHẦN ĐÁNH GIÁ (KẾT HỢP ICON & SHAPES)              === */
+/* =============================================================== */
+
+/* --- PHẦN 1: NỀN VÀ CÁC HÌNH KHỐI TRANG TRÍ --- */
+.reviews-section-marquee {
+  background-color: #fff;
+  position: relative;
+  overflow: hidden; /* Bắt buộc để ẩn phần thừa của shapes */
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+/* "Sân khấu" chứa các hình khối */
+.reviews-bg-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+.reviews-bg-shapes .shape {
+    position: absolute;
+    display: block;
+    opacity: 0.1; /* Rất mờ để không gây xao nhãng */
+    border-radius: 50%; /* Tất cả đều là hình tròn cho tinh tế */
+}
+/* Định vị các shape */
+.reviews-bg-shapes .shape-1 {
+    width: 150px;
+    height: 150px;
+    top: 15%;
+    left: 5%;
+    background-color: var(--primary-green, #28a745);
+}
+.reviews-bg-shapes .shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 5%;
+    right: 5%;
+    background-color: var(--primary-yellow, #ffc107);
+}
+.reviews-bg-shapes .shape-3 {
+    width: 50px;
+    height: 50px;
+    top: 20%;
+    right: 15%;
+    background-color: var(--primary-green, #28a745);
+}
+
+/* --- PHẦN 2: TIÊU ĐỀ VÀ DẢI PHÂN CÁCH ICON --- */
+.reviews-section-marquee .section-title {
+    padding-bottom: 0;
+    margin-bottom: 1rem;
+    font-size: 2.8rem;
+    font-weight: 800;
+}
+.reviews-section-marquee .section-title::after {
+    display: none; 
+}
+
+/* Dải phân cách */
+.title-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 40px auto 0 auto; /* Chỉ có margin top, vì carousel đã có mt-5 */
+    max-width: 600px;
+    width: 90%;
+}
+/* Đường kẻ hai bên */
+.title-separator::before,
+.title-separator::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background: var(--border-color, #dee2e6); /* Giữ màu xám trung tính */
+}
+/* THAY ĐỔI MÀU SẮC: Icon sẽ có màu vàng */
+.title-separator i {
+    font-size: 1.75rem;
+    color: var(--primary-yellow, #ffc107); /* Đổi sang màu vàng */
+    padding: 0 1.25rem;
+}
+
+
+/* --- PHẦN 3: ĐẢM BẢO NỘI DUNG NẰM BÊN TRÊN SHAPES --- */
+.reviews-section-marquee .container,
+.reviews-section-marquee .reviews-carousel-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* --- PHẦN 4: STYLE THẺ CARD (GIỮ NGUYÊN TỪ CODE GỐC) --- */
+.reviews-carousel-wrapper { overflow: hidden; cursor: pointer; margin-top: 50px; }
+.reviews-carousel-wrapper.is-paused { opacity: 0.9; }
+.reviews-swiper-marquee .swiper-wrapper { transition-timing-function: linear !important; will-change: transform; align-items: stretch; }
+.reviews-swiper-marquee .swiper-slide { width: 350px !important; max-width: none; padding: 10px 0; height: auto; }
+.review-card-item { border: 1px solid var(--border-color, #dee2e6); border-top: 4px solid var(--primary-green, #28a745); border-radius: var(--border-radius-lg, 0.8rem); background-color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+.review-card-item .card-body { flex-grow: 1; padding: 1rem; }
+.review-card-header { margin-bottom: 0.75rem !important; }
+.review-card-header .fa-user-circle { font-size: 2.5em; color: var(--dark-green, #1e7e34); }
+.review-user-info strong { font-size: 0.95rem; }
+.review-card-rating { font-size: 1rem; margin-bottom: 0.75rem !important; }
+.review-card-comment { font-size: 0.9rem; font-style: italic; color: var(--text-dark, #212529); line-height: 1.5; }
+
+.reviews-swiper-marquee .swiper-wrapper {
+  transition-timing-function: linear !important;
+  will-change: transform; /* giúp GPU render mượt hơn */
+}
+
+

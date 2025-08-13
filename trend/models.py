@@ -6,7 +6,7 @@ class IndustryTrend(models.Model):
     trend_score = models.FloatField(default=0)
     job_growth = models.CharField(max_length=100, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
-    record_date = models.DateField(default=timezone.now) 
+    record_date = models.DateField(default=timezone.now)  # ✅ thêm dòng này
 
     def __str__(self):
         return self.name
