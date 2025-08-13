@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('quiz_highschool/', include('quiz_highschool.urls')),
     path('quiz_university/', include('quiz_university.urls')),
-    path('quiz_workers/', include('quiz_workers.urls')),
+    #path('quiz_workers/', include('quiz_workers.urls')),
     path('users/', include('users.urls')),
     path('trend/', include('trend.urls')),
     path('premium/', include('premium.urls')),

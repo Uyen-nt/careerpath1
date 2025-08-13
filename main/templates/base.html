@@ -17,9 +17,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap&subset=vietnamese" rel="stylesheet">
+    <!-- SwiperJS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <!-- Your Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+<!-- SwiperJS JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <body>
     <header class="navbar-custom sticky-top"> <!-- Added sticky-top -->
         <div class="container d-flex justify-content-between align-items-center"> <!-- Use Bootstrap container -->
@@ -43,7 +47,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'quiz_highschool:gioi_thieu' %}"><i class="fas fa-user-graduate fa-fw me-2 text-primary-green opacity-75"></i>Học sinh</a></li>
                         <li><a class="dropdown-item" href="{% url 'quiz_university:gioi_thieu_u' %}"><i class="fas fa-university fa-fw me-2 text-primary-green opacity-75"></i>Sinh viên</a></li>
-                        <li><a class="dropdown-item" href="{% url 'quiz_workers:gioi_thieu_w' %}"><i class="fas fa-briefcase fa-fw me-2 text-primary-green opacity-75"></i>Người đi làm</a></li>
+                        
                     </ul>
                 </div>
                 <a class="nav-link" href="{% url 'trend:trend' %}">Xu hướng ngành nghề</a>
