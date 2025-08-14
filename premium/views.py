@@ -27,18 +27,6 @@ payOS = PayOS(settings.PAYOS_CLIENT_ID, settings.PAYOS_API_KEY, settings.PAYOS_C
 
 User = get_user_model()
 
-def send_payment_confirmation_email(user, months, amount, request=None):
-    subject = 'Xác Nhận Thanh Toán Premium - CareerPath'
-    context = {
-        'user': user,
-        'months': months,
-        'amount': amount,
-        'end_date': timezone.now() + timezone.timedelta(days=30 * months),
-    }
-    message = render_to_string('email_payment_confirmation.html', context)
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], html_message=message)
-
-
 def premium_home(request):
     user = request.user if request.user.is_authenticated else None
     subscription = None
@@ -213,54 +201,56 @@ def initiate_payment(request):
 
     return HttpResponseBadRequest()
 
+
+def send_payment_confirmation_email(user, months, amount, request=None):
+    subject = 'Xác Nhận Thanh Toán Premium - CareerPath'
+    context = {
+        'user': user,
+        'months': months,
+        'amount': amount,
+        'end_date': timezone.now() + timezone.timedelta(days=30 * months),
+    }
+    message = render_to_string('email_payment_confirmation.html', context)
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], html_message=message)
+
 @csrf_exempt
 def payos_webhook(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
 
     try:
-        raw = request.body  # raw bytes từ PayOS
+        raw = request.body  # để log/debug nếu cần
         body = json.loads(raw)
 
-        # SDK PayOS trả về WebhookData (object có thuộc tính)
+        # NOTE: SDK trả về WebhookData (thuộc tính phẳng)
         verified = payOS.verifyPaymentWebhookData(body)
 
-        # Lấy thông tin từ verified.data
-        data = getattr(verified, 'data', None)
-        if data is None:
-            logger.error('Webhook: missing data field | verified=%s', verified)
-            return JsonResponse({'success': False, 'error': 'missing data'}, status=400)
-
-        # Truy cập theo thuộc tính (không dùng .get)
-        order_code = str(getattr(data, 'orderCode', None))
-        code = str(getattr(data, 'code', None))
+        order_code = str(getattr(verified, 'orderCode', '') or '')
+        code = str(getattr(verified, 'code', '') or '')
 
         if not order_code:
-            logger.error('Webhook: missing orderCode | data=%s', data)
+            logger.error('Webhook missing orderCode | verified=%s', verified)
             return JsonResponse({'success': False, 'error': 'missing orderCode'}, status=400)
 
         transaction = get_object_or_404(Transaction, order_id=order_code)
 
         if transaction.status == 'pending':
-            if code in ('00', '0'):
+            if code in ('00', '0', 0):  # đề phòng kiểu dữ liệu
                 subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
                 subscription.activate_subscription(months=transaction.months)
 
                 transaction.status = 'completed'
                 transaction.save(update_fields=['status', 'updated_at'])
 
-                # Gửi email: đừng để lỗi mail làm fail webhook
                 try:
-                    send_payment_confirmation_email(
-                        transaction.user, transaction.months, transaction.amount
-                    )
+                    send_payment_confirmation_email(transaction.user, transaction.months, transaction.amount)
                 except Exception as mail_err:
                     logger.exception('Send mail failed for order %s: %s', order_code, mail_err)
             else:
                 transaction.status = 'failed'
                 transaction.save(update_fields=['status', 'updated_at'])
 
-        # Luôn trả 200 để PayOS không retry vô tận
+        # trả 200 để PayOS không retry nữa
         return JsonResponse({'success': True})
     except Exception as e:
         logger.exception('Webhook error: %s | raw=%s', e, request.body)
