@@ -264,3 +264,87 @@ LOGGING = {
         "django": {"handlers": ["file", "console"], "level": "INFO", "propagate": True},
     },
 }
+
+JAZZMIN_SETTINGS = {
+    # --- Tiêu đề & Thương hiệu ---
+    "site_title": "CareerPath Admin",
+    "site_header": "CAREERPATH",       # <-- ĐÃ IN HOA
+    "site_brand": "CAREERPATH",        # <-- ĐÃ IN HOA
+    "welcome_sign": "Chào mừng tới trang quản trị CareerPath",
+    "copyright": "CareerPath © 2025",
+    
+
+    # --- CSS & JS ---
+    "custom_css": "css/custom.css", # Đổi tên file CSS cho phù hợp
+    "user_avatar": "avatar",        # tên field ImageField trên CustomUser
+    "show_user_menu": True,  
+
+    # 💡 [CẢI TIẾN] CẬP NHẬT ICONS CHO PHÙ HỢP HƠN
+    "icons": {
+        # ===== App-level =====
+        "users": "fas fa-users-cog",
+        "premium": "fas fa-gem",
+        "quiz_highschool": "fas fa-school",
+        "quiz_university": "fas fa-university",
+        "trend": "fas fa-chart-line",
+        "python_social_auth": "fas fa-share-alt",  # tránh 'fab' (brands)
+
+        # ===== Users (model + proxy) =====
+        "users.CustomUser": "fas fa-user",
+        "users.SuperUserProxy": "fas fa-user-shield",
+        "users.RegularUserProxy": "fas fa-user-friends",
+        "users.AnalyticsUserProxy": "fas fa-chart-pie",
+
+        # ===== Premium =====
+        "premium.PremiumSubscription": "fas fa-id-badge",
+        "premium.Transaction": "fas fa-receipt",
+
+        # ===== Quiz_Highschool =====
+        "quiz_highschool.QuizHighschool": "fas fa-file-alt",
+        "quiz_highschool.ResultFeedback": "fas fa-comments",
+        "quiz_highschool.ResultFeedbackHighschool": "fas fa-comment-dots",
+
+        # ===== Quiz_University =====
+        "quiz_university.QuizUniversity": "fas fa-clipboard",
+        "quiz_university.ResultFeedbackUniversity": "fas fa-comment-dots",
+    },
+    
+    # --- Các cài đặt khác giữ nguyên ---
+    "topmenu_links": [
+        {"name": "Dashboard", "url": "admin:index"},
+        {"name": "Xem trang web", "url": "/", "icon": "fas fa-globe", "new_window": True},
+    ],
+    "order_with_respect_to": [
+        "users", "premium", "quiz_highschool", "quiz_university", "trend", "python_social_auth",
+    ],
+    "hide_apps": ["auth", "quiz_workers"],
+    "hide_models": ["python_social_auth.nonce", "python_social_auth.association"],
+    "show_ui_builder": False,
+    "changeform_format": "horizontal_tabs",
+    "related_modal_active": True,
+}
+
+# JAZZMIN_UI_TWEAKS gần như giữ nguyên vì chúng ta chủ yếu tùy biến bằng CSS
+JAZZMIN_UI_TWEAKS = {
+    "theme": "flatly",
+    "navbar_small_text": False,
+    "footer_small_text": True,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "sidebar_nav_small_text": False,
+    "navbar_fixed": True,
+    "sidebar_fixed": True,
+    "footer_fixed": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-white navbar-light",
+    "sidebar": "sidebar-dark-charcoal",
+    "sidebar_nav_flat_style": True,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact": True,
+    "sidebar_nav_legacy_style": False,
+    "button_classes": {
+        "primary": "btn-primary", "secondary": "btn-secondary", "info": "btn-info",
+        "warning": "btn-warning", "danger": "btn-danger", "success": "btn-success"
+    },
+    "actions_sticky_top": True,
+}
