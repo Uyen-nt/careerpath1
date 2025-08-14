@@ -37,7 +37,6 @@ def send_payment_confirmation_email(user, months, amount, request=None):
     }
     message = render_to_string('email_payment_confirmation.html', context)
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], html_message=message)
-}
 
 
 def premium_home(request):
