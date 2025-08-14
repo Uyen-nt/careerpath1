@@ -16,6 +16,8 @@ from django.urls import reverse
 from quiz_highschool.models import QuizHighschool
 from quiz_university.models import QuizUniversity
 
+from premium.models import PremiumSubscription
+
 
 def register_view(request):
     if request.method == 'POST':
@@ -28,31 +30,33 @@ def register_view(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
-
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
 def login_view(request):
-    # Phần xử lý POST cho form đăng nhập giữ nguyên
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')
+            user = form.get_user()
+            login(request, user)
+
+            # Redirect dựa theo quyền
+            if user.is_staff:
+                return redirect(reverse('admin:index'))
+            return redirect('home')
+        else:
+            messages.error(request, "Tên đăng nhập hoặc mật khẩu không chính xác.")
     else:
         form = CustomAuthenticationForm()
 
-    # 👇 THÊM DÒNG NÀY: Tạo một instance của form reset password
+    # Form reset mật khẩu
     password_reset_form = PasswordResetForm()
 
-    # 👇 CẬP NHẬT CONTEXT: Truyền cả 2 form ra template
-    context = {
+    return render(request, 'login.html', {
         'form': form,
         'password_reset_form': password_reset_form
-    }
-    
-    return render(request, 'login.html', context)
+    })
 
 @require_POST # Chỉ cho phép phương thức POST
 def ajax_password_reset_view(request):
@@ -254,3 +258,119 @@ def ajax_delete_account(request):
 #     else:
 #         form = CustomUserChangeForm(instance=request.user)
 #     return render(request, 'edit_profile.html', {'form': form})
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render
+from django.db.models import Q
+
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, redirect, get_object_or_404
+# ĐÚNG:
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import user_passes_test, login_required, permission_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
+from django.utils import timezone
+from datetime import timedelta
+from .models import CustomUser
+
+# ---------- QUẢN LÝ SUPERUSER ----------
+@user_passes_test(lambda u: u.is_superuser)
+def manage_superusers_view(request):
+    superusers = CustomUser.objects.filter(is_superuser=True).order_by("-date_joined")
+    candidates = CustomUser.objects.filter(is_superuser=False).order_by("-date_joined")[:10]
+    return render(request, "control_manage_superusers.html", {
+        "superusers": superusers,
+        "candidates": candidates,
+    })
+
+@staff_member_required
+@require_POST
+def promote_to_superuser(request, user_id):
+    u = get_object_or_404(CustomUser, pk=user_id)
+    u.is_superuser = True
+    u.is_staff = True  # cần để vào /admin/
+    u.save(update_fields=["is_superuser", "is_staff"])
+    messages.success(request, f"Đã nâng {u.username} thành superuser.")
+    return redirect("users:manage_superusers")
+
+@staff_member_required
+@require_POST
+def revoke_superuser(request, user_id):
+    u = get_object_or_404(CustomUser, pk=user_id)
+    u.is_superuser = False
+    # tuỳ chính sách của bạn: có thể vẫn giữ is_staff nếu muốn
+    u.is_staff = False
+    u.save(update_fields=["is_superuser", "is_staff"])
+    messages.success(request, f"Đã hạ quyền superuser của {u.username}.")
+    return redirect("users:manage_superusers")
+
+
+# ---------- QUẢN LÝ USER THƯỜNG ----------
+@staff_member_required
+def manage_users_view(request):
+    qs = CustomUser.objects.filter(is_staff=False).order_by('-date_joined')
+    q = request.GET.get('q', '').strip()
+    premium = request.GET.get('premium')
+    active = request.GET.get('active')
+
+    if q:
+        qs = qs.filter(Q(username__icontains=q) | Q(email__icontains=q))
+    if premium in ('1', '0'):
+        qs = qs.filter(is_premium=(premium == '1'))
+    if active in ('1', '0'):
+        qs = qs.filter(is_active=(active == '1'))
+
+    return render(request, 'control_manage_users.html', {
+        'users_list': qs, 'q': q, 'premium': premium, 'active': active
+    })
+
+
+@staff_member_required
+@require_POST
+def toggle_active(request, user_id):
+    u = get_object_or_404(CustomUser, pk=user_id, is_staff=False)
+    u.is_active = not u.is_active
+    u.save(update_fields=['is_active'])
+    messages.success(request, f'Đã {"mở" if u.is_active else "khóa"} {u.username}.')
+    return redirect('users:manage_users')
+
+@staff_member_required
+@require_POST
+def set_premium(request, user_id):
+    u = get_object_or_404(CustomUser, pk=user_id, is_staff=False)
+    days = int(request.POST.get('days', '30'))
+    u.is_premium = True
+    u.premium_expiry = timezone.now() + timedelta(days=days)
+    u.save(update_fields=['is_premium', 'premium_expiry'])
+
+    # ✅ Cập nhật/khởi tạo subscription tương ứng
+    sub, _ = PremiumSubscription.objects.get_or_create(user=u)
+    if sub.subscription_start is None:
+        sub.subscription_start = timezone.now()
+    sub.subscription_end = u.premium_expiry
+    sub.is_active = True
+    sub.save(update_fields=['subscription_start', 'subscription_end', 'is_active'])
+
+    messages.success(request, f'Đã set premium cho {u.username} {days} ngày.')
+    return redirect('users:manage_users')
+
+@staff_member_required
+@require_POST
+def remove_premium(request, user_id):
+    u = get_object_or_404(CustomUser, pk=user_id, is_staff=False)
+    u.is_premium = False
+    u.premium_expiry = None
+    u.save(update_fields=['is_premium', 'premium_expiry'])
+
+    # ✅ Đồng bộ subscription nếu có
+    from premium.models import PremiumSubscription
+    sub = PremiumSubscription.objects.filter(user=u).first()
+    if sub:
+        sub.is_active = False
+        sub.subscription_end = None
+        sub.save(update_fields=['is_active', 'subscription_end'])
+
+    messages.success(request, f'Đã gỡ premium của {u.username}.')
+    return redirect('users:manage_users')
+

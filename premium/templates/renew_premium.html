@@ -5,169 +5,132 @@
 
 {% block content %}
 <head>
-  <link rel="stylesheet" href="{% static 'css/premium.css' %}">
-  <!-- Tải CSS cho trang gia hạn -->
+  <!-- Trỏ đến file CSS mới, nhất quán -->
   <link rel="stylesheet" href="{% static 'css/renew-premium.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<section class="premium-section py-5">
+<main class="premium-page section-padding">
   <div class="container">
-    <div class="row justify-content-center text-center mb-5">
-      <div class="col-xl-8 col-lg-9">
-        <h2 class="section-title fw-bolder mb-2">
-          {% if is_first_time %}Chọn Gói Premium Phù Hợp{% else %}Gia Hạn Premium{% endif %}
-        </h2>
-        <p class="text-muted lead-line mb-0">
-          {{ hero_subtitle }}
-        </p>
-      </div>
+    
+    <!-- === KHU VỰC TIÊU ĐỀ CHÍNH (Giữ nguyên) === -->
+    <div class="premium-header text-center">
+      <h2 class="premium-main-title">
+        {% if is_first_time %}Chọn Gói Premium Phù Hợp{% else %}Gia Hạn Premium{% endif %}
+      </h2>
+      <p class="premium-subtitle">
+        {{ hero_subtitle }}
+      </p>
+      <div class="section-divider"></div> 
     </div>
 
-    <!-- Bố cục 2 cột -->
-    <div class="row align-items-start justify-content-center">
+    <!-- Bố cục 2 cột, căn giữa theo chiều dọc -->
+    <div class="row align-items-center justify-content-center g-5">
       
-      <!-- Cột 1: Lợi ích (Giữ nguyên) -->
-      <div class="col-lg-6 col-md-12 mb-5 mb-lg-0">
-        <div class="feature-description">
-          <h3 class="fw-bold mb-4">Những gì bạn sẽ nhận được</h3>
-          <ul class="list-unstyled">
-            <li class="d-flex mb-4">
-              <div class="feature-icon me-3"><i class="bi bi-person-check-fill"></i></div>
-              <div>
-                <h5 class="fw-bold">Hiểu rõ bản thân</h5>
-                <p class="text-muted">Khám phá tính cách, sở thích, năng lực tiềm ẩn qua hệ thống câu hỏi chuyên sâu.</p>
-              </div>
-            </li>
-            <li class="d-flex mb-4">
-              <div class="feature-icon me-3"><i class="bi bi-graph-up-arrow"></i></div>
-              <div>
-                <h5 class="fw-bold">Đón đầu xu hướng</h5>
-                <p class="text-muted">Phân tích ngành nghề hot, kỹ năng cần thiết để bạn đi trước một bước.</p>
-              </div>
-            </li>
-            <li class="d-flex mb-4">
-                <div class="feature-icon me-3"><i class="bi bi-unlock-fill"></i></div>
-                <div>
-                  <h5 class="fw-bold">Truy cập toàn bộ tính năng</h5>
-                  <p class="text-muted">Mở khóa tất cả báo cáo, gợi ý nghề nghiệp và lộ trình phát triển chi tiết.</p>
-                </div>
-              </li>
-          </ul>
+      <!-- Cột 1: Lợi ích (Giữ nguyên cấu trúc đã đẹp) -->
+      <div class="col-lg-7">
+        <div class="benefits-grid">
+          <div class="benefit-card-premium">
+            <div class="benefit-icon-wrapper"><i class="fas fa-user-astronaut"></i></div>
+            <div class="benefit-content">
+              <h5 class="benefit-title">Báo Cáo Phân Tích Chuyên Sâu</h5>
+              <p class="benefit-description">Nhận bản phân tích chi tiết về 2 nhóm ngành phù hợp nhất, giải mã điểm mạnh, điểm yếu và tiềm năng phát triển của bạn.</p>
+            </div>
+          </div>
+          <div class="benefit-card-premium">
+            <div class="benefit-icon-wrapper"><i class="fas fa-road-spikes"></i></div>
+            <div class="benefit-content">
+              <h5 class="benefit-title">Lộ Trình Phát Triển Cá Nhân Hóa</h5>
+              <p class="benefit-description">Gợi ý các kỹ năng, khóa học, và hoạt động ngoại khóa cụ thể để bạn xây dựng hồ sơ năng lực ấn tượng, phù hợp với ngành mục tiêu.</p>
+            </div>
+          </div>
+          <div class="benefit-card-premium">
+            <div class="benefit-icon-wrapper"><i class="fas fa-chart-line"></i></div>
+            <div class="benefit-content">
+              <h5 class="benefit-title">Đón Đầu Xu Hướng Ngành Nghề</h5>
+              <p class="benefit-description">Truy cập các báo cáo độc quyền về xu hướng thị trường lao động, các ngành nghề triển vọng trong tương lai để bạn luôn đi trước một bước.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Cột 2: Form lựa chọn gói -->
-      <div class="col-lg-5 col-md-8">
-        <div class="pricing-card">
-          <div class="card-body p-4 p-lg-5">
+      <!-- Cột 2: Form lựa chọn gói (Áp dụng style mới) -->
+      <div class="col-lg-5">
+        <div class="pricing-card-reimagined">
+          <form id="renew-form" method="post" novalidate>
+            {% csrf_token %}
+            
+            <div class="user-info-box">
+              <p><i class="fas fa-user-circle"></i> <strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+              <p><i class="fas fa-envelope"></i> <strong>{{ user.email }}</strong></p>
+            </div>
 
-            <form id="renew-form" method="post" novalidate>
-              {% csrf_token %}
-              
-              <!-- Thông tin người dùng (không cần chỉnh sửa) -->
-              <div class="user-info-display">
-                <p><span class="text-muted">Tài khoản:</span> <strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
-                <p><span class="text-muted">Email:</span> <strong>{{ user.email }}</strong></p>
-              </div>
-
-              <!-- Lựa chọn gói -->
-              <div id="plan-options" class="plan-options-group">
-                
-                <!-- Gói 1 Tháng -->
-                <label for="plan-1" class="plan-option" data-price="39000">
-                  <input type="radio" id="plan-1" name="months" value="1" checked>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <div class="plan-title">1 Tháng</div>
-                      <div class="plan-savings text-white">.</div> <!-- Placeholder để giữ chiều cao -->
-                    </div>
-                    <div class="plan-price text-end">39,000₫</div>
+            <h4 class="form-section-title">Chọn thời hạn của bạn</h4>
+            
+            <div class="plan-options-wrapper">
+              {% for p in plans %}
+                <label class="plan-option-card">
+                  <input type="radio" name="months" value="{{ p.months }}" data-price="{{ p.price }}" {% if forloop.first %}checked{% endif %}>
+                  <div class="plan-radio-visual"></div>
+                  <div class="plan-details">
+                    <span class="plan-title">Gói {{ p.months }} Tháng</span>
+                    {% if p.saving_pct > 0 %}
+                      <span class="plan-savings">Tiết kiệm {{ p.saving_pct }}%</span>
+                    {% endif %}
                   </div>
+                  <span class="plan-price">{{ p.price|intcomma }}<span class="currency">₫</span></span>
+                  {% if p.months == 3 %}<div class="best-value-badge badge-blue">Phổ Biến</div>{% endif %}
+                  {% if p.months == 6 %}<div class="best-value-badge badge-yellow">Tốt Nhất</div>{% endif %}
                 </label>
+              {% endfor %}
+            </div>
 
-                <!-- Gói 6 Tháng -->
-                <label for="plan-6" class="plan-option" data-price="199000">
-                  <input type="radio" id="plan-6" name="months" value="6">
-                   <div class="best-value-badge">Tiết kiệm</div>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <div class="plan-title">6 Tháng</div>
-                      <div class="plan-savings">Tiết kiệm 15%</div>
-                    </div>
-                    <div class="plan-price text-end">199,000₫</div>
-                  </div>
-                </label>
+            <!-- Sử dụng lại nút bấm từ trang Premium -->
+            <button type="submit" class="btn btn-premium-cta mt-4">
+              <span id="cta-button-text">
+                {% with first_plan=plans.0 %}
+                  {% if is_first_time %}Thanh toán{% else %}Gia hạn với{% endif %} {{ first_plan.price|intcomma }}₫
+                {% endwith %}
+              </span>
+            </button>
 
-                <!-- Gói 12 Tháng -->
-                <label for="plan-12" class="plan-option" data-price="349000">
-                  <input type="radio" id="plan-12" name="months" value="12">
-                   <div class="best-value-badge">Giá tốt nhất</div>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <div class="plan-title">12 Tháng</div>
-                      <div class="plan-savings">Tiết kiệm 25%</div>
-                    </div>
-                    <div class="plan-price text-end">349,000₫</div>
-                  </div>
-                </label>
 
-              </div>
-
-              <div class="d-grid mt-4">
-                <button type="submit" class="btn btn-warning btn-lg fw-bold shadow-sm">
-                  <span id="cta-button-text">Thanh toán 39,000₫</span>
-                </button>
-              </div>
-
-              <p class="text-muted small text-center mt-3 mb-0">
-                <i class="bi bi-shield-check"></i> Thanh toán một lần, an toàn và bảo mật.
-              </p>
-            </form>
-
-          </div>
+            <p class="security-notice">
+              <i class="fas fa-shield-alt"></i> Thanh toán một lần, an toàn và bảo mật.
+            </p>
+          </form>
         </div>
       </div>
     </div>
   </div>
-</section>
+</main>
 
+<!-- JavaScript giữ nguyên, chỉ chỉnh selector cho đúng -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('renew-form');
-    const options = form.querySelectorAll('.plan-option');
+    const options = form.querySelectorAll('.plan-option-card'); 
     const ctaButtonText = document.getElementById('cta-button-text');
-    const ctaLabel = "{{ cta_label }}"; // Ví dụ: "Tiến tới thanh toán"
+    const ctaLabel = "{% if is_first_time %}Thanh toán{% else %}Gia hạn với{% endif %}";
 
     function updateSelection() {
-        let selectedOption = null;
+        let selectedRadio = form.querySelector('input[name="months"]:checked');
+        
         options.forEach(opt => {
-            const radio = opt.querySelector('input[type="radio"]');
-            if (radio.checked) {
-                opt.classList.add('selected');
-                selectedOption = opt;
-            } else {
-                opt.classList.remove('selected');
-            }
+            opt.classList.toggle('selected', opt.contains(selectedRadio));
         });
         
-        // Cập nhật nút bấm
-        if (selectedOption) {
-            const price = parseInt(selectedOption.dataset.price, 10);
+        if (selectedRadio) {
+            const price = parseInt(selectedRadio.dataset.price, 10);
             const formattedPrice = price.toLocaleString('vi-VN') + '₫';
             ctaButtonText.textContent = `${ctaLabel} ${formattedPrice}`;
         }
     }
 
-    // Thêm event listener cho từng option
-    options.forEach(option => {
-        option.addEventListener('click', function() {
-            // Cập nhật trạng thái radio và giao diện
-            this.querySelector('input[type="radio"]').checked = true;
-            updateSelection();
-        });
+    form.querySelectorAll('input[name="months"]').forEach(radio => {
+        radio.addEventListener('change', updateSelection);
     });
 
-    // Cập nhật lần đầu khi tải trang
     updateSelection();
 });
 </script>

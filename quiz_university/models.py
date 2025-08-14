@@ -30,9 +30,9 @@ class QuizUniversity(models.Model):
 
     # HTML phân tích chi tiết cho kết quả
     analysis_html = models.TextField()
-    detailed_analysis_html = models.TextField(blank=True, null=True)  
+    detailed_analysis_html = models.TextField(blank=True, null=True)
 
-    # ResultFeedback 
+    # ResultFeedback (dùng chung model ở app THPT)
     feedbacks = GenericRelation("quiz_highschool.ResultFeedback", related_query_name="quiz_university")
 
     # Đề xuất hành động tiếp theo (optionally show in result page)
@@ -45,3 +45,14 @@ class QuizUniversity(models.Model):
         verbose_name = "Bài đánh giá kỹ năng"
         verbose_name_plural = "Bài đánh giá kỹ năng"
         ordering = ["-created_at"]
+
+
+# ===== Proxy: Phản hồi cho Đại học (trang admin riêng thuộc app này) =====
+from quiz_highschool.models import ResultFeedback
+
+class ResultFeedbackUniversity(ResultFeedback):
+    class Meta:
+        proxy = True
+        app_label = "quiz_university"    # để hiển thị dưới menu Quiz_University
+        verbose_name = "Feedback (SV)"
+        verbose_name_plural = "Feedback (SV)"

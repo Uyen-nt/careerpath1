@@ -52,6 +52,10 @@
                 </div>
                 <a class="nav-link" href="{% url 'trend:trend' %}">Xu hướng ngành nghề</a>
                 <a class="nav-link" href="{% url 'premium:premium_home' %}">Premium</a>
+
+                {% if request.user.is_authenticated and request.user.is_staff %}
+                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                {% endif %}
             </nav>
 
             <div class="header-actions d-flex align-items-center">
@@ -61,7 +65,13 @@
                         <a class="d-flex align-items-center text-decoration-none dropdown-toggle no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="{{ request.user.avatar.url }}" class="rounded-circle me-2" width="36" height="36">
 
-                            <span>{{ request.user.first_name }} {{ request.user.last_name }}</span>
+                            <span>
+                                {% if request.user.first_name or request.user.last_name %}
+                                    {{ request.user.first_name }} {{ request.user.last_name }}
+                                {% else %}
+                                    {{ request.user.username }}
+                                {% endif %}
+                            </span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>

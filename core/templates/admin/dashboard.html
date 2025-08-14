@@ -1,0 +1,340 @@
+{% extends "admin/base_site.html" %}
+{% block coltype %}col-12{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Dashboard | CareerPath Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  
+  /* --- Bảng màu & Biến toàn cục (ĐÃ CẬP NHẬT) --- */
+  :root {
+    /* Bảng màu mới theo yêu cầu của bạn */
+    --primary: #28a745;        /* Màu Xanh lá chính */
+    --warning: #edb80aff;        /* Màu Vàng nhấn */
+    
+    /* Màu bổ sung để hoàn thiện bảng màu 4 thẻ */
+    --info: #1a6ce7ea;           /* Màu Xanh dương chuyên nghiệp (Bootstrap Blue) */
+    --success: #14b8a6;        /* Màu Xanh mòng két (Teal) cho mục thành công phụ */
+
+    /* Tông màu Graphite & Nền */
+    --text-heading: #1e293b;
+    --text-body: #475569;
+    --bg-page: #f8fafc;
+    --border-color: #e2e8f0;
+
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --card-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  /* --- Thiết lập chung --- */
+  #content {
+    background-color: var(--bg-page) !important;
+  }
+  .content-wrapper .content {
+    padding: 1.5rem 2rem 2rem 2rem !important;
+  }
+
+  /* --- Tiêu đề trang ấn tượng --- */
+  .page-header {
+    margin-bottom: 2.5rem;
+  }
+  .page-header h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    /* Hiệu ứng Gradient sẽ tự động cập nhật theo màu mới */
+    background: linear-gradient(45deg, var(--primary), var(--success));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+  .page-header .lead {
+    font-size: 1.1rem;
+    color: var(--text-body);
+    margin-top: 0.25rem;
+    max-width: 700px;
+  }
+
+  /* === KPI STAT CARDS (GIỮ NGUYÊN STYLE NỀN ĐẬM) === */
+  .stat-card {
+    background-color: var(--card-color); 
+    border-radius: 0.75rem;
+    border: 1px solid transparent; 
+    box-shadow: var(--card-shadow);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    height: 100%;
+    color: white; 
+  }
+  .stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--card-shadow-lg);
+    filter: brightness(1.1);
+  }
+
+  .stat-card .inner {
+    display: flex;
+    align-items: center;
+  }
+
+  .stat-card .icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-right: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.15);
+    color: white;
+  }
+
+  .stat-card .info h3 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin: 0 0 0.1rem 0;
+    color: #fff;
+  }
+  .stat-card .info p {
+    font-size: 0.95rem;
+    opacity: 0.85; 
+    margin: 0;
+    color: #fff;
+  }
+  
+  /* Gán màu cho từng loại card */
+  .stat-card.primary { --card-color: var(--primary); } /* Sẽ là màu Xanh lá mới */
+  .stat-card.info    { --card-color: var(--info); }    /* Sẽ là màu Xanh dương */
+  .stat-card.success { --card-color: var(--success); } /* Sẽ là màu Xanh mòng két */
+  .stat-card.warning { --card-color: var(--warning); } /* Sẽ là màu Vàng mới */
+  
+  /* --- Card cho Biểu đồ (Không thay đổi) --- */
+  .card {
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    background-color: #fff;
+    height: 100%;
+  }
+  .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+  }
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-heading);
+  }
+  .card-header .fas {
+    color: var(--primary); /* Sẽ là màu Xanh lá mới */
+  }
+  .card-body {
+    padding: 1.5rem;
+  }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="page-header">
+      <h1>Dashboard</h1>
+
+    </div>
+  </div>
+</div>
+
+<div class="content">
+    <!-- Hàng 1: 4 KPI Cards (HTML không đổi) -->
+    <div class="row">
+      <div class="col-12 col-sm-6 col-lg-3 mb-4">
+        {# Card này sẽ có màu Xanh Lá --primary #}
+        <div class="stat-card primary"> 
+          <div class="inner">
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <div class="info">
+              <h3>{{ total_users|intcomma }}</h3>
+              <p>Tổng Người Dùng</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 mb-4">
+        {# Card này sẽ có màu Xanh Dương --info #}
+        <div class="stat-card info">
+          <div class="inner">
+            <div class="icon"><i class="fas fa-user-plus"></i></div>
+            <div class="info">
+              <h3>+{{ signups_7d|intcomma }}</h3>
+              <p>Đăng ký mới (7 ngày)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 mb-4">
+        {# Card này sẽ có màu Xanh Mòng Két --success #}
+        <div class="stat-card success">
+          <div class="inner">
+            <div class="icon"><i class="fas fa-check-circle"></i></div>
+            <div class="info">
+              <h3>{{ quiz_users|intcomma }}</h3>
+              <p>Đã Làm Quiz ({{ quiz_rate }}%)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 mb-4">
+        {# Card này sẽ có màu Vàng --warning #}
+        <div class="stat-card warning">
+          <div class="inner">
+            <div class="icon"><i class="fas fa-user-shield"></i></div>
+            <div class="info">
+              <h3>{{ admin_count|intcomma }}</h3>
+              <p>Tài Khoản Admin</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hàng 2: Biểu đồ (Không thay đổi) -->
+    <div class="row">
+      <div class="col-lg-8 mb-4">
+        <div class="card">
+          <div class="card-header"><h3 class="card-title"><i class="fas fa-chart-bar mr-2"></i>Đăng ký 7 ngày gần đây</h3></div>
+          <div class="card-body">
+            <div style="height: 350px;"><canvas id="signup7Chart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 mb-4">
+        <div class="card">
+          <div class="card-header"><h3 class="card-title"><i class="fas fa-chart-pie mr-2"></i>Phân bổ người dùng làm Quiz</h3></div>
+          <div class="card-body">
+            <div style="height: 350px;"><canvas id="quizRateChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{# Javascript sẽ tự động cập nhật màu từ CSS, không cần thay đổi #}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const style = getComputedStyle(document.body);
+    const chartColors = {
+        primary: style.getPropertyValue('--primary').trim(),
+        success: style.getPropertyValue('--success').trim(),
+        info: style.getPropertyValue('--info').trim(),
+        warning: style.getPropertyValue('--warning').trim(),
+        textBody: style.getPropertyValue('--text-body').trim(),
+        borderColor: style.getPropertyValue('--border-color').trim(),
+        textHeading: style.getPropertyValue('--text-heading').trim(),
+        bgPage: style.getPropertyValue('--bg-page').trim() || '#ffffff'
+    };
+    
+    Chart.defaults.font.family = "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'";
+    Chart.defaults.color = chartColors.textBody;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.padding = 20;
+
+    const signupCtx = document.getElementById('signup7Chart');
+    if (signupCtx) {
+        const signupGradient = signupCtx.getContext('2d').createLinearGradient(0, 0, 0, 350);
+        signupGradient.addColorStop(0, `${chartColors.primary}B3`);
+        signupGradient.addColorStop(1, `${chartColors.primary}00`);
+
+        new Chart(signupCtx, {
+            type: 'line',
+            data: {
+                labels: {{ labels_7|safe }},
+                datasets: [{
+                    label: 'Đăng ký',
+                    data: {{ signups_series_7|safe }},
+                    fill: true, // nếu muốn có nền dưới đường
+                    backgroundColor: signupGradient,
+                    borderColor: chartColors.primary,
+                    borderWidth: 2,
+                    tension: 0.4, // độ cong của đường
+                    pointBackgroundColor: chartColors.primary,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: chartColors.textHeading,
+                        titleFont: { weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: false,
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: chartColors.borderColor, borderDash: [2, 4], drawBorder: false } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    const quizRateCtx = document.getElementById('quizRateChart');
+    if (quizRateCtx) {
+        new Chart(quizRateCtx, {
+            type: 'doughnut',
+            data: {
+                labels: {{ quiz_labels|safe }},
+                datasets: [{
+                    data: {{ quiz_values|safe }},
+                    backgroundColor: [ chartColors.success, chartColors.info, chartColors.warning, '#cbd5e1' ],
+                    borderColor: chartColors.bgPage,
+                    borderWidth: 4,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'rectRounded' } },
+                    tooltip: {
+                        backgroundColor: chartColors.textHeading,
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed;
+                                const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                const percentage = total > 0 ? ((value / total) * 100).toFixed(0) : 0;
+                                return ` ${label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

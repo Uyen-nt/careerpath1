@@ -448,6 +448,7 @@
   opacity: 0;
   transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
   transform: translateY(10px);
+  position: relative;
 }
 .tab-content.active {
   display: block;
@@ -1355,3 +1356,63 @@
 }
 .toast.success .toast-progress-bar { background-color: var(--primary-green, #28a745); }
 .toast.error .toast-progress-bar { background-color: var(--danger, #dc3545); }
+
+
+/* thêm lớp phủ cho user chưa premium */
+/* Khóa toàn bộ nội dung trong tab 'detailed' khi chưa premium */
+.tab-content.locked-pane > *:not(.premium-overlay) {
+  filter: blur(3px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Overlay phủ riêng khu vực tab */
+.premium-overlay--content {
+  position: absolute;
+  inset: 0;           /* top:0; right:0; bottom:0; left:0 */
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(2px);
+}
+
+/* Hộp thông báo */
+.premium-overlay-content {
+  text-align: center;
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  max-width: 320px;
+  width: 92%;
+}
+
+.premium-overlay-content i.fa-crown { 
+  font-size: 32px; 
+  margin-bottom: 10px; 
+  color: #F1C40F; 
+}
+
+.premium-overlay-content p { 
+  margin: 6px 0 14px; 
+  font-weight: 600; 
+}
+
+.premium-overlay-content .btn-premium {
+  display: inline-block; 
+  padding: 10px 16px; 
+  border-radius: 10px; 
+  text-decoration: none;
+  background:#111827; 
+  color:#fff; 
+  font-weight:600;
+  transition: transform .08s ease, box-shadow .12s ease;
+  box-shadow: 0 4px 12px rgba(17,24,39,.25);
+}
+
+.premium-overlay-content .btn-premium:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(17,24,39,.3);
+}

@@ -4,78 +4,116 @@
 
 {% block content %}
 <head>
+  <!-- Đổi tên file CSS để không bị xung đột -->
   <link rel="stylesheet" href="{% static 'css/premium.css' %}">
+  <!-- Thêm link Font Awesome nếu chưa có trong base.html -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<section class="premium-section">
-  <div class="container py-5">
-    <div class="row">
-      <div class="col-lg-10 col-xl-9 mx-auto text-center mb-4">
-        <h2 class="section-title mb-2">Mở Khóa Tiềm Năng Nghề Nghiệp</h2>
-        <p class="text-muted mb-0 lead-line">
-          Trải nghiệm CareerPath Premium để nhận phân tích chuyên sâu, định hướng rõ ràng cho sự nghiệp của bạn.
-        </p>
-      </div>
-
+<!-- Sử dụng lớp `result-page` để kế thừa nền và các hình khối trang trí -->
+<main class="premium-page section-padding">
+  <div class="container">
+    
+    <!-- === KHU VỰC TIÊU ĐỀ CHÍNH === -->
+    <div class="premium-header text-center">
+      <h2 class="premium-main-title">Mở Khóa Tiềm Năng Nghề Nghiệp</h2>
+      <p class="premium-subtitle">
+        Trải nghiệm CareerPath Premium để nhận phân tích chuyên sâu, lộ trình rõ ràng và các công cụ độc quyền giúp bạn tự tin kiến tạo tương lai.
+      </p>
+      <!-- Dải phân cách gradient giống trang kết quả -->
+      <div class="section-divider"></div> 
     </div>
 
-    <div class="row align-items-start justify-content-center">
-      <!-- Cột 1: Lợi ích -->
-      <div class="col-lg-6 col-md-12 mb-5 mb-lg-0">
-        <div class="feature-description">
-          <h3 class="fw-bold mb-4">Tại sao nên chọn Premium?</h3>
-          <ul class="list-unstyled">
-            <li class="d-flex mb-4">
-              <div class="feature-icon me-3">
-                <i class="bi bi-person-check-fill"></i>
-              </div>
-              <div>
-                <h5 class="fw-bold">Hiểu rõ bản thân</h5>
-                <p class="text-muted">Khám phá tính cách, sở thích, năng lực tiềm ẩn qua hệ thống câu hỏi chuyên sâu.</p>
-              </div>
-            </li>
-            <li class="d-flex mb-4">
-              <div class="feature-icon me-3">
-                <i class="bi bi-graph-up-arrow"></i>
-              </div>
-              <div>
-                <h5 class="fw-bold">Đón đầu xu hướng</h5>
-                <p class="text-muted">Phân tích ngành nghề hot, kỹ năng cần thiết để bạn đi trước một bước.</p>
-              </div>
-            </li>            
-          </ul>
+    <div class="row align-items-center justify-content-center g-4 g-lg-5">
+      
+      <!-- === CỘT TRÁI: DANH SÁCH LỢI ÍCH === -->
+      <div class="col-lg-7">
+        <div class="benefits-grid">
+          
+          <!-- Lợi ích 1 -->
+          <div class="benefit-card-premium">
+            <div class="benefit-icon-wrapper">
+              <i class="fas fa-user-astronaut"></i>
+            </div>
+            <div class="benefit-content">
+              <h5 class="benefit-title">Báo Cáo Phân Tích Chuyên Sâu</h5>
+              <p class="benefit-description">Nhận bản phân tích chi tiết về 2 nhóm ngành phù hợp nhất, giải mã điểm mạnh, điểm yếu và tiềm năng phát triển của bạn.</p>
+            </div>
+          </div>
+          
+          <!-- Lợi ích 2 -->
+          <div class="benefit-card-premium">
+            <div class="benefit-icon-wrapper">
+              <i class="fas fa-road-spikes"></i>
+            </div>
+            <div class="benefit-content">
+              <h5 class="benefit-title">Lộ Trình Phát Triển Cá Nhân Hóa</h5>
+              <p class="benefit-description">Gợi ý các kỹ năng, khóa học, và hoạt động ngoại khóa cụ thể để bạn xây dựng hồ sơ năng lực ấn tượng, phù hợp với ngành mục tiêu.</p>
+            </div>
+          </div>
+
+          <!-- Lợi ích 3 -->
+          <div class="benefit-card-premium">
+            <div class="benefit-icon-wrapper">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="benefit-content">
+              <h5 class="benefit-title">Đón Đầu Xu Hướng Ngành Nghề</h5>
+              <p class="benefit-description">Truy cập các báo cáo độc quyền về xu hướng thị trường lao động, các ngành nghề triển vọng trong tương lai để bạn luôn đi trước một bước.</p>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <!-- Cột 2: Premium -->
-      <div class="col-lg-5 col-md-8">
-        <div class="pricing-card">
-          <div class="card-body p-lg-5">
-            {% if subscription_active %}
-              {% if days_left > 0 %}
-                <h3 class="card-title fw-bold mb-3 text-center">🎉 Bạn đang sử dụng Premium</h3>
-                <p class="text-center text-success fw-bold mb-3">Thời hạn còn lại: {{ days_left }} ngày</p>
-                <p class="text-center">Bạn đã mở khoá toàn bộ tính năng: phân tích chi tiết, gợi ý nghề, báo cáo xu hướng.</p>
-                <a href="{% url 'home' %}" class="btn btn-success btn-lg d-block mt-3">Khám phá ngay</a>
-              {% else %}
-                <h3 class="card-title fw-bold mb-3 text-center">⚠️ Gói Premium đã hết hạn</h3>
-                <p class="text-center text-danger fw-bold mb-3">Thời hạn Premium của bạn đã kết thúc.</p>
-                <p class="text-center">Hãy gia hạn để tiếp tục sử dụng các tính năng Premium.</p>
-                <a href="{% url 'premium:renew_premium' %}" class="btn btn-success btn-lg d-block mt-3">Gia hạn Premium</a>
-              {% endif %}          
-            
+      <!-- === CỘT PHẢI: THẺ PREMIUM (CTA) === -->
+      <div class="col-lg-5">
+        <!-- Áp dụng style card mới, cao cấp hơn -->
+        <div class="pricing-card-reimagined">
+          
+          {% if subscription_active %}
+            {% if days_left > 0 %}
+              <!-- Giao diện khi gói cước còn hạn -->
+              <div class="card-icon-status text-success"><i class="fas fa-check-circle"></i></div>
+              <h3 class="pricing-card-title">Gói Premium Đang Kích Hoạt</h3>
+              <p class="pricing-card-subtitle">
+                Thời gian còn lại: <strong class="text-success">{{ days_left }} ngày</strong>.
+              </p>
+              <p class="pricing-card-description">
+                Bạn đã mở khóa toàn bộ các tính năng cao cấp. Hãy bắt đầu khám phá ngay!
+              </p>
+              <a href="{% url 'users:profile' %}" class="btn btn-premium-cta">Xem lại kết quả</a>
             {% else %}
-              <h3 class="card-title fw-bold mb-3 text-center">🎓 Trải nghiệm Premium</h3>
-              <p class="card-subtitle text-muted text-center mb-4">Bước đầu khởi nghiệp thành công.</p>               
-              <p class="text-center">Đăng ký Premium ngay để tận hưởng toàn bộ tính năng.</p>
-              <div class="d-grid">
-                <a href="{% url 'premium:renew_premium' %}" class="btn btn-success btn-lg fw-bold shadow-sm">Đăng ký Premium</a>
-              </div>
-            {% endif %}
-          </div>
+              <!-- Giao diện khi gói cước hết hạn -->
+              <div class="card-icon-status text-danger"><i class="fas fa-exclamation-triangle"></i></div>
+              <h3 class="pricing-card-title">Gói Premium Đã Hết Hạn</h3>
+              <p class="pricing-card-subtitle">
+                Hãy gia hạn để tiếp tục sử dụng các phân tích chi tiết và lợi ích độc quyền.
+              </p>
+              <a href="{% url 'premium:renew_premium' %}" class="btn btn-premium-cta btn-warning-style">
+                <i class="fas fa-crown me-2"></i> Gia Hạn Ngay
+              </a>
+            {% endif %}          
+          {% else %}
+            <!-- Giao diện khi chưa đăng ký -->
+            <div class="card-icon-status text-primary-yellow"><i class="fas fa-crown"></i></div>
+            <h3 class="pricing-card-title">Nâng Cấp Premium</h3>
+            <p class="pricing-card-subtitle">
+              Chỉ với một khoản đầu tư nhỏ cho một tương lai lớn.
+            </p>
+            <ul class="pricing-features">
+              <li><i class="fas fa-check"></i> Phân tích chi tiết</li>
+              <li><i class="fas fa-check"></i> Lộ trình cá nhân hóa</li>
+              <li><i class="fas fa-check"></i> Báo cáo xu hướng</li>
+            </ul>
+            <a href="{% url 'premium:renew_premium' %}" class="btn btn-premium-cta">
+              <i class="fas fa-rocket me-2"></i> Đăng Ký Ngay
+            </a>
+          {% endif %}
+
         </div>
       </div>
     </div>
   </div>
-</section>
+</main>
 {% endblock %}

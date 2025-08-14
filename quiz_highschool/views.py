@@ -675,7 +675,7 @@ def save_feedback(request):
         rating=rating,
         comment=comment,
         approved=True,  
-        is_public=True,
+        # is_public=True,
     )
 
     return JsonResponse({"ok": True})

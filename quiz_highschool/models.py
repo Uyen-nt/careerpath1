@@ -4,6 +4,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.contenttypes.models import ContentType
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 class QuizHighschool(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -38,6 +39,10 @@ class QuizHighschool(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.top_cluster_name} ({self.top_percentage}%)"
 
+    class Meta:
+        verbose_name = "Bài test HS"
+        verbose_name_plural = "Bài test HS"
+
 
 class ResultFeedback(models.Model):
     user = models.ForeignKey(
@@ -52,18 +57,21 @@ class ResultFeedback(models.Model):
     rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     comment = models.TextField(blank=True)
 
-    approved = models.BooleanField(default=False, db_index=True)
-    is_public = models.BooleanField(default=True, db_index=True)
+    # Việt hoá nhãn để hiện đẹp trong admin
+    approved = models.BooleanField("Đã duyệt", default=False, db_index=True)
+    is_public = models.BooleanField("Công khai", default=False, db_index=True)
 
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-created_at"]
+        verbose_name = "Phản hồi kết quả"
+        verbose_name_plural = "Phản hồi kết quả"
         indexes = [
             models.Index(fields=["content_type", "object_id"], name="idx_ct_obj"),
             models.Index(fields=["approved", "is_public", "rating", "created_at"], name="idx_moderation_stats"),
-            models.Index(fields=["user", "content_type", "object_id"], name="idx_owner_ct_obj"),  # <— chỉ là index, KHÔNG unique
+            models.Index(fields=["user", "content_type", "object_id"], name="idx_owner_ct_obj"),
         ]
 
     def __str__(self):
@@ -74,3 +82,11 @@ class ResultFeedback(models.Model):
         full = (getattr(self.user, "get_full_name", None) or (lambda: ""))() or self.user.username
         parts = full.strip().split()
         return f"{parts[0]} {parts[-1][0]}." if len(parts) > 1 else parts[0]
+
+
+# Proxy: Phản hồi cho THPT (admin riêng, không tạo bảng mới)
+class ResultFeedbackHighschool(ResultFeedback):
+    class Meta:
+        proxy = True
+        verbose_name = "Feedback (HS)"
+        verbose_name_plural = "Feedback (HS)"

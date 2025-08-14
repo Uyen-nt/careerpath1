@@ -15,12 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from main import views as main_views
+from core.views_admin import admin_dashboard
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    path('admin/dashboard/', admin_dashboard, name='admin-dashboard'),
+    re_path(r'^admin/$', RedirectView.as_view(pattern_name='admin-dashboard', permanent=False)),
     path('admin/', admin.site.urls),
+    path('', main_views.home, name='home'),
     path('', include('main.urls')),
     path('quiz_highschool/', include('quiz_highschool.urls')),
     path('quiz_university/', include('quiz_university.urls')),
@@ -30,4 +36,5 @@ urlpatterns = [
     path('premium/', include('premium.urls')),
     path('oauth/', include('social_django.urls', namespace='social')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 

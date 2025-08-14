@@ -46,4 +46,10 @@ urlpatterns = [
         ),
         name='password_reset_complete'
     ),
+
+   # ✅ QUẢN LÝ USER (staff)
+    path('control/users/', views.manage_users_view, name='manage_users'),
+    path('control/users/<int:user_id>/toggle-active/', views.toggle_active, name='toggle_active'),
+    path('control/users/<int:user_id>/set_premium/', views.set_premium, name='set_premium'),
+    path('control/users/<int:user_id>/remove_premium/', views.remove_premium, name='remove_premium'),
 ]

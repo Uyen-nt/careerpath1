@@ -127,6 +127,16 @@
                 <!-- Vùng chứa nội dung gốc, sẽ được JS xử lý -->
                 
                   {{ detailed_analysis_html|safe }}
+
+                  {% if not is_premium %}
+                  <div class="premium-overlay premium-overlay--content">
+                    <div class="premium-overlay-content">
+                      <i class="fas fa-crown"></i>
+                      <p>Hãy sử dụng Premium để xem</p>
+                      <a class="btn-premium" href="{% url 'premium:renew_premium' %}">Nâng cấp ngay</a>
+                    </div>
+                  </div>
+                  {% endif %}
                 
             </div>
         </div>

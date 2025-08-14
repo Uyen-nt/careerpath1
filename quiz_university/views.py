@@ -13,7 +13,7 @@ from django.views.decorators.http import require_POST
 #from .analysis_generator import generate_analysis_html
 from django.views.decorators.http import require_http_methods
 from .generate_analysis_html import generate_analysis_html_social, generate_analysis_html_business, generate_analysis_html_tech, generate_analysis_html_health, generate_analysis_html_arts, generate_analysis_html_science, generate_detailed_analysis_html
-
+from premium.models import PremiumSubscription
 
 
 def gioi_thieu(request):
@@ -158,6 +158,11 @@ def format_score(score):
 @login_required
 def ket_qua_u(request):
     quiz_result_id = request.GET.get('quiz_id') or request.session.get('quiz_university_result_id')
+
+    # ✅ Tính premium giống highschool
+    subscription = PremiumSubscription.objects.filter(user=request.user).first()
+    is_premium = subscription.check_status() if subscription else False
+
     context = {}
 
     if quiz_result_id:
@@ -181,17 +186,24 @@ def ket_qua_u(request):
                 "analysis_html": analysis_html,
                 "detailed_analysis_html": detailed_analysis_html,
 
-                # 👇 thêm 2 biến này để form đánh giá dùng
                 "quiz_type": "university",
                 "quiz_id": quiz_result.id,
+
+                # ⬇️ TRUYỀN TRẠNG THÁI PREMIUM XUỐNG TEMPLATE
+                "is_premium": is_premium,
             }
         except QuizUniversity.DoesNotExist:
-            context = {"error": "Kết quả không tồn tại."}
+            context = {
+                "error": "Kết quả không tồn tại.",
+                "is_premium": is_premium,  # vẫn truyền xuống để template xử lý
+            }
     else:
-        context = {"error": "Bạn chưa làm bài đánh giá."}
+        context = {
+            "error": "Bạn chưa làm bài đánh giá.",
+            "is_premium": is_premium,  # vẫn truyền xuống để template xử lý
+        }
 
     return render(request, 'result_u.html', context)
-
 
 
 def generate_analysis_html(cluster_code, skill_scores, readiness_score):

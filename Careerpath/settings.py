@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['careerpath.io.vn', 'www.careerpath.io.vn', '103.173.66.148', '
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,12 +47,16 @@ INSTALLED_APPS = [
 
     'main',
     'quiz_highschool',
-    'quiz_university',
-    #'quiz_workers',
-    'users',    
+    'quiz_university',   
     'trend',
-    'premium',
+    'premium.apps.PremiumConfig',
+    'users.apps.UsersConfig',
+    'core',
 ]
+
+list_per_page = 20
+list_select_related = True
+readonly_fields = ('date_joined', 'last_login')
 
 LOGIN_URL = 'users:login'
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -122,7 +127,11 @@ DATABASES = {
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
         'HOST': os.getenv('MYSQL_HOST','localhost'),
         'PORT': os.getenv('MYSQL_PORT','3306'),
-        'OPTIONS': {'charset': 'utf8mb4'},        
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            # Asia/Ho_Chi_Minh = +07:00
+            "init_command": "SET time_zone = '+07:00'",
+        },       
     }
 }
 
@@ -147,6 +156,12 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+PREMIUM_PRICING = {
+    1: 29000,   # 1 tháng
+    3: 79000,  # 3 tháng (đã chiết khấu)
+    6: 169000, # 6 tháng (đã chiết khấu)
+}
+
 GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
 GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
 
@@ -163,11 +178,16 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.auth_allowed',
     'social_core.pipeline.social_auth.social_user',
-    'social_core.pipeline.user.get_username',
 
-    'users.pipeline.associate_by_email', 
-    'users.pipeline.save_avatar_from_google', 
-    'social_core.pipeline.user.create_user',
+    # nếu email đã có user trong DB thì map luôn để không tạo mới
+    'users.pipeline.associate_by_email',
+
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',        # <- tạo user mới (nếu cần)
+
+    # <- ĐẶT Ở ĐÂY để lúc này đã có kwargs['user']
+    'users.pipeline.save_avatar_from_google',
+
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',

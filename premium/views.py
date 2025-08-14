@@ -17,12 +17,8 @@ from django.urls import reverse
 import qrcode
 from payos import PayOS, ItemData, PaymentData
 from django.conf import settings
-from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-import logging
-
-logger = logging.getLogger(__name__)
 
 payOS = PayOS(settings.PAYOS_CLIENT_ID, settings.PAYOS_API_KEY, settings.PAYOS_CHECKSUM_KEY)
 
@@ -47,18 +43,17 @@ def send_payment_confirmation_email(user, months, amount):
 
 def premium_home(request):
     user = request.user if request.user.is_authenticated else None
-
     subscription = None
     subscription_active = False
     days_left = 0
 
     if user:
-        subscription, _ = PremiumSubscription.objects.get_or_create(user=user)
-        subscription.check_status()
-        now = timezone.now()
-        if subscription.subscription_start and subscription.subscription_end > now:
-            subscription_active = True
-            days_left = (subscription.subscription_end - now).days
+        subscription = PremiumSubscription.objects.filter(user=user).first()
+        if subscription:
+            subscription_active = subscription.check_status()  # <-- dùng check_status
+            if subscription.subscription_end:
+                delta = subscription.subscription_end - timezone.now()
+                days_left = max(delta.days, 0)
 
     context = {
         "subscription": subscription,
@@ -69,17 +64,48 @@ def premium_home(request):
     return render(request, 'premium.html', context)
 
 
+def get_price(months: int) -> int:
+    try:
+        return int(settings.PREMIUM_PRICING[int(months)])
+    except Exception:
+        # months không hợp lệ -> chặn
+        raise ValueError("Gói không hợp lệ")
+    
+
+def compute_plans(pricing):
+    base = pricing.get(1)
+    plans = []
+    for m, v in pricing.items():
+        if m == 1 or not base:
+            saving_pct = 0
+        else:
+            original = base * m
+            saving_pct = max(0, round((original - v) / original * 100))
+        plans.append({'months': m, 'price': v, 'saving_pct': saving_pct})
+    # sort theo số tháng
+    plans.sort(key=lambda x: x['months'])
+    return plans
+
+    
 @login_required
 def renew_premium(request):
     user = request.user
-    subscription, _ = PremiumSubscription.objects.get_or_create(user=user)
-    subscription.check_status()
 
-    # Xác định lần đầu đăng ký hay gia hạn
-    is_first_time = subscription.subscription_start is None
-    is_expired = (subscription.subscription_start is not None) and (not subscription.is_active)
+    # Chỉ đọc: không tạo mới ở đây
+    subscription = PremiumSubscription.objects.filter(user=user).first()
 
-    # Tiêu đề/trợ ngôn ngữ hiển thị cho template
+    # Mặc định
+    is_first_time = True
+    is_expired = False
+
+    if subscription:
+        subscription.check_status()
+        # Nếu chưa từng kích hoạt -> lần đầu
+        is_first_time = (subscription.subscription_start is None)
+        # Nếu từng có start nhưng hiện không active -> hết hạn / tạm dừng
+        is_expired = (subscription.subscription_start is not None) and (not subscription.is_active)
+
+    # Tiêu đề/trợ ngôn ngữ
     if is_first_time:
         page_title = "Đăng ký Premium"
         hero_subtitle = "Điền thông tin để bắt đầu trải nghiệm Premium với đầy đủ tính năng nâng cao."
@@ -93,9 +119,12 @@ def renew_premium(request):
         )
         cta_label = "Tiếp tục thanh toán"
 
-    if request.method == "POST":
-        months = int(request.POST.get('months', 1))
-        amount = 15000 * months  # TODO: đồng bộ với giá hiển thị nếu bạn dùng 39,000₫
+    if request.method == "POST":      
+        try:
+            months = int(request.POST.get('months', 1))
+            amount = get_price(months)  # ✅ đồng bộ với UI
+        except ValueError:
+            return HttpResponseBadRequest("Gói không hợp lệ")
 
         context = {
             'amount': amount,
@@ -103,29 +132,35 @@ def renew_premium(request):
             'user': user,
         }
         return render(request, 'premium_payment_qr.html', context)
-
+    plans = compute_plans(settings.PREMIUM_PRICING)
     return render(
         request,
         'renew_premium.html',
         {
             "user": user,
-            "subscription": subscription,
+            "subscription": subscription,  # có thể là None -> template cần if-check
             "is_first_time": is_first_time,
             "is_expired": is_expired,
             "page_title": page_title,
             "hero_subtitle": hero_subtitle,
             "cta_label": cta_label,
+            "pricing": settings.PREMIUM_PRICING, 
+            "plans": plans,
         }
     )
 
 @login_required
 def initiate_payment(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        months = int(data.get('months'))
-        amount = 15000 * months 
+        try:
+            data = json.loads(request.body)
+            months_raw = data.get('months', None)
+            months = int(months_raw)
+            amount = get_price(months)
+        except (ValueError, TypeError):
+            return JsonResponse({'status': 'error', 'message': 'Gói không hợp lệ'}, status=400)
 
-        order_code = random.randint(100000000, 999999999)  # Unique order code
+        order_code = random.randint(100000000, 999999999)
         transaction = Transaction.objects.create(
             user=request.user,
             order_id=str(order_code),
@@ -133,7 +168,6 @@ def initiate_payment(request):
             months=months,
             status='pending'
         )
-
         item = ItemData(name=f"Gói Premium {months} tháng", quantity=1, price=amount)
         payment_data = PaymentData(
             orderCode=order_code,
@@ -181,36 +215,28 @@ def initiate_payment(request):
 
     return HttpResponseBadRequest()
 
-@csrf_exempt
 def payos_webhook(request):
-    if request.method != 'POST':
-        return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
-    try:
-        body = json.loads(request.body.decode('utf-8'))
-        verified = payOS.verifyPaymentWebhookData(body)
-
-        order_code = str(verified.orderCode)
-        code = str(verified.code)  # "00" = thành công
-
-        transaction = Transaction.objects.filter(order_id=order_code).first()
-        if not transaction:
-            logger.warning("Transaction with order_id %s not found", order_code)
-            return HttpResponse("OK", status=200)
-
-        if transaction.status == 'pending':
-            subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
-            if code == '00':
-                subscription.activate_subscription(months=transaction.months)
-                transaction.status = 'completed'
-                send_payment_confirmation_email(transaction.user, transaction.months, transaction.amount)
-            else:
-                transaction.status = 'failed'
-            transaction.save()
-
-        return HttpResponse("OK", status=200)
-    except Exception as e:
-        logger.exception("payOS webhook error: %s", e)
-        return HttpResponse("OK", status=200)  # trả 200 luôn để PayOS không retry
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            verified_data = payOS.verifyPaymentWebhookData(body)
+            order_code = verified_data['orderCode']
+            transaction = get_object_or_404(Transaction, order_id=str(order_code))
+            if transaction.status == 'pending':
+                if verified_data['code'] == '00':
+                    subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
+                    subscription.activate_subscription(months=transaction.months)
+                    transaction.status = 'completed'
+                    transaction.save()
+                    send_payment_confirmation_email(transaction.user, transaction.months, transaction.amount, request)
+                else:
+                    transaction.status = 'failed'
+                    transaction.save()
+                    # Optional: Gửi email thông báo thất bại nếu cần
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+    return HttpResponseBadRequest()
 
 @login_required
 def check_payment(request, order_id):
