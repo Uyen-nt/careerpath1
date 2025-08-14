@@ -37,6 +37,7 @@ def send_payment_confirmation_email(user, months, amount, request=None):
     }
     message = render_to_string('email_payment_confirmation.html', context)
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], html_message=message)
+}
 
 
 def premium_home(request):
@@ -222,41 +223,50 @@ def payos_webhook(request):
         raw = request.body  # raw bytes từ PayOS
         body = json.loads(raw)
 
-        # Tuỳ SDK PayOS: nếu verify nhận dict thì giữ body, nếu cần raw thì truyền raw
-        verified_data = payOS.verifyPaymentWebhookData(body)  # hoặc raw
+        # SDK PayOS trả về WebhookData (object có thuộc tính)
+        verified = payOS.verifyPaymentWebhookData(body)
 
-        order_code = str(verified_data.get('orderCode'))
-        code = str(verified_data.get('code'))
+        # Lấy thông tin từ verified.data
+        data = getattr(verified, 'data', None)
+        if data is None:
+            logger.error('Webhook: missing data field | verified=%s', verified)
+            return JsonResponse({'success': False, 'error': 'missing data'}, status=400)
+
+        # Truy cập theo thuộc tính (không dùng .get)
+        order_code = str(getattr(data, 'orderCode', None))
+        code = str(getattr(data, 'code', None))
 
         if not order_code:
-            logger.error('Webhook missing orderCode | body=%s', body)
+            logger.error('Webhook: missing orderCode | data=%s', data)
             return JsonResponse({'success': False, 'error': 'missing orderCode'}, status=400)
 
         transaction = get_object_or_404(Transaction, order_id=order_code)
 
         if transaction.status == 'pending':
-            if code == '00' or code == '0':  # tuỳ PayOS trả '00' hay 0
+            if code in ('00', '0'):
                 subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
                 subscription.activate_subscription(months=transaction.months)
 
                 transaction.status = 'completed'
                 transaction.save(update_fields=['status', 'updated_at'])
 
-                # Không để email lỗi làm fail webhook
+                # Gửi email: đừng để lỗi mail làm fail webhook
                 try:
-                    send_payment_confirmation_email(transaction.user, transaction.months, transaction.amount, request)
+                    send_payment_confirmation_email(
+                        transaction.user, transaction.months, transaction.amount
+                    )
                 except Exception as mail_err:
                     logger.exception('Send mail failed for order %s: %s', order_code, mail_err)
             else:
                 transaction.status = 'failed'
                 transaction.save(update_fields=['status', 'updated_at'])
 
-        # Trả 200 để PayOS không retry vô hạn
+        # Luôn trả 200 để PayOS không retry vô tận
         return JsonResponse({'success': True})
     except Exception as e:
         logger.exception('Webhook error: %s | raw=%s', e, request.body)
         return JsonResponse({'success': False, 'error': str(e)}, status=400)
-
+    
 @login_required
 def check_payment(request, order_id):
     transaction = get_object_or_404(Transaction, order_id=order_id, user=request.user)
