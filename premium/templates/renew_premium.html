@@ -78,7 +78,7 @@
                       <span class="plan-savings">Tiết kiệm {{ p.saving_pct }}%</span>
                     {% endif %}
                   </div>
-                  <span class="plan-price">{{ p.price|intcomma }}<span class="currency">₫</span></span>
+                  <span class="plan-price">{{ p.price|intcomma:1 }}<span class="currency">₫</span></span>
                   {% if p.months == 3 %}<div class="best-value-badge badge-blue">Phổ Biến</div>{% endif %}
                   {% if p.months == 6 %}<div class="best-value-badge badge-yellow">Tốt Nhất</div>{% endif %}
                 </label>
@@ -89,7 +89,7 @@
             <button type="submit" class="btn btn-premium-cta mt-4">
               <span id="cta-button-text">
                 {% with first_plan=plans.0 %}
-                  {% if is_first_time %}Thanh toán{% else %}Gia hạn với{% endif %} {{ first_plan.price|intcomma }}₫
+                  {% if is_first_time %}Thanh toán{% else %}Gia hạn với{% endif %} {{ first_plan.price|intcomma:1 }}₫
                 {% endwith %}
               </span>
             </button>
