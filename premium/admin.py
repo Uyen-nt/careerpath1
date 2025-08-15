@@ -1,5 +1,18 @@
 from django.contrib import admin
 from .models import PremiumSubscription, Transaction
+from django.utils import timezone
+from django.utils.html import format_html
+
+def fmt_datetime(dt):
+    """Format datetime dạng dd/mm/YYYY HH:MM theo giờ Việt Nam."""
+    if not dt:
+        return "-"
+    if timezone.is_naive(dt) and getattr(timezone.settings, "USE_TZ", False):
+        dt = timezone.make_aware(dt, timezone.get_current_timezone())
+    if timezone.is_aware(dt):
+        dt = timezone.localtime(dt, timezone.get_current_timezone())
+    return dt.strftime("%d/%m/%Y %H:%M")
+
 
 @admin.register(PremiumSubscription)
 class PremiumSubscriptionAdmin(admin.ModelAdmin):
@@ -22,12 +35,12 @@ class PremiumSubscriptionAdmin(admin.ModelAdmin):
     is_active_vi.admin_order_field = 'is_active'
 
     def subscription_start_vi(self, obj):
-        return obj.subscription_start
+        return fmt_datetime(obj.subscription_start)
     subscription_start_vi.short_description = "Ngày bắt đầu"
     subscription_start_vi.admin_order_field = 'subscription_start'
 
     def subscription_end_vi(self, obj):
-        return obj.subscription_end
+        return fmt_datetime(obj.subscription_end)
     subscription_end_vi.short_description = "Ngày kết thúc"
     subscription_end_vi.admin_order_field = 'subscription_end'
 
@@ -67,12 +80,19 @@ class TransactionAdmin(admin.ModelAdmin):
     months_vi.admin_order_field = 'months'
 
     def status_vi(self, obj):
-        return obj.status
+        color = "green" if obj.status == "completed" else (
+            "orange" if obj.status == "pending" else "red"
+        )
+        return format_html(
+            '<span style="color: {};">{}</span>',
+            color,
+            obj.get_status_display() if hasattr(obj, "get_status_display") else obj.status
+        )
     status_vi.short_description = "Trạng thái"
     status_vi.admin_order_field = 'status'
 
     def created_at_vi(self, obj):
-        return obj.created_at
+        return fmt_datetime(obj.created_at)
     created_at_vi.short_description = "Ngày tạo"
     created_at_vi.admin_order_field = 'created_at'
 
