@@ -113,10 +113,8 @@ class ResultFeedbackDHAdmin(admin.ModelAdmin):
 
     @admin.display(description="Nhận xét")
     def nhan_xet(self, obj):
-        if not obj.comment:
-            return ""
-        return obj.comment if len(obj.comment) < 80 else obj.comment[:77] + "..."
-
+        return obj.comment or ""
+    
     @admin.display(description="Đối tượng được phản hồi")
     def doi_tuong(self, obj):
         target = obj.content_object
