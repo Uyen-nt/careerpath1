@@ -159,7 +159,7 @@ AUTHENTICATION_BACKENDS = (
 PREMIUM_PRICING = {
     1: 29000,   # 1 tháng
     3: 79000,  # 3 tháng (đã chiết khấu)
-    6: 169000, # 6 tháng (đã chiết khấu)
+    6: 139000, # 6 tháng (đã chiết khấu)
 }
 
 GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
