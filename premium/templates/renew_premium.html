@@ -79,8 +79,8 @@
                     {% endif %}
                   </div>
                   <span class="plan-price">{{ p.price|intcomma:1 }}<span class="currency">₫</span></span>
-                  {% if p.months == 3 %}<div class="best-value-badge badge-blue">Phổ Biến</div>{% endif %}
-                  {% if p.months == 6 %}<div class="best-value-badge badge-yellow">Tốt Nhất</div>{% endif %}
+                  {% if p.months == 3 %}<div class="best-value-badge badge-blue"></div>{% endif %}
+                  {% if p.months == 6 %}<div class="best-value-badge badge-yellow"></div>{% endif %}
                 </label>
               {% endfor %}
             </div>
