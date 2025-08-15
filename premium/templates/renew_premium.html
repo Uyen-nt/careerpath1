@@ -113,6 +113,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const ctaButtonText = document.getElementById('cta-button-text');
     const ctaLabel = "{% if is_first_time %}Thanh toán{% else %}Gia hạn với{% endif %}";
 
+    // === Thêm: format tất cả giá trong danh sách gói về dạng 29.000₫ ===
+    function formatPlanPrices() {
+        document.querySelectorAll('.plan-price').forEach(el => {
+            // Lấy số từ nội dung (bỏ mọi ký tự không phải số)
+            const raw = el.textContent.replace(/[^\d]/g, '');
+            const num = parseInt(raw, 10);
+            if (!isNaN(num)) {
+                const formatted = num.toLocaleString('vi-VN');
+                el.innerHTML = formatted + '<span class="currency">₫</span>';
+            }
+        });
+    }
+
     function updateSelection() {
         let selectedRadio = form.querySelector('input[name="months"]:checked');
         
@@ -130,6 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
     form.querySelectorAll('input[name="months"]').forEach(radio => {
         radio.addEventListener('change', updateSelection);
     });
+
+    // Gọi format giá cho danh sách gói (một lần khi load)
+    formatPlanPrices();
 
     updateSelection();
 });
