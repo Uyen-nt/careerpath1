@@ -89,8 +89,60 @@
                 {% else %}
                     <a href="{% url 'users:login' %}" class="btn btn-primary btn-login">Đăng nhập</a>
                 {% endif %}
+                <!-- Add a mobile menu toggle button -->
+                <button class="navbar-toggler d-lg-none ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-         </div>
+        </div>
+        <!-- Mobile Navigation Collapse -->
+        <div class="collapse navbar-collapse d-lg-none" id="mobileNav">
+            <div class="container py-3">
+                <div class="dropdown mb-2">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Trắc nghiệm bản thân 
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'quiz_highschool:gioi_thieu' %}"><i class="fas fa-user-graduate fa-fw me-2 text-primary-green opacity-75"></i>Học sinh</a></li>
+                        <li><a class="dropdown-item" href="{% url 'quiz_university:gioi_thieu_u' %}"><i class="fas fa-university fa-fw me-2 text-primary-green opacity-75"></i>Sinh viên</a></li>
+                    </ul>
+                </div>
+                <a class="nav-link mb-2" href="{% url 'trend:trend' %}">Xu hướng ngành nghề</a>
+                <a class="nav-link mb-2" href="{% url 'premium:premium_home' %}">Premium</a>
+                {% if request.user.is_authenticated and request.user.is_staff %}
+                    <a class="nav-link mb-2" href="{% url 'admin:index' %}">Admin</a>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    <div class="dropdown mb-2">
+                        <a class="d-flex align-items-center text-decoration-none dropdown-toggle no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ Ascending/descending order
+                            {{ request.user.avatar.url }}" class="rounded-circle me-2" width="36" height="36">
+                            <span>
+                                {% if request.user.first_name or request.user.last_name %}
+                                    {{ request.user.first_name }} {{ request.user.last_name }}
+                                {% else %}
+                                    {{ request.user.username }}
+                                {% endif %}
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'users:profile' %}">
+                                    <i class="fas fa-user-circle fa-fw"></i> Trang cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'users:logout' %}">
+                                    <i class="fas fa-sign-out-alt fa-fw"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a href="{% url 'users:login' %}" class="nav-link mb-2 btn btn-primary btn-login">Đăng nhập</a>
+                {% endif %}
+            </div>
+        </div>
     </header>
 
     <main>
