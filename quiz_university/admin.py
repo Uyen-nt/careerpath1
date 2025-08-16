@@ -114,7 +114,7 @@ class ResultFeedbackDHAdmin(admin.ModelAdmin):
     @admin.display(description="Nhận xét")
     def nhan_xet(self, obj):
         return obj.comment or ""
-    
+
     @admin.display(description="Đối tượng được phản hồi")
     def doi_tuong(self, obj):
         target = obj.content_object
