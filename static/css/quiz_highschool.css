@@ -2492,3 +2492,93 @@ small.suggested-majors i {
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(17,24,39,.3);
 }
+
+
+/* ======================================================= */
+/* ===== FIX LỖI THẺ "HÌNH MẪU NỔI BẬT" TRÊN MOBILE (V2) ===== */
+/* ======================================================= */
+
+@media (max-width: 767px) {
+
+    /* --- Sửa layout cho khu vực chứa thẻ --- */
+    .profile-spotlight-wrapper {
+        flex-direction: column; /* Cho các thẻ xếp dọc */
+        gap: 1.5rem;          /* Tạo khoảng cách giữa 2 thẻ */
+        min-height: unset;    /* Bỏ chiều cao tối thiểu cũ */
+        margin-top: 2rem;
+    }
+
+    /* --- Sửa lỗi "biến mất" cho chính các thẻ kết quả --- */
+    .profile-spotlight-card.split-theme {
+        /* BẮT BUỘC: Chuyển sang position tĩnh để thẻ tự tạo chiều cao */
+        position: relative !important; 
+        
+        /* BẮT BUỘC: Hủy các thuộc tính ẩn/hiện của carousel */
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        
+        /* Chuyển layout bên trong thẻ thành cột dọc */
+        flex-direction: column;
+    }
+
+    /* --- Tinh chỉnh lại các phần bên trong thẻ cho đẹp --- */
+    .spotlight-identity-pane {
+        max-width: 100%;
+        padding: 1.5rem 1rem;
+    }
+
+    .spotlight-avatar {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1rem;
+    }
+
+    .spotlight-archetype h5 {
+        font-size: 1.6rem;
+    }
+    
+    .spotlight-analysis-pane {
+        padding: 1.5rem 1.25rem;
+    }
+}
+
+
+/* ======================================================= */
+/* ===== FIX LỖI NÚT NỘP BÀI TRÊN MOBILE (TRANG QUIZ) ===== */
+/* ======================================================= */
+
+@media (max-width: 767px) {
+
+    /* 1. Style lại khung chứa các nút */
+    .quiz-page .quiz-navigation {
+        display: grid; /* Sử dụng Grid Layout để sắp xếp thông minh hơn */
+        grid-template-columns: 1fr 1fr; /* Chia làm 2 cột bằng nhau */
+        gap: 0.8rem;
+        margin-top: 1.5rem; /* Thêm khoảng cách với các câu trả lời */
+    }
+
+    /* 2. Style lại các nút con */
+    .quiz-page #prev-question-btn {
+        grid-column: 1 / 2; /* Nút "Câu trước" nằm ở cột 1 */
+    }
+
+    .quiz-page #next-question-btn {
+        grid-column: 2 / 3; /* Nút "Câu tiếp theo" nằm ở cột 2 */
+        margin-left: 0; /* Reset margin cũ */
+    }
+
+    /* 3. Style đặc biệt cho nút "Nộp bài" */
+    #submit-quiz-btn {
+        grid-column: 1 / -1; /* BẮT BUỘC: Cho nút "Nộp bài" chiếm trọn 2 cột */
+        margin: 0;           /* Reset margin cũ */
+        transform: none;     /* BẮT BUỘC: Gỡ bỏ thuộc tính transform gây lỗi */
+        width: 100%;         /* Đảm bảo nút rộng hết cỡ */
+    }
+    
+    /* 4. Style chung cho tất cả các nút để đồng bộ */
+    .quiz-page .btn {
+        width: 100%; 
+        padding: 0.8rem;
+    }
+}
