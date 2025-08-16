@@ -29,6 +29,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = ['careerpath.io.vn', 'www.careerpath.io.vn', '103.173.66.148', 'www.google.com', '127.0.0.1', 'localhost']
+CSRF_TRUSTED_ORIGINS = ['https://careerpath.io.vn', 'https://www.careerpath.io.vn']
 
 
 # Application definition
