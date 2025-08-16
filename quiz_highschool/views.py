@@ -9,7 +9,7 @@ from .career_analysis_cards import ANALYSIS_CARDS_PRIMARY, ANALYSIS_CARDS_SECOND
 from django.contrib.auth.decorators import login_required
 from .models import QuizHighschool
 from premium.models import PremiumSubscription
-
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 import os
 from django.conf import settings
@@ -18,6 +18,7 @@ from django.conf import settings
 def gioi_thieu(request):
     return render(request, 'gioi_thieu.html')
 
+@ensure_csrf_cookie
 @login_required
 def question_hs(request):
     return render(request, 'question_hs.html')

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load csrf_token %}
 {% block title %}Trắc Nghiệm - CareerPath{% endblock %}
 
 {% block content %}
@@ -145,7 +145,7 @@ function showToast(message, type = 'error', duration = 5000) {
     return cookieValue;
   }
 
-  const csrftoken = getCookie('csrftoken');
+  const csrftoken = document.querySelector('meta[name="csrf-token"]').content;
   let currentQuestion = 0;
   const selectedAnswersPerQuestion = [];
   const questionBank = [];
@@ -170,6 +170,7 @@ function showToast(message, type = 'error', duration = 5000) {
     const partialAnswers = selectedAnswersPerQuestion.slice(0, questionIndex).flat();
     const res = await fetch('/quiz_highschool/api/next-question/', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: { 
           'Content-Type': 'application/json',
           'X-CSRFToken': csrftoken
@@ -298,6 +299,7 @@ function showToast(message, type = 'error', duration = 5000) {
     
     await fetch('/quiz_highschool/submit/', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: { 
           'Content-Type': 'application/json',
           'X-CSRFToken': csrftoken
