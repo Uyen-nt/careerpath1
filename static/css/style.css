@@ -1006,3 +1006,169 @@ html {
 }
 
 
+
+
+
+/* =============================================================== */
+/* ===         RESPONSIVE & MOBILE MENU STYLING                === */
+/* =============================================================== */
+
+/* --- Offcanvas Mobile Menu Styling --- */
+.offcanvas-header {
+    border-bottom: 1px solid var(--border-color);
+}
+.offcanvas-title {
+    font-family: var(--font-primary);
+    font-weight: 700;
+}
+.offcanvas-body .nav-link {
+    font-size: 1.1rem; /* Chữ to hơn, dễ nhấn hơn */
+    padding: 10px 5px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+.offcanvas-body .nav-link:hover {
+    color: var(--primary-green);
+}
+/* Dropdown trong offcanvas */
+.offcanvas-body .dropdown-menu {
+    position: static !important; /* Quan trọng: bỏ định vị tuyệt đối */
+    transform: none !important; /* Quan trọng: bỏ transform */
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    padding-left: 1.25rem; /* Thụt vào cho dễ nhìn */
+    width: 100%;
+}
+.offcanvas-body .dropdown-item {
+    padding: 8px 0;
+    font-weight: 500;
+}
+
+/* --- Style cho menu con (dropdown-menu) --- */
+
+/* 1. Mặc định, ẩn hoàn toàn menu con và không cho chiếm diện tích */
+.offcanvas-body .dropdown-menu {
+    display: none; /* ĐÂY LÀ THAY ĐỔI QUAN TRỌNG NHẤT */
+    position: static;
+    float: none;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0; /* Bỏ hết padding khi ẩn */
+}
+
+/* 2. Chỉ khi có class '.show' (do Bootstrap JS thêm vào khi click),
+      menu mới hiện ra và có style */
+.offcanvas-body .dropdown-menu.show {
+    display: block;
+    padding-top: 0.5rem; /* Thêm lại padding khi hiện ra */
+    padding-left: 1.25rem; /* Thụt lề các mục con */
+}
+
+/* --- Style cho các mục con --- */
+.offcanvas-body .dropdown-item {
+    padding: 8px 0;
+    font-weight: 500;
+}
+
+/* ======================================================= */
+/* ===      LOGOUT LINK STYLING (MOBILE ONLY)          === */
+/* ======================================================= */
+
+/* Style cho link Đăng xuất CHỈ TRÊN MOBILE (trong offcanvas) */
+#mobileOffcanvas .action-logout {
+    font-weight: 600 !important; /* Làm chữ đậm hơn một chút */
+    transition: all 0.2s ease-in-out; /* Thêm hiệu ứng chuyển động mượt mà */
+    border-radius: 0.375rem; /* Bo góc nhẹ cho đẹp hơn khi hover */
+    margin: 0 -5px; /* Bù trừ cho padding để vùng hover được full-width */
+    padding: 10px 5px;
+}
+
+/* Đặt màu đỏ cho chữ và icon */
+#mobileOffcanvas .action-logout,
+#mobileOffcanvas .action-logout i {
+    color: #dc3545 !important; /* Màu đỏ cảnh báo của Bootstrap */
+}
+
+/* Hiệu ứng khi hover/tap */
+#mobileOffcanvas .action-logout:hover {
+    background-color: #dc3545 !important; /* Nền chuyển sang màu đỏ */
+    color: #ffffff !important; /* Chữ chuyển sang màu trắng */
+}
+
+/* Đảm bảo icon cũng chuyển sang màu trắng khi hover/tap */
+#mobileOffcanvas .action-logout:hover i {
+    color: #ffffff !important;
+}
+
+/* --- Responsive Adjustments --- */
+
+/* Màn hình nhỏ hơn Large (tablets & mobiles) */
+@media (max-width: 991.98px) {
+    .navbar-custom .container {
+        /* Cho container dùng padding mặc định của bootstrap trên mobile */
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: none;
+    }
+    .logo-link {
+        margin-left: 0; /* Reset margin trên desktop */
+    }
+    .header-actions {
+        margin-right: 0; /* Reset margin trên desktop */
+    }
+}
+
+
+/* Màn hình nhỏ hơn Medium (smartphones ngang) */
+@media (max-width: 767.98px) {
+    /* Điều chỉnh lại padding và font-size của các section chính */
+    .section-padding {
+        padding: 60px 0;
+    }
+    h2.section-title {
+        font-size: 2rem;
+    }
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    .hero p.lead {
+        font-size: 1.1rem;
+    }
+
+    /* Giảm kích thước logo để tiết kiệm không gian */
+    .logo-text {
+        font-size: 28px;
+    }
+    .slogan {
+        font-size: 13px;
+    }
+}
+
+
+/* Màn hình rất nhỏ (smartphones dọc) */
+@media (max-width: 576px) {
+    .logo-text {
+        font-size: 24px;
+    }
+    .slogan {
+        display: none; /* Ẩn slogan để header không bị quá cao */
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .footer-column {
+        text-align: center; /* Căn giữa nội dung footer */
+    }
+    .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%); /* Căn giữa gạch chân của tiêu đề */
+    }
+    .contact-item, .social-icons {
+        justify-content: center; /* Căn giữa các icon */
+    }
+}
+
