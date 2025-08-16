@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-{% load csrf_token %}
+{% load csrf %}
+<meta name="csrf-token" content="{{ csrf_token }}">
 {% block title %}Trắc Nghiệm - CareerPath{% endblock %}
 
 {% block content %}
