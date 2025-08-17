@@ -20,6 +20,9 @@ from django.conf import settings
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
 payOS = PayOS(settings.PAYOS_CLIENT_ID, settings.PAYOS_API_KEY, settings.PAYOS_CHECKSUM_KEY)
 
 User = get_user_model()
@@ -215,25 +218,33 @@ def initiate_payment(request):
 
     return HttpResponseBadRequest()
 
+@csrf_exempt
 def payos_webhook(request):
     if request.method == 'POST':
         try:
             body = json.loads(request.body)
             verified_data = payOS.verifyPaymentWebhookData(body)
+
             order_code = verified_data['orderCode']
             transaction = get_object_or_404(Transaction, order_id=str(order_code))
+
             if transaction.status == 'pending':
                 if verified_data['code'] == '00':
                     subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
                     subscription.activate_subscription(months=transaction.months)
                     transaction.status = 'completed'
                     transaction.save()
-                    send_payment_confirmation_email(transaction.user, transaction.months, transaction.amount, request)
+                    send_payment_confirmation_email(
+                        transaction.user,
+                        transaction.months,
+                        transaction.amount
+                    )
                 else:
                     transaction.status = 'failed'
                     transaction.save()
-                    # Optional: Gửi email thông báo thất bại nếu cần
+
             return JsonResponse({'success': True})
+
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
     return HttpResponseBadRequest()
