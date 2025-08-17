@@ -223,8 +223,13 @@ def initiate_payment(request):
 def payos_webhook(request):
     if request.method == 'POST':
         try:
-            body = json.loads(request.body)
+            raw_body = request.body.decode('utf-8')
+            print("Webhook RAW body:", raw_body)   # log ra toàn bộ payload
+            body = json.loads(raw_body)
+            print("Webhook JSON:", body)
+
             verified_data = payOS.verifyPaymentWebhookData(body)
+            print("Verified:", verified_data)
 
             order_code = verified_data['orderCode']
             transaction = get_object_or_404(Transaction, order_id=str(order_code))
@@ -247,8 +252,10 @@ def payos_webhook(request):
             return JsonResponse({'success': True})
 
         except Exception as e:
+            print("Webhook error:", str(e))
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
     return HttpResponseBadRequest()
+
 
 @login_required
 def check_payment(request, order_id):
