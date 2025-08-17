@@ -22,7 +22,9 @@ from django.shortcuts import get_object_or_404
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+import logging
 
+logger = logging.getLogger(__name__)
 
 payOS = PayOS(settings.PAYOS_CLIENT_ID, settings.PAYOS_API_KEY, settings.PAYOS_CHECKSUM_KEY)
 
@@ -224,12 +226,13 @@ def payos_webhook(request):
     if request.method == 'POST':
         try:
             raw_body = request.body.decode('utf-8')
-            print("Webhook RAW body:", raw_body)   # log ra toàn bộ payload
+            logger.info("Webhook RAW body: %s", raw_body)   # log JSON gốc
+
             body = json.loads(raw_body)
-            print("Webhook JSON:", body)
+            logger.info("Webhook parsed JSON: %s", body)
 
             verified_data = payOS.verifyPaymentWebhookData(body)
-            print("Verified:", verified_data)
+            logger.info("Webhook verified: %s", verified_data)
 
             order_code = verified_data['orderCode']
             transaction = get_object_or_404(Transaction, order_id=str(order_code))
@@ -245,17 +248,19 @@ def payos_webhook(request):
                         transaction.months,
                         transaction.amount
                     )
+                    logger.info("Payment success for order %s", order_code)
                 else:
                     transaction.status = 'failed'
                     transaction.save()
+                    logger.warning("Payment failed for order %s", order_code)
 
             return JsonResponse({'success': True})
 
         except Exception as e:
-            print("Webhook error:", str(e))
+            logger.error("Webhook error: %s", str(e), exc_info=True)
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
-    return HttpResponseBadRequest()
 
+    return HttpResponseBadRequest()
 
 @login_required
 def check_payment(request, order_id):
