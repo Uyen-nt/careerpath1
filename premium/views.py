@@ -234,11 +234,12 @@ def payos_webhook(request):
             verified_data = payOS.verifyPaymentWebhookData(body)
             logger.info("Webhook verified: %s", verified_data)
 
-            order_code = verified_data['orderCode']
-            transaction = get_object_or_404(Transaction, order_id=str(order_code))
+            order_code = str(verified_data.orderCode) 
+            status_code = str(verified_data.code)    
+            transaction = get_object_or_404(Transaction, order_id=order_code)
 
             if transaction.status == 'pending':
-                if verified_data['code'] == '00':
+                if status_code == '00':
                     subscription, _ = PremiumSubscription.objects.get_or_create(user=transaction.user)
                     subscription.activate_subscription(months=transaction.months)
                     transaction.status = 'completed'
