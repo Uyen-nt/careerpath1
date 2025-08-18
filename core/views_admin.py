@@ -15,6 +15,7 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 from premium.models import PremiumSubscription, Transaction
 from django.db.models import Count, OuterRef, Subquery 
+from django.db.models import Sum
 
 User = get_user_model()
 
@@ -65,7 +66,39 @@ def admin_dashboard(request):
     premium_activations_7d = PremiumSubscription.objects.filter(
         subscription_start__gte=start_7
     ).count()
-  
+    
+     # ==== DOANH THU & ĐƠN HÀNG THÁNG NÀY (gắn với Premium/Transaction) ====
+    tx_month = Transaction.objects.filter(
+        created_at__year=now.year,
+        created_at__month=now.month
+    )
+
+    # Tổng đơn hàng tháng này (mọi trạng thái)
+    total_orders_month = tx_month.count()
+
+    # Doanh thu tháng này (chỉ tính các giao dịch "completed")
+    revenue_month = tx_month.filter(status='completed').aggregate(
+        s=Sum('amount')
+    )['s'] or 0
+
+    # Phân bổ trạng thái đơn hàng để vẽ donut
+    status_rows = tx_month.values('status').annotate(c=Count('id'))
+    status_map = {'completed': 0, 'pending': 0, 'failed': 0}
+    for r in status_rows:
+        status_map[r['status']] = r['c']
+
+    order_status_labels = ['Đã thanh toán', 'Chờ thanh toán', 'Thất bại']
+    order_status_values = [
+        status_map['completed'],
+        status_map['pending'],
+        status_map['failed'],
+    ]
+
+    # Thu theo kênh thanh toán (tạm thời 1 kênh Website)
+    payment_channels = [
+        {'name': 'CareerPath website', 'amount': revenue_month}
+    ]
+
     last_months_sq = Transaction.objects.filter(
         user=OuterRef('pk'),
         status='completed'
@@ -95,6 +128,12 @@ def admin_dashboard(request):
         "signups_series_7": signups_series_7,
         "quiz_labels": quiz_labels,
         "quiz_values": quiz_values,
+        "revenue_month": revenue_month,
+        "total_orders_month": total_orders_month,
+
+        "order_status_labels_json": json.dumps(order_status_labels, ensure_ascii=False),
+        "order_status_values_json": json.dumps(order_status_values),
+        "payment_channels": payment_channels,
 
         # ✅ KPI Premium
         "premium_active": premium_active,
